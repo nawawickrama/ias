@@ -34,6 +34,9 @@
                             <a href="{{route('approved-requests')}}" class="nav-link">Approved Requests</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('waiting-requests')}}" class="nav-link">Waiting Requests</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('rejected-requests')}}" class="nav-link">Rejected Requests</a>
                         </li>
                     </ul>

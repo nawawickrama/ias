@@ -26,6 +26,9 @@ Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::view('/admin/pending-requests','admin.requests.pending-requests')->name('pending-requests');
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
+Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
+Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
+Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
 //Landing
 Route::view('/','landing.home');
