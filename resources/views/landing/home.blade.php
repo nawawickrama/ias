@@ -16,45 +16,45 @@
                     <div class="form-row mt-2">
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue" checked>
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="" value="STEP" checked>
                                 STEP (Study Eligibility Program) is a Pre-bachelors program for students who completed their 12 yrs of Schooling
                             </label>
                         </div>
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue">
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="" value="E-STEP">
                                 E-STEP (English -Study Eligibility Program) is a Pre-bachelors program for students who completed their 12 yrs of Schooling
                             </label>
                         </div>
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue">
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="" value="MEP">
                                 MEP (Master Eligibility Program) is Pre- Master program for students who wish to start their Masters In Germany
                             </label>
                         </div>
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue">
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="" value="PAP">
                                 PAP (PAP is a Preparation program for being a registered Nurse in Germany).
                             </label>
                         </div>
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue">
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="" value="GVET">
                                 GVET Vocational Training
                             </label>
                         </div>
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="radio1" id="" value="checkedValue">
+                                <input type="radio" class="form-check-input program-radio" name="radio1" id="direct_job" value="Direct job">
                                 Direct job apply
                             </label>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" id='job_field'>
                         <div class="form-group col-md-12">
                             <label for="">Which Field</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            <input type="text" class="form-control" name="" id="which_job" aria-describedby="helpId" placeholder="">
                         </div>
                     </div>
                     <div class="form-row mt-4">
@@ -176,29 +176,31 @@
                     <div class="form-row">
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+                                <input type="checkbox" class="form-check-input" name="" id="vocational_check_box" value="checkedValue">
                                 Vocational Training?
                             </label>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Field of the vocational training</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                    <div id="vocational_fields">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="">Field of the vocational training</label>
+                                <input type="text" class="form-control" name="" id="vocational" aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">Year of completion</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="">Year of completion</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Overall Result Percentage (%)</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="">Duration of the vocational training (Months)</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="">Overall Result Percentage (%)</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">Duration of the vocational training (Months)</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            </div>
                         </div>
                     </div>
                     <div class="form-row mt-4">
@@ -250,19 +252,21 @@
                     <div class="form-row">
                         <div class="form-check col-md-12">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+                                <input type="checkbox" class="form-check-input" name="" id="expirience_box" value="checkedValue">
                                 Working experience?
                             </label>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Name of the field that you work :</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="">How many years of experience? :</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                    <div id="expirience_field">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="">Name of the field that you work :</label>
+                                <input type="text" class="form-control" name="" id="expirience_text" aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">How many years of experience? :</label>
+                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            </div>
                         </div>
                     </div>
                     <div class="form-row mt-4">
@@ -274,17 +278,17 @@
                             <br>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="radio2" id="" value="checkedValue"> Yes
+                                    <input class="form-check-input Ge_lang" type="radio" name="radio2" id="Ge_lang_yes" value="checkedValue"> Yes
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="radio2" id="" value="checkedValue"> No
+                                    <input class="form-check-input Ge_lang" type="radio" name="radio2" id="Ge_lang_no" value="checkedValue"> No
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" id="ge_level_field">
                         <div class="form-group col-md-12">
                             <label for="">Which level? :</label>
                             <br>
@@ -326,7 +330,7 @@
                             <br>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="check1" id="" value="checkedValue"> Agent / Educational Consultancy
+                                    <input class="form-check-input" type="checkbox" name="check1" id="agent_check_box" value="checkedValue"> Agent / Educational Consultancy
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -341,10 +345,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" id="agent_field">
                         <div class="form-group col-md-12">
                             <label for="">Name of the agent or education consultancy (If you know IAS college from agent or education consultancy) :</label>
-                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                            <input type="text" class="form-control" name="" id="agent_text" aria-describedby="helpId" placeholder="">
                         </div>
                     </div>
                     <div class="form-row">
@@ -385,4 +389,75 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('document').ready(()=>{
+        $('#job_field').hide();
+        $('#vocational_fields').hide();
+        $('#expirience_field').hide();
+        $('#agent_field').hide();
+        $('#Ge_lang_no').prop('checked','checked');
+        $('#ge_level_field').hide();
+
+
+        $('.program-radio').change(()=>{
+            let select_direct = $('#direct_job').prop('checked');
+                if(select_direct){
+                    $('#job_field').slideDown();
+                    $('#which_job').focus();
+                    $('#which_job').attr('required', true);
+                }
+                else{
+                    $('#job_field').slideUp();
+                    $('#which_job').attrRemove('required');
+                }
+        });
+
+        $('#vocational_check_box').change(()=>{
+            let select_vocational = $('#vocational_check_box').prop('checked');
+            if(select_vocational){
+                $('#vocational_fields').slideDown();
+                $('#vocational').focus();
+            }else{
+                $('#vocational_fields').slideUp();
+            }
+        });
+
+        $('#expirience_box').change(()=>{
+            let select_expirience = $('#expirience_box').prop('checked');
+
+            if(select_expirience){
+                $('#expirience_field').slideDown();
+                $('#expirience_text').focus();
+            }else{
+                $('#expirience_field').slideUp();
+            }
+
+        });
+
+        $('#agent_check_box').change(()=>{
+            let select_agent = $('#agent_check_box').prop('checked');
+
+            if(select_agent){
+                $('#agent_field').slideDown();
+                $('#agent_text').focus();
+                $('#agent_text').attr('required', true);
+            }else{
+                $('#agent_field').slideUp();
+                $('#agent_text').attrRemove('required');
+            }
+
+        });
+        
+        $('.Ge_lang').change(()=>{
+            let ge_lan = $('#Ge_lang_yes').prop('checked');
+
+            if(ge_lan){
+                $('#ge_level_field').slideDown();
+            }else{
+                $('#ge_level_field').slideUp();
+            }
+        });
+    });
+</script>
 @endsection
