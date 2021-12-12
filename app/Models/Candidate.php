@@ -11,7 +11,7 @@ class Candidate extends Model
 
     protected $table = 'candidates';
 
-    protected $primartyKey = 'candidate_id';
+    protected $primaryKey = 'candidate_id';
 
     protected $fillable = [
         'first_name',

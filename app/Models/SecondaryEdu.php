@@ -14,10 +14,10 @@ class SecondaryEdu extends Model
     protected $primaryKey = 'secondary_edu_id';
 
     protected $fillable = [
-        'field',
-        'compleate_year',
-        'result',
+        'years/level',
         'duration',
+        'result_percentage',
         'candidate_id'
+
     ];
 }

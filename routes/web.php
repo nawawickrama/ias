@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CandidareController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,8 @@ Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
 Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
 Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
-//Landing
+
+
+//Candidate form
 Route::view('/','landing.home');
+Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');

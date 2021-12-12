@@ -21,8 +21,8 @@ class CreateCandidatesTable extends Migration
             $table->boolean('sex'); //1->male,  0->female
             $table->date('dob');
             $table->string('nationality');
-            $table->string('telephone');
-            $table->string('email');
+            $table->string('telephone')->unique();
+            $table->string('email')->unique();
             $table->string('address');
             $table->boolean('ge_lang'); //1->yes , 0-> no
             $table->string('ge_lang_level');
