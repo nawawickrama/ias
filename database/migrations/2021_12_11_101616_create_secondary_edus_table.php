@@ -22,7 +22,7 @@ class CreateSecondaryEdusTable extends Migration
             $table->integer('sec_edu_type');
 
             $table->unsignedBigInteger('candidate_id');
-            $table->foreign('cadidate_id')->references('candidate_id')->on('candidates');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             
             $table->timestamps();
         });

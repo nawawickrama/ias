@@ -21,7 +21,7 @@ class CreateVocationalTrainingsTable extends Migration
             $table->string('duration');
 
             $table->unsignedBigInteger('candidate_id');
-            $table->foreign('cadidate_id')->references('candidate_id')->on('candidates');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             $table->timestamps();
         });
     }
