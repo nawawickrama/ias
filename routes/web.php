@@ -27,7 +27,7 @@ Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logou
 //Admin Dashboard
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Application Admin
+//Admin Application 
 Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_application'])->name('pending-requests');
 Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'appli_view'])->name('view-application');
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
@@ -36,18 +36,17 @@ Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name
 Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
 Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
 
-//Assesment Form Admin
+//Admin Assesment Form 
 Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 
-//Settings Admin
+//Admin Settings 
 Route::view('/admin/smtp','admin.settings.smtp')->name('smtp');
 Route::view('/admin/user-settings','admin.settings.user')->name('user-settings');
+
+//Admin Profile
+Route::view('/admin/profile','admin.profile.profile')->name('profile');
+
 //Landing
-Route::view('/','landing.home');
-
-
-//Candidate form
-Route::view('/','landing.home');
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
