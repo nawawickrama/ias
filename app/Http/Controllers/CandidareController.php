@@ -1,0 +1,215 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Candidate;
+use App\Models\HigherEdu;
+use App\Models\SecondaryEdu;
+use App\Models\VocationalTraining;
+use App\Models\WorkExperience;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
+
+class CandidareController extends Controller
+{
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
+
+    public function reg_candi(Request $request)
+    {
+        // return request('project');
+        $request->validate([
+            'project' => 'required',
+            'first_name' => 'required',
+            'sur_name' => 'required',
+            'sex' => 'required',
+            'dob' => 'required|date',
+            'nationality' => 'required',
+            'telephone' => 'required',
+            'state' => 'required',
+            'telephone' => 'required|numeric',
+            'email' => 'required|email',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'zip' => 'required',
+            'country' => 'required',
+
+            'secondary_school' => 'nullable',
+            
+            'higher_sec_school' => 'nullable',
+
+            'v_training_tick' => 'nullable',
+
+            'b_uni' => 'nullable',
+
+            'm_uni' => 'nullable',
+
+            'w_experience_tick' => 'nullable',
+
+            'german_language' => 'nullable',
+
+            'agree' => 'required',
+        ]);
+        
+        if(request('project') == 'Direct job'){
+            $request->validate([
+                'job_feild' => 'required',
+            ]);
+        }
+
+        if(request('secondary_school') !=  null){
+            $request->validate([
+                'sec_from' => 'required',
+                'sec_to' => 'required',
+                'sec_result' => 'required',
+            ]);
+        }
+
+        if(request('higher_sec_school') !=  null){
+            $request->validate([
+                'highter_from' => 'required',
+                'highter_to' => 'required',
+                'highter_result' => 'required',
+            ]);
+        }
+
+        if(request('v_training_tick') ==  1){
+            $request->validate([
+                'v_field' => 'required',
+                'v_complete_year' => 'required',
+                'v_result' => 'required',
+                'v_duration' => 'required',
+            ]);
+        }
+
+        if(request('b_uni') !=  null){
+            $request->validate([
+                'b_major_sub' => 'required',
+                'b_year' => 'required',
+                'b_result' => 'required',
+            ]);
+        }
+
+        if(request('m_uni') !=  null){
+            $request->validate([
+                'm_major_sub' => 'required',
+                'm_year' => 'required',
+                'm_result' => 'required',
+            ]);
+        }
+        
+        if(request('w_experience_tick') ==  1){
+            $request->validate([
+                'w_exp_field' => 'required',
+                'w_year' => 'required',
+            ]);
+        }
+
+        if(request('german_language') ==  1){
+            $request->validate([
+                'german_level' => 'required',
+            ]);
+        }
+
+        if(request('how_to_know_agent') == null && request('how_to_know_fb') == null && request('how_to_know_email') == null ){
+            $request->validate([
+                'how_to_know_agent' => 'required',
+                'how_to_know_fb' => 'required',
+                'how_to_know_email' => 'required',
+            ]);
+        }
+
+        if(request('how_to_know_agent') !=  null){
+            $request->validate([
+                'agent_name' => 'required',
+            ]);
+        }
+
+        try{
+            DB::transaction(function () {
+                $candidate_info = Candidate::create([
+                    'first_name' => request('first_name'),
+                    'sur_name' => request('sur_name'),
+                    'sex' => request('sex'),
+                    'program' => request('project'),
+                    'dob' => request('dob'),
+                    'nationality' => request('nationality'),
+                    'telephone' => request('telephone'),
+                    'email' => request('email'),
+                    'address' => request('address').','.request('city').','.request('province').','.request('country').','.request('zip'),
+                    'ge_lang' => request('german_language'),
+                    'ge_lang_level' => request('german_level'),
+                    'how_to_know' => request('how_to_know_agent').', '.request('how_to_know_fb').', '.request('how_to_know_email'),
+                    'agent_name' => request('agent_name'),
+                ]);
+
+                if(request('secondary_school') !=  null){
+                    SecondaryEdu::create([
+                        'years/level' => request('secondary_school'),
+                        'duration' => request('sec_from').' - '.request('sec_to'),
+                        'result_percentage' => request('sec_result'),
+                        // 'candidate_id' => $candidate_info->candidate_id,
+                    ]);
+                }
+
+                if(request('higher_sec_school') !=  null){
+                    SecondaryEdu::create([
+                        'years/level' => request('higher_sec_school'),
+                        'duration' => request('highter_from').' - '.request('highter_to'),
+                        'result_percentage' => request('highter_result'),
+                        // 'candidate_id' => $candidate_info->candidate_id,
+                    ]);
+                }
+
+                if(request('b_uni') !=  null){
+                    HigherEdu::create([
+                        'university' => request('b_uni'),
+                        'major_subject' => request('b_major_sub'),
+                        'year' => request('b_year'),
+                        'result_percentage' => request('b_result'),
+                        'higher_edu_type' => 'batchelor',
+                        // 'candidate_id' => $candidate_info->candidate_id
+                    ]);
+                }
+
+                if(request('m_uni') !=  null){
+                    HigherEdu::create([
+                        'university' => request('m_uni'),
+                        'major_subject' => request('m_major_sub'),
+                        'year' => request('m_year'),
+                        'result_percentage' => request('m_result'),
+                        'higher_edu_type' => 'masters',
+                        // 'candidate_id' => $candidate_info->candidate_id
+                    ]);
+                }
+
+                if(request('v_training_tick') ==  1){
+                    VocationalTraining::create([
+                        'field' => request('v_field'),
+                        'compleate_year' => request('v_complete_year'),
+                        'result_percentage' => request('v_result'),
+                        'duration' => request('v_duration'),
+                        // 'candidate_id' => $candidate_info->candidate_id
+                    ]);
+                }
+
+                if(request('w_experience_tick') ==  1){
+                    WorkExperience::create([
+                        'field' => request('w_exp_field'),
+                        'duration' => request('w_year'),
+                        // 'candidate_id' => $candidate_info->candidate_id,
+                    ]);
+                }
+            });
+        }catch(Throwable $e){
+            dd($e);
+            return back()->with(['error' => 'Form submition faild.' , 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Form submition succesful.']);
+    }
+}
