@@ -31,10 +31,10 @@
                             <a href="{{route('pending-requests')}}" class="nav-link">Pending Requests</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('approved-requests')}}" class="nav-link">Approved Requests</a>
+                            <a href="{{route('approved-requests')}}" class="nav-link">Selected Requests</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('waiting-requests')}}" class="nav-link">Waiting Requests</a>
+                            <a href="{{route('waiting-requests')}}" class="nav-link">Selected Under Condition</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('rejected-requests')}}" class="nav-link">Rejected Requests</a>
@@ -52,16 +52,10 @@
                 <div class="collapse" id="settings">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{route('pending-requests')}}" class="nav-link">General Settings</a>
+                            <a href="{{route('user-settings')}}" class="nav-link">User Settings</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('approved-requests')}}" class="nav-link">SMTP Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('waiting-requests')}}" class="nav-link">Waiting Requests</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('rejected-requests')}}" class="nav-link">Rejected Requests</a>
+                            <a href="{{route('smtp')}}" class="nav-link">SMTP Settings</a>
                         </li>
                     </ul>
                 </div>

@@ -29,11 +29,11 @@
                     <td>{{ $candidate->nationality }}</td>
                     <td>
                         <a href="{{ route('view-application', $candidate->candidate_id) }}" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
-                            <i data-feather="eye"></i></a>
+                                <i data-feather="eye"></i></a>
                         </button>
-                        <button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
+                        <a type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
                             <i data-feather="download"></i>
-                        </button>
+                        </a>
                         <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
                             <i data-feather="flag"></i>
                         </button>
@@ -41,7 +41,7 @@
                             <i data-feather="mail"></i>
                         </button>
                     </td>
-                </tr> 
+                </tr>
                 @endforeach
             </tbody>
         </table>
