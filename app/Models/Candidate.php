@@ -27,5 +27,11 @@ class Candidate extends Model
         'ge_lang_level',
         'how_to_know',
         'agent_name',
+        'application_status'
     ];
+
+    public function sec_sch()
+    {
+        return $this->hasMany(SecondaryEdu::class, 'secondary_edu_id');
+    }
 }

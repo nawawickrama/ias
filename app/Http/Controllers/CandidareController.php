@@ -13,10 +13,10 @@ use Throwable;
 
 class CandidareController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
 
     public function reg_candi(Request $request)
     {
@@ -152,7 +152,7 @@ class CandidareController extends Controller
                         'years/level' => request('secondary_school'),
                         'duration' => request('sec_from').' - '.request('sec_to'),
                         'result_percentage' => request('sec_result'),
-                        'candidate_id' => $candidate_info->candidate_id,
+                        // 'candidate_id' => $candidate_info->candidate_id,
                     ]);
                 }
 
@@ -161,7 +161,7 @@ class CandidareController extends Controller
                         'years/level' => request('higher_sec_school'),
                         'duration' => request('highter_from').' - '.request('highter_to'),
                         'result_percentage' => request('highter_result'),
-                        'candidate_id' => $candidate_info->candidate_id,
+                        // 'candidate_id' => $candidate_info->candidate_id,
                     ]);
                 }
 
@@ -172,7 +172,7 @@ class CandidareController extends Controller
                         'year' => request('b_year'),
                         'result_percentage' => request('b_result'),
                         'higher_edu_type' => 'batchelor',
-                        'candidate_id' => $candidate_info->candidate_id
+                        // 'candidate_id' => $candidate_info->candidate_id
                     ]);
                 }
 
@@ -183,7 +183,7 @@ class CandidareController extends Controller
                         'year' => request('m_year'),
                         'result_percentage' => request('m_result'),
                         'higher_edu_type' => 'masters',
-                        'candidate_id' => $candidate_info->candidate_id
+                        // 'candidate_id' => $candidate_info->candidate_id
                     ]);
                 }
 
@@ -193,7 +193,7 @@ class CandidareController extends Controller
                         'compleate_year' => request('v_complete_year'),
                         'result_percentage' => request('v_result'),
                         'duration' => request('v_duration'),
-                        'candidate_id' => $candidate_info->candidate_id
+                        // 'candidate_id' => $candidate_info->candidate_id
                     ]);
                 }
 
@@ -201,7 +201,7 @@ class CandidareController extends Controller
                     WorkExperience::create([
                         'field' => request('w_exp_field'),
                         'duration' => request('w_year'),
-                        'candidate_id' => $candidate_info->candidate_id,
+                        // 'candidate_id' => $candidate_info->candidate_id,
                     ]);
                 }
             });

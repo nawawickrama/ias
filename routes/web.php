@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidareController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,12 +26,15 @@ Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logou
 
 //Admin Dashboard
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::view('/admin/pending-requests','admin.requests.pending-requests')->name('pending-requests');
+
+//Application
+Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_application'])->name('pending-requests');
+Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'appli_view'])->name('view-application');
+
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
 Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
 Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
-Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
 
 
 //Candidate form

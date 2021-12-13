@@ -28,6 +28,8 @@ class CreateCandidatesTable extends Migration
             $table->string('ge_lang_level');
             $table->string('how_to_know')->nullable();
             $table->string('agent_name')->nullable();
+
+            $table->integer('application_status')->default(2); //2-> pending 1->approve 0->reject
             $table->timestamps();
         });
     }

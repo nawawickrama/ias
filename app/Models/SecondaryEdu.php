@@ -20,4 +20,9 @@ class SecondaryEdu extends Model
         'candidate_id'
 
     ];
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class, 'secondary_edu_id');
+    }
 }
