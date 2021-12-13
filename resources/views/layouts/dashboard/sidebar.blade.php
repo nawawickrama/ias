@@ -42,6 +42,30 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item nav-category">Web Settings</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#settings" role="button" aria-expanded="false" aria-controls="emails">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">Settings</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="settings">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('pending-requests')}}" class="nav-link">General Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('approved-requests')}}" class="nav-link">SMTP Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('waiting-requests')}}" class="nav-link">Waiting Requests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('rejected-requests')}}" class="nav-link">Rejected Requests</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

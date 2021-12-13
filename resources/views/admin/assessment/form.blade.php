@@ -3,27 +3,9 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <div class="row">
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-block btn-success">Email Aseesment form</button>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-block btn-primary">Download Aseesment form</button>
-            </div>
-        </div>
+        <p>ASSESSMENT FORM</p>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-center">
-                    <br>
-                    <u>Fachkrafte (FK)-Assessment Form</u>
-                </h3>
-            </div>
-        </div>
-        <br>
-        <br>
-        <hr>
         <div class="row">
             <div class="col-md-8">
                 <p>Applying for :<em class="text-secondary"> STEP course</em></p>
@@ -121,12 +103,13 @@
                 <p>Datum :22.09.2021, Unterschrift/Stempel prufer(n).</p>
             </div>
         </div>
-        <hr>
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <p class="text-center">
-                    <u>IAS college GmbH | Maria-Geoppert-Str. 1 | 23562 Luebeck, Germany <br> www.iaos.de </u>
-                </p>
+        <br>
+        <div class="row">
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-block btn-success">Email Aseesment form</button>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-block btn-primary">Download Aseesment form</button>
             </div>
         </div>
     </div>
