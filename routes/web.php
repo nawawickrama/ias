@@ -48,5 +48,7 @@ Route::view('/admin/user-settings','admin.settings.user')->name('user-settings')
 //Admin Profile
 Route::view('/admin/profile','admin.profile.profile')->name('profile');
 
+//Admin Email
+Route::view('/admin/send-mail','admin.mail.send-mail')->name('send-mail');
 //Landing
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');

@@ -18,6 +18,12 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{route('send-mail')}}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Send Email</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Student Management</li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
