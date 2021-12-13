@@ -30,5 +30,7 @@ Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
 Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
 Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
+Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
+Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 //Landing
 Route::view('/','landing.home');
