@@ -44,7 +44,6 @@ Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name
 //Admin Assesment Form 
 Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
-Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 
 //Admin Settings 
     //SMTP
@@ -61,6 +60,8 @@ Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name
 //Admin Profile
 Route::view('/admin/profile','admin.profile.profile')->name('profile');
 
+//Admin Email
+Route::view('/admin/send-mail','admin.mail.send-mail')->name('send-mail');
 //Landing
 Route::view('/','landing.home');
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
