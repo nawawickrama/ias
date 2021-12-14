@@ -39,7 +39,6 @@ Route::view('/admin/view-application','admin.requests.view-application')->name('
 //Admin Assesment Form 
 Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
-Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 
 //Admin Settings 
 Route::view('/admin/smtp','admin.settings.smtp')->name('smtp');
