@@ -657,8 +657,8 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input @error('how_to_know') is-invalid @enderror"
-                                            type="checkbox" name="how_to_know_agent" id="agent_check_box"
-                                            value="Agent/Educational Consultancy" @if (old('how_to_know_agent') == 1) {{ 'checked' }} @endif> Agent /
+                                            type="checkbox" name="how_to_know[]" id="agent_check_box"
+                                            value="Agent/Educational Consultancy" @if (old('how_to_know') == 'Agent/Educational Consultancy') {{ 'checked' }} @endif> Agent /
                                         Educational Consultancy
                                         @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -669,8 +669,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="how_to_know_fb" id=""
-                                            value="Facebook Advertiesments" @if (old('how_to_know_fb') == 1) {{ 'checked' }} @endif> Facebook
+                                        <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
+                                            value="Facebook Advertiesments" @if (old('how_to_know') == 'Facebook Advertiesments') {{ 'checked' }} @endif> Facebook
                                         Advertiesments
                                         @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -681,8 +681,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="how_to_know_email" id=""
-                                            value="Promotional Email" @if (old('how_to_know_email') == 1) {{ 'checked' }} @endif> Promotional Email
+                                        <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
+                                            value="Promotional Email" @if (old('how_to_know') == "Promotional Email") {{ 'checked' }} @endif> Promotional Email
                                         @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

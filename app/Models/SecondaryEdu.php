@@ -14,15 +14,11 @@ class SecondaryEdu extends Model
     protected $primaryKey = 'secondary_edu_id';
 
     protected $fillable = [
-        'years/level',
+        'years_level',
         'duration',
         'result_percentage',
+        'sec_edu_type',
         'candidate_id'
 
     ];
-
-    public function candidate()
-    {
-        return $this->belongsTo(Candidate::class, 'secondary_edu_id');
-    }
 }

@@ -26,14 +26,14 @@
                     <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                     <td>{{ $candidate->email }}</td>
                     <td>{{ $candidate->telephone }}</td>
-                    <td>{{ $candidate->nationality }}</td>
+                    <td>{{ $candidate->country }}</td>
                     <td>
-                        <a href="{{ route('view-application', $candidate->candidate_id) }}" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
+                        <a href="{{ route('view-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
                                 <i data-feather="eye"></i></a>
                         </button>
-                        <a type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
+                        <a href="{{ route('download-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
                             <i data-feather="download"></i>
-                        </a>
+                        </button></a>
                         <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
                             <i data-feather="flag"></i>
                         </button>

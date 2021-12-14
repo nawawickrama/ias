@@ -41,7 +41,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">User Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">User Role</th>
@@ -50,12 +50,15 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($user_details as $user)    
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Ayesh Nawawickrama</td>
-                    <td>nawawickrama@gmail.com</td>
-                    <td>Administrator</td>
-                    <td><span class="badge badge-success">Active</span><span class="badge badge-danger">Inactive</span></td>
+                    <th scope="row">{{ $user->id }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>Admin</td>
+                    <td>
+                        @if($user->status == 1)<span class="badge badge-success">Active</span>@elseif($user->status == 0)<span class="badge badge-danger">Inactive</span>@endif
+                    </td>
                     <td>
                         <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Activate User">
                             <i data-feather="user"></i>
@@ -65,36 +68,7 @@
                         </button>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Ayesh Nawawickrama</td>
-                    <td>nawawickrama@gmail.com</td>
-                    <td>Administrator</td>
-                    <td><span class="badge badge-success">Active</span><span class="badge badge-danger">Inactive</span></td>
-                    <td>
-                        <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Activate User">
-                            <i data-feather="user"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Inactivate User">
-                            <i data-feather="user-x"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Ayesh Nawawickrama</td>
-                    <td>nawawickrama@gmail.com</td>
-                    <td>Administrator</td>
-                    <td><span class="badge badge-success">Active</span><span class="badge badge-danger">Inactive</span></td>
-                    <td>
-                        <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Activate User">
-                            <i data-feather="user"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Inactivate User">
-                            <i data-feather="user-x"></i>
-                        </button>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

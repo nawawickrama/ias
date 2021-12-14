@@ -68,7 +68,8 @@
             </div>
         </div>
     </div>
-
+    @include('layouts.aleart.msg');
+    @include('sweetalert::alert')
     <script src="{{url('assets/vendors/core/core.js')}}"></script>
     <script src="{{url('assets/vendors/feather-icons/feather.min.js')}}"></script>
     <script src="{{url('assets/js/template.js')}}"></script>

@@ -18,20 +18,38 @@ class Candidate extends Model
         'sur_name',
         'sex',
         'program',
+        'job_feild',
         'dob',
         'nationality',
         'telephone',
         'email',
         'address',
+        'country',
         'ge_lang',
         'ge_lang_level',
         'how_to_know',
         'agent_name',
+        'comment',
         'application_status'
     ];
 
     public function sec_sch()
     {
-        return $this->hasMany(SecondaryEdu::class, 'secondary_edu_id');
+        return $this->hasMany(SecondaryEdu::class, 'candidate_id');
+    }
+
+    public function vocational_t()
+    {
+        return $this->hasOne(VocationalTraining::class, 'candidate_id');
+    }
+
+    public function higher_edu()
+    {
+        return $this->hasMany(HigherEdu::class, 'candidate_id');
+    }
+
+    public function work_exp()
+    {
+        return $this->hasMany(WorkExperience::class, 'candidate_id');
     }
 }

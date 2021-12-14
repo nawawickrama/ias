@@ -6,6 +6,9 @@ use App\Models\Candidate;
 use App\Models\SecondaryEdu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class ApplicationController extends Controller
 {
@@ -37,7 +40,7 @@ class ApplicationController extends Controller
         $permission = $user->can('view application');
 
         if($permission){
-            $application_details = Candidate::find($candidate_id)->first();
+            $application_details = Candidate::find($candidate_id);
             return view('admin.requests.view-application')->with(['application_details' => $application_details]);
 
         }else{
@@ -46,5 +49,28 @@ class ApplicationController extends Controller
 
         }
         
+    }
+
+    public function appli_download($candidate_id)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('view application');
+
+        if($permission){
+            $application_details = Candidate::find($candidate_id);
+            $sec_school = Candidate::find($application_details->candidate_id)->sec_sch;
+            $vacational = Candidate::find($application_details->candidate_id)->vocational_t;
+            $higher_edu = Candidate::find($application_details->candidate_id)->higher_edu;
+            $work_exp = Candidate::find($application_details->candidate_id)->work_exp;
+
+            // $pdf = PDF::loadView('admin.requests.download-application', ['application_details' => $application_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
+            // return $pdf->download('invoice.pdf');
+            return view('admin.requests.download-application')->with(['application_details' => $application_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
     }
 }

@@ -18,16 +18,19 @@ class CreateCandidatesTable extends Migration
             $table->string('first_name');
             $table->string('sur_name');
             $table->string('program');
+            $table->string('job_feild')->nullable(); //if program is direct job
             $table->boolean('sex'); //1->male,  0->female
             $table->date('dob');
             $table->string('nationality');
             $table->string('telephone')->unique();
             $table->string('email')->unique();
             $table->string('address');
+            $table->string('country');
             $table->boolean('ge_lang'); //1->yes , 0-> no
-            $table->string('ge_lang_level');
+            $table->string('ge_lang_level')->nullable();
             $table->string('how_to_know')->nullable();
             $table->string('agent_name')->nullable();
+            $table->text('comment')->nullable();
 
             $table->integer('application_status')->default(2); //2-> pending 1->approve 0->reject
             $table->timestamps();

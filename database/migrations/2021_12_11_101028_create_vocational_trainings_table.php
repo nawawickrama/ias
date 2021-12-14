@@ -16,12 +16,12 @@ class CreateVocationalTrainingsTable extends Migration
         Schema::create('vocational_trainings', function (Blueprint $table) {
             $table->id('v_training_id');
             $table->string('field');
-            $table->string('compleate_year');
+            $table->string('complete_year');
             $table->integer('result_percentage');
             $table->string('duration');
 
-            // $table->unsignedBigInteger('candidate_id');
-            // $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
+            $table->unsignedBigInteger('candidate_id');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             $table->timestamps();
         });
     }

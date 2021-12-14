@@ -28,6 +28,8 @@
 
 <body>
 @yield('content')
+@include('layouts.aleart.msg');
+@include('sweetalert::alert')
 
     <script src="{{url('assets/js/select2.js')}}"></script>
     <script src="{{url('assets/vendors/select2/select2.min.js')}}"></script>

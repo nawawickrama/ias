@@ -16,13 +16,13 @@ class CreateSecondaryEdusTable extends Migration
         Schema::create('secondary_edus', function (Blueprint $table) {
             $table->id('secondary_edu_id');
 
-            $table->string('years/level');
+            $table->string('years_level');
             $table->string('duration');
             $table->integer('result_percentage');
-            // $table->integer('sec_edu_type');
+            $table->string('sec_edu_type');
 
-            // $table->unsignedBigInteger('candidate_id');
-            // $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
+            $table->unsignedBigInteger('candidate_id');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             
             $table->timestamps();
         });

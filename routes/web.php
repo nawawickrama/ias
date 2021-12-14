@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidareController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingControler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,11 +32,14 @@ Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->nam
 //Admin Application 
 Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_application'])->name('pending-requests');
 Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'appli_view'])->name('view-application');
+Route::get('/admin/application/download/{candyId}',[ApplicationController::class, 'appli_download'])->name('download-application');
+
+
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
 Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
-Route::view('/admin/download-application','admin.requests.download-application')->name('download-application');
-Route::view('/admin/view-application','admin.requests.view-application')->name('view-application');
+
+
 
 //Admin Assesment Form 
 Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
@@ -42,11 +47,20 @@ Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessme
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 
 //Admin Settings 
-Route::view('/admin/smtp','admin.settings.smtp')->name('smtp');
-Route::view('/admin/user-settings','admin.settings.user')->name('user-settings');
+    //SMTP
+    Route::get('/admin/smtp',[SettingControler::class, 'smtp_page'])->name('smtp');
+    Route::post('/admin/smtp',[SettingControler::class, 'set_smtp'])->name('set_smtp');
+
+//User Accoutn
+Route::get('/admin/user-settings', [ProfileController::class, 'user'])->name('user-settings');
+
+Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
+Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
+Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
 
 //Admin Profile
 Route::view('/admin/profile','admin.profile.profile')->name('profile');
 
 //Landing
+Route::view('/','landing.home');
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');

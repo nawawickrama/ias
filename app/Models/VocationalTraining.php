@@ -15,7 +15,7 @@ class VocationalTraining extends Model
 
     protected $fillable = [
         'field',
-        'compleate_year',
+        'complete_year',
         'result_percentage',
         'duration',
         'candidate_id'

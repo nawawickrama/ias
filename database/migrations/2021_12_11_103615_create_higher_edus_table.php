@@ -21,8 +21,8 @@ class CreateHigherEdusTable extends Migration
             $table->string('result_percentage');
             $table->string('higher_edu_type');
 
-            // $table->unsignedBigInteger('candidate_id');
-            // $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
+            $table->unsignedBigInteger('candidate_id');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             
             $table->timestamps();
         });
