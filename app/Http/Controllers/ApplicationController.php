@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AddUser;
 use App\Models\Candidate;
-use App\Models\SecondaryEdu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Dompdf\Dompdf;
 use PDF;
 use Throwable;
 
@@ -29,6 +26,22 @@ class ApplicationController extends Controller
         if($permission){
             $application_details = Candidate::where('application_status', 2)->get();
             return view('admin.requests.pending-requests')->with(['application_details' => $application_details]);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function select_application(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('view pending candidates');
+       
+        if($permission){
+            $application_details = Candidate::where('application_status', 1)->get();
+            return view('admin.requests.approved-requests')->with(['application_details' => $application_details]);
 
         }else{
             Auth::logout();
@@ -122,17 +135,87 @@ class ApplicationController extends Controller
             $data['comment_institute'] = $application_details->comment_institute;
 
 
-            // $pdf = PDF::loadView('admin.assessment.pdf', $data);
-            // $pdf = PDF::loadView('admin.home');
+            $pdf = PDF::loadView('admin.assessment.pdf', $data);
 
-            // Mail::send('admin.assessment.pdf', $data, function($message)use($pdf, $application_details) {
-            //     $message->to($application_details->email)
-            //             ->subject('Addmission Details')
-            //             ->attachData($pdf->output(), "admission.pdf");
-            // });
-            
+            Mail::send('admin.assessment.pdf', $data, function($message)use($pdf, $application_details) {
+                $message->to($application_details->email)
+                        ->subject('Addmission Details')
+                        ->attachData($pdf->output(), "admission.pdf");
+            });
             
             return back()->with(['success']);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function download_form(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('download assesment form');
+
+        if($permission){
+            
+            $appli_id = request('appli_id');
+            $comments = request('comments');
+            $addmission = request('addmission');
+
+            $application_details = Candidate::find($appli_id);
+
+            try{
+                $application_details->update([
+                    'application_status' => $addmission,
+                    'comment_institute' => $comments,
+                ]);
+            }catch(Throwable $e){
+                return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
+            }
+            $data['program'] = $application_details->program;
+            $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
+            $data['address'] = $application_details->address.' '.$application_details->country;
+            $data['adimssion'] = $application_details->application_status;
+            $data['comment_institute'] = $application_details->comment_institute;
+
+
+            $pdf = PDF::loadView('admin.assessment.pdf', $data);
+            return $pdf->download($application_details->name.'_'.time().'.pdf');
+            
+            return back()->with(['success']);
+
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function download_form_by_approve(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('download assesment form');
+
+        if($permission){
+            
+            $appli_id = request('appli_id');
+
+            $application_details = Candidate::find($appli_id);
+
+            $data['program'] = $application_details->program;
+            $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
+            $data['address'] = $application_details->address.' '.$application_details->country;
+            $data['adimssion'] = $application_details->application_status;
+            $data['comment_institute'] = $application_details->comment_institute;
+
+
+            $pdf = PDF::loadView('admin.assessment.pdf', $data);
+            return $pdf->download($application_details->name.'_'.time().'.pdf');
+            
+            return back()->with(['success']);
+
 
         }else{
             Auth::logout();

@@ -109,7 +109,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <img style="height: 300px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
+                    <img style="height: 250px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
                 </div>
             </div>
             <div class="row">

@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewUser extends Mailable
+class newUser extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $pwrd;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($pwrd)
     {
-        //
+        $this->data = $pwrd;
     }
 
     /**
@@ -28,6 +28,6 @@ class NewUser extends Mailable
      */
     public function build()
     {
-        return $this->markdown('admin.mail.new_user');
+        return $this->markdown('admin.mail.new_user', ['data' => $this->data]);
     }
 }

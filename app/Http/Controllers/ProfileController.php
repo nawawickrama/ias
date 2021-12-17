@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AddUser;
+use App\Mail\newUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,7 @@ class ProfileController extends Controller
                 return back()->with(['error' => 'User Registration failed', 'error_type' => 'error']);
             }
 
+            Mail::to($user_data->email)->send(new newUser($pwrd));
             return back()->with(['success' => 'User Registration Successful']);
 
         }else{

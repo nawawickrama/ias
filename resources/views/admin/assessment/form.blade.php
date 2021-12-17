@@ -99,7 +99,7 @@
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <img style="height: 270px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
+                <img style="height: 250px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
             </div>
         </div>
         <div class="row">
@@ -126,7 +126,7 @@
         });
 
         $('#btn-download').click(function(){
-            $('#send-form').attr('action', "");
+            $('#send-form').attr('action', "{{ route('download_assessment_form') }}");
             $('#send-form').submit();
         });
     });
