@@ -37,7 +37,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view pending candidates');
+        $permission = $user->can('view selected candidates');
        
         if($permission){
             $application_details = Candidate::where('application_status', 1)->get();
@@ -53,7 +53,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view pending candidates');
+        $permission = $user->can('view selected candidates by condition');
        
         if($permission){
             $application_details = Candidate::where('application_status', 3)->get();
@@ -69,7 +69,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view pending candidates');
+        $permission = $user->can('view rejected candidates');
        
         if($permission){
             $application_details = Candidate::where('application_status', 0)->get();
@@ -103,7 +103,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view application');
+        $permission = $user->can('download application');
 
         if($permission){
             $application_details = Candidate::find($candidate_id);
@@ -248,6 +248,34 @@ class ApplicationController extends Controller
             
             return back()->with(['success']);
 
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function convert_pending(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('application convert to pending');
+
+        if($permission){
+
+            $appli_id = request('appli_id');
+            $application_details = Candidate::find($appli_id);
+            
+            try{
+                $application_details->update([
+                    'application_status' => '2'
+                ]);
+
+            }catch(Throwable $e){
+                return back()->with(['error' => 'Application Reverse Failed', 'error_type' => 'error']);
+            }
+
+            return back()->with(['success']);
 
         }else{
             Auth::logout();

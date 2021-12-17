@@ -41,6 +41,8 @@ Route::get('/admin/approved-requests',[ApplicationController::class, 'select_app
 Route::get('/admin/waiting-requests', [ApplicationController::class, 'select_application_by_conditions'])->name('waiting-requests');
 Route::get('/admin/rejected-requests', [ApplicationController::class, 'rejected_application'])->name('rejected-requests');
 
+Route::post('/admin/covert-pending', [ApplicationController::class, 'convert_pending'])->name('convert_pending');
+
 
 //Admin Assesment Form 
 Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment'])->name('send_assessment_form');
