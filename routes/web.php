@@ -64,7 +64,8 @@ Route::post('/admin/assessment-down-approve/', [ApplicationController::class, 'd
 Route::view('/admin/profile','admin.profile.profile')->name('profile');
 
 //Admin Email
-Route::view('/admin/send-mail','admin.mail.send-mail')->name('send-mail');
+Route::get('/admin/send-mail', [ApplicationController::class, 'send_email_page'])->name('send-mail');
+Route::post('/admin/send-mail', [ApplicationController::class, 'send_email'])->name('send-mail-post');
 
 //Landing
 Route::view('/', 'landing.home');
