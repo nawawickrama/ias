@@ -28,18 +28,22 @@
                     <td>{{ $candidate->telephone }}</td>
                     <td>{{ $candidate->country }}</td>
                     <td>
-                        <a href="{{ route('view-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
-                                <i data-feather="eye"></i></a>
-                        </button>
-                        <a href="{{ route('download-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
-                            <i data-feather="download"></i>
-                        </button></a>
-                        <a href="{{ route('send_assessment_form', $candidate->candidate_id) }}"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
-                            <i data-feather="flag"></i>
-                        </button></a>
-                        <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
-                            <i data-feather="mail"></i>
-                        </button>
+                        <form action="" id="send-form" method="POST">
+                            @csrf
+                            <input type="hidden" name="email" value="" id="email_form">
+                            <a href="{{ route('view-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
+                                    <i data-feather="eye"></i></a>
+                            </button>
+                            <a href="{{ route('download-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
+                                <i data-feather="download"></i>
+                            </button></a>
+                            <a href="{{ route('send_assessment_form', $candidate->candidate_id) }}"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
+                                <i data-feather="flag"></i>
+                            </button></a>
+                            <button type="button" class="btn btn-danger btn-icon btn-email" data-email="{{ $candidate->email }}" data-toggle="tooltip" data-placement="top" title="Send Email">
+                                <i data-feather="mail"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
@@ -47,4 +51,15 @@
         </table>
     </div>
 </div>
+
+<script>
+    $('document').ready(function(){
+        $('.btn-email').click(function(){
+            let email = $(this).attr('data-email');
+            $('#email_form').val(email);
+            $('#send-form').attr('action', "{{ route('email_button') }}");
+            $('#send-form').submit();
+        });
+    });
+</script>
 @endsection

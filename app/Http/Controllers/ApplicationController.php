@@ -328,5 +328,23 @@ class ApplicationController extends Controller
             abort(403);
         }
     }
+
+    public function email_button(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('send email');
+
+        if($permission){
+        
+            $email_add = request('email');
+            return view('admin.mail.send-mail')->with(['email_add' => $email_add]);
+        
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+
+    }
     
 }

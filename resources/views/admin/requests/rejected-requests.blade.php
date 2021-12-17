@@ -28,9 +28,13 @@
                     <td>{{ $candidate->telephone }}</td>
                     <td>{{ $candidate->country }}</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
-                            <i data-feather="mail"></i>
-                        </button>
+                        <form action="" id="send-form" method="POST">
+                            @csrf
+                            <input type="hidden" name="email" value="" id="email_form">
+                            <button type="button" class="btn btn-danger btn-icon btn-email" data-email="{{ $candidate->email }}" data-toggle="tooltip" data-placement="top" title="Send Email">
+                                <i data-feather="mail"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
@@ -40,4 +44,14 @@
     </div>
 </div>
 
+<script>
+    $('document').ready(function(){
+        $('.btn-email').click(function(){
+            let email = $(this).attr('data-email');
+            $('#email_form').val(email);
+            $('#send-form').attr('action', "{{ route('email_button') }}");
+            $('#send-form').submit();
+        });
+    });
+</script>
 @endsection

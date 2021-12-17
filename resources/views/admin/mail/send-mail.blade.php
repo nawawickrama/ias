@@ -13,7 +13,7 @@
                     <input type="text" name="subject" id="" placeholder="Subject" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="email" name="email" id="" value="" class="form-control">
+                    <input type="email" name="email" id="" class="form-control" @if(isset($email_add)) value="{{ $email_add }}" {{ 'readonly' }} @else value="" @endif >
                 </div>
             </div>
             <div class="form-row">

@@ -30,6 +30,7 @@
                     <td>
                         <form action="" method="POST" id="send-form">
                             @csrf
+                            <input type="hidden" name="email" value="" id="email_form">
                             <input type="hidden" name="appli_id" value="{{ $candidate->candidate_id }}">
                             <button type="button" class="btn btn-primary btn-icon btn-convert-pending" data-toggle="tooltip" data-placement="top" title="Convert to Pending Request">
                                 <i data-feather="rotate-cw"></i>
@@ -42,7 +43,7 @@
                             <button type="button" class="btn btn-success btn-icon btn-down" data-toggle="tooltip" data-placement="top" title="Download Assesment Form">
                                 <i data-feather="flag"></i>
                             </button>
-                            <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
+                            <button type="button" class="btn btn-danger btn-icon btn-email" data-email="{{ $candidate->email }}" data-toggle="tooltip" data-placement="top" title="Send Email">
                                 <i data-feather="mail"></i>
                             </button>
                         </form>
@@ -64,6 +65,13 @@
 
         $('.btn-convert-pending').click(function(){
             $('#send-form').attr('action', "{{ route('convert_pending') }}");
+            $('#send-form').submit();
+        });
+
+        $('.btn-email').click(function(){
+            let email = $(this).attr('data-email');
+            $('#email_form').val(email);
+            $('#send-form').attr('action', "{{ route('email_button') }}");
             $('#send-form').submit();
         });
     });

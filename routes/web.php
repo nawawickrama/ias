@@ -66,6 +66,7 @@ Route::view('/admin/profile','admin.profile.profile')->name('profile');
 //Admin Email
 Route::get('/admin/send-mail', [ApplicationController::class, 'send_email_page'])->name('send-mail');
 Route::post('/admin/send-mail', [ApplicationController::class, 'send_email'])->name('send-mail-post');
+Route::post('/admin/button-mail', [ApplicationController::class, 'email_button'])->name('email_button');
 
 //Landing
 Route::view('/', 'landing.home');
