@@ -19,13 +19,14 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($application_details as $candidate)
                 <tr>
-                    <th>499494</th>
-                    <td>STEP Program</td>
-                    <td>Ayesh Nawawickrama</td>
-                    <td>nawawickrama@gmail.com</td>
-                    <td>0779389533</td>
-                    <td>Sri Lanka</td>
+                    <th scope="row">{{ $candidate->candidate_id }}</th>
+                    <td>{{ $candidate->program }}</td>
+                    <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
+                    <td>{{ $candidate->email }}</td>
+                    <td>{{ $candidate->telephone }}</td>
+                    <td>{{ $candidate->country }}</td>
                     <td>
                         <button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="Convert to Pending Request">
                             <i data-feather="rotate-cw"></i>
@@ -41,6 +42,7 @@
                         </button>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
 
         </table>

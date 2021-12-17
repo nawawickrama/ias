@@ -38,15 +38,15 @@ Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'a
 Route::get('/admin/application/download/{candyId}',[ApplicationController::class, 'appli_download'])->name('download-application');
 
 Route::get('/admin/approved-requests',[ApplicationController::class, 'select_application'])->name('approved-requests');
-
-Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
-Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
+Route::get('/admin/waiting-requests', [ApplicationController::class, 'select_application_by_conditions'])->name('waiting-requests');
+Route::get('/admin/rejected-requests', [ApplicationController::class, 'rejected_application'])->name('rejected-requests');
 
 
 //Admin Assesment Form 
 Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment'])->name('send_assessment_form');
 Route::post('/admin/assessment-email/', [ApplicationController::class, 'email_assestment'])->name('email_assessment_form');
 Route::post('/admin/assessment-down/', [ApplicationController::class, 'download_form'])->name('download_assessment_form');
+Route::post('/admin/assessment-down-approve/', [ApplicationController::class, 'download_form_by_approve'])->name('download_assessment_form_by_approve');
 
 //Admin Settings 
     //SMTP

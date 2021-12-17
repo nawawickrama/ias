@@ -28,7 +28,7 @@
                     <td>{{ $candidate->telephone }}</td>
                     <td>{{ $candidate->country }}</td>
                     <td>
-                        <form action="" method="POST">
+                        <form action="" method="POST" id="send-form">
                             @csrf
                             <input type="hidden" name="appli_id" value="{{ $candidate->candidate_id }}">
                             <button type="button" class="btn btn-warning btn-icon btn-down" data-toggle="tooltip" data-placement="top" title="Download Application">
@@ -51,8 +51,8 @@
 
 <script>
     $('document').ready(function(){
-        $('#btn-down').click(function(){
-            $('#send-form').attr('action', "{{ route('email_assessment_form') }}");
+        $('.btn-down').click(function(){
+            $('#send-form').attr('action', "{{ route('download_assessment_form_by_approve') }}");
             $('#send-form').submit();
         });
     });

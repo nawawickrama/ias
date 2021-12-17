@@ -49,6 +49,38 @@ class ApplicationController extends Controller
         }
     }
 
+    public function select_application_by_conditions(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('view pending candidates');
+       
+        if($permission){
+            $application_details = Candidate::where('application_status', 3)->get();
+            return view('admin.requests.waiting-requests')->with(['application_details' => $application_details]);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function rejected_application(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('view pending candidates');
+       
+        if($permission){
+            $application_details = Candidate::where('application_status', 0)->get();
+            return view('admin.requests.rejected-requests')->with(['application_details' => $application_details]);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
     public function appli_view($candidate_id)
     {
         /** @var App\Models\User $user */
