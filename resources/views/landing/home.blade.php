@@ -401,7 +401,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="">Overall Result Percentage (%)</label>
-                                    <input type="text" class="form-control @error('v_result') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('v_result') is-invalid @enderror"
                                         name="v_result" id="" aria-describedby="helpId" placeholder=""
                                         value="{{ old('v_result') }}">
                                     @error('v_result')
@@ -462,7 +462,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="text" class="form-control @error('b_result') is-invalid @enderror"
+                                <input type="number" class="form-control @error('b_result') is-invalid @enderror"
                                     name="b_result" id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('b_result') }}">
                                 @error('b_result')
@@ -511,7 +511,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="text" class="form-control @error('m_result') is-invalid @enderror"
+                                <input type="number" class="form-control @error('m_result') is-invalid @enderror"
                                     name="m_result" id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('m_result') }}">
                                 @error('m_result')

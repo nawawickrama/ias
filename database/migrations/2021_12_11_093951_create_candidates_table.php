@@ -32,7 +32,8 @@ class CreateCandidatesTable extends Migration
             $table->string('agent_name')->nullable();
             $table->text('comment')->nullable();
 
-            $table->integer('application_status')->default(2); //2-> pending 1->approve 0->reject
+            $table->text('comment_institute')->nullable();
+            $table->integer('application_status')->default(2); //2-> pending 1->approve 0->reject 3->select with condition
             $table->timestamps();
         });
     }

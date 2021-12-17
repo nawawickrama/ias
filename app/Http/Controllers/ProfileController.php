@@ -56,8 +56,7 @@ class ProfileController extends Controller
             }catch(Throwable $e){
                 return back()->with(['error' => 'User Registration failed', 'error_type' => 'error']);
             }
-            
-            Mail::to($user_data->email)->send(new AddUser($pwrd));
+
             return back()->with(['success' => 'User Registration Successful']);
 
         }else{
@@ -66,5 +65,32 @@ class ProfileController extends Controller
         }
 
 
+    }
+
+    public function active_inactive(Request $request)
+    {
+        /** @var App\Model\User $user */
+        $user = Auth::user();
+        $permission = $user->can('make active inactive user');
+
+        if($permission){
+
+            $user_id = request('user_id');
+            $status = request('status');
+
+            try{
+                User::find($user_id)->update([
+                    'status' => $status,
+                ]);
+            }catch(Throwable $e){
+                return back()->with(['error' => 'User active/deactive failed', 'error_type' => 'error']);
+            }
+
+            return back()->with(['success']);
+
+        }else{
+            Auth::logout();
+            abort(403);
+        }
     }
 }

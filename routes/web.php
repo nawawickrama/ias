@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidareController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
+use App\Mail\NewUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,15 +35,14 @@ Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_app
 Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'appli_view'])->name('view-application');
 Route::get('/admin/application/download/{candyId}',[ApplicationController::class, 'appli_download'])->name('download-application');
 
-
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
 Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
 Route::view('/admin/rejected-requests','admin.requests.rejected-requests')->name('rejected-requests');
 
 
-
 //Admin Assesment Form 
-Route::view('/admin/assessment-form','admin.assessment.form')->name('assessment-form');
+Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment'])->name('send_assessment_form');
+Route::post('/admin/assessment-email/', [ApplicationController::class, 'email_assestment'])->name('email_assessment_form');
 Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessment-form-pdf');
 
 //Admin Settings 
@@ -53,6 +53,7 @@ Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessme
 //User Accoutn
 Route::get('/admin/user-settings', [ProfileController::class, 'user'])->name('user-settings');
 Route::post('/admin/user-settings', [ProfileController::class, 'add_user'])->name('add-user');
+Route::post('/admin/user-status', [ProfileController::class, 'active_inactive'])->name('active_inactive');
 
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
 Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');
@@ -66,3 +67,8 @@ Route::view('/admin/send-mail','admin.mail.send-mail')->name('send-mail');
 //Landing
 Route::view('/','landing.home');
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
+
+
+Route::get('/email', function () {
+    return new NewUser();
+});

@@ -1,8 +1,7 @@
 @component('mail::message')
-# Welcome to IAS College.
+# Introduction
 
-Your Password: {{ $date }}
-Login Page: {{ config('app.url') }}
+The body of your message.
 
 @component('mail::button', ['url' => ''])
 Button Text

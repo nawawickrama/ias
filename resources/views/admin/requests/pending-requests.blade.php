@@ -34,9 +34,9 @@
                         <a href="{{ route('download-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
                             <i data-feather="download"></i>
                         </button></a>
-                        <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
+                        <a href="{{ route('send_assessment_form', $candidate->candidate_id) }}"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
                             <i data-feather="flag"></i>
-                        </button>
+                        </button></a>
                         <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Send Email">
                             <i data-feather="mail"></i>
                         </button>

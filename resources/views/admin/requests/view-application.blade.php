@@ -188,6 +188,8 @@
                             foreach ($howto as $how) {
                                 if($how == 'Agent/Educational Consultancy'){
                                     $agent = 1;
+                                }else{
+                                    $agent = 0;
                                 }
                                 echo " $how,";
                             }

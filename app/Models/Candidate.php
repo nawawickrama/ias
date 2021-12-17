@@ -30,7 +30,8 @@ class Candidate extends Model
         'how_to_know',
         'agent_name',
         'comment',
-        'application_status'
+        'application_status',
+        'comment_institute'
     ];
 
     public function sec_sch()

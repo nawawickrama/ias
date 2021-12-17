@@ -21,7 +21,7 @@ class SettingControler extends Controller
         $permission = $user->can('view smtp setting');
 
         if($permission){
-            $smtp_setting = Smtp::find(1);
+            $smtp_setting = Smtp::orderbyDesc('id')->first();
             return view('admin.settings.smtp')->with(['smtp_setting' => $smtp_setting]);
         }else{
             Auth::logout();
@@ -42,12 +42,12 @@ class SettingControler extends Controller
             $pword = request('pword');
 
             try{
-                $d = Smtp::firstOrCreate();
-                $d->MAIL_HOST = request('host');
-                $d->MAIL_PORT = request('port');
-                $d->MAIL_USERNAME = request('uname');
-                $d->MAIL_PASSWORD = request('pword');
-                $d->save();
+                $d = Smtp::create([
+                'MAIL_HOST' => request('host'),
+                'MAIL_PORT' => request('port'),
+                'MAIL_USERNAME' => request('uname'),
+                'MAIL_PASSWORD' => request('pword'),
+                ]);
                 
             }catch(Throwable $e){
                 dd($e);

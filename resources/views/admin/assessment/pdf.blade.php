@@ -22,7 +22,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-8">
-                    <p>Applying for :<em class="text-secondary"> STEP course</em></p>
+                    <p>Applying for :<em class="text-secondary"> {{ $program }} course</em></p>
                 </div>
                 <div class="col-md-4">
                     <p>Intake :<em class="text-secondary"> 2022</em></p>
@@ -31,13 +31,13 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Applicant Name :<em class="text-secondary"> Ayesh Nawawickrama</em></p>
+                    <p>Applicant Name :<em class="text-secondary"> {{ $name }}</em></p>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Address :<em class="text-secondary"> 137/1, Malpeththawa, Ambalantota</em></p>
+                    <p>Address :<em class="text-secondary">{{ $address }}</em></p>
                 </div>
             </div>
             <hr>
@@ -50,7 +50,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="checkbox1" id="" value="checkedValue" checked>
+                            <input type="radio" class="form-check-input" name="checkbox1" id="" value="1" @if($adimssion == 1){{ 'checked' }} @endif>
                             Selected for the FK program.
                         </label>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="checkbox1" id="" value="checkedValue">
+                            <input type="radio" class="form-check-input" name="checkbox1" id="" value="3" @if($adimssion == 3){{ 'checked' }} @endif>
                             Selected for the FK program with the condition.
                         </label>
                     </div>
@@ -70,7 +70,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="checkbox1" id="" value="checkedValue">
+                            <input type="radio" class="form-check-input" name="checkbox1" id="" value="0" @if($adimssion == 2){{ 'checked' }} @endif>
                             Not selected.
                         </label>
                     </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+                    <textarea name="" class="form-control" id="" cols="30" rows="5">{{ $comment_institute }}</textarea>
                 </div>
             </div>
             <hr>
