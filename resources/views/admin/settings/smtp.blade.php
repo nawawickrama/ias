@@ -11,21 +11,21 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="">Host :</label>
-                    <input type="text" name="host" id="" class="form-control" value="{{ $smtp_host }}">
+                    <input type="text" name="host" id="" class="form-control" value="{{ $smtp_setting->MAIL_HOST }}">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Port :</label>
-                    <input type="number" name="port" id="" class="form-control" value="{{ $smtp_port }}">
+                    <input type="number" name="port" id="" class="form-control" value="{{ $smtp_setting->MAIL_PORT }}">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="">Username :</label>
-                    <input type="text" name="uname" id="" class="form-control" value="{{ $smtp_uname }}">
+                    <input type="text" name="uname" id="" class="form-control" value="{{ $smtp_setting->MAIL_USERNAME }}">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Password :</label>
-                    <input type="password" name="pword" id="" class="form-control" value="{{ $smtp_pwrd }}">
+                    <input type="password" name="pword" id="" class="form-control" value="{{ $smtp_setting->MAIL_PASSWORD }}">
                 </div>
             </div>
             <div class="form-row">

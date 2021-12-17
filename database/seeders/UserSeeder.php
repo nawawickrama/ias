@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'ias',
             'email' => 'ias@ias.com',
             'password' => Hash::make('password'),
+            'status' => 1,
         ]);
     }
 }

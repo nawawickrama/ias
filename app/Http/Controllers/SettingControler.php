@@ -11,7 +11,7 @@ class SettingControler extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'actived']);
     }
 
     public function smtp_page()
@@ -21,12 +21,8 @@ class SettingControler extends Controller
         $permission = $user->can('view smtp setting');
 
         if($permission){
-            $smtp_host = env('MAIL_HOST');
-            $smtp_port = env('MAIL_PORT');
-            $smtp_uname = env('MAIL_USERNAME');
-            $smtp_pwrd = env('MAIL_PASSWORD');
-
-            return view('admin.settings.smtp')->with(['smtp_host' => $smtp_host, 'smtp_port' => $smtp_port, 'smtp_uname' => $smtp_uname, 'smtp_pwrd' => $smtp_pwrd]);
+            $smtp_setting = Smtp::find(1);
+            return view('admin.settings.smtp')->with(['smtp_setting' => $smtp_setting]);
         }else{
             Auth::logout();
             abort(403);

@@ -52,6 +52,7 @@ Route::view('/admin/assessment-form-pdf','admin.assessment.pdf')->name('assessme
 
 //User Accoutn
 Route::get('/admin/user-settings', [ProfileController::class, 'user'])->name('user-settings');
+Route::post('/admin/user-settings', [ProfileController::class, 'add_user'])->name('add-user');
 
 Route::view('/admin/approved-requests','admin.requests.approved-requests')->name('approved-requests');
 Route::view('/admin/waiting-requests','admin.requests.waiting-requests')->name('waiting-requests');

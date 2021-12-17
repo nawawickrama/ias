@@ -6,21 +6,22 @@
         <p>User Settings</p>
     </div>
     <div class="card-body">
-        <form action="">
+        <form action="{{ route('add-user') }}" method="POST">
+            @csrf
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="">Name :</label>
-                    <input type="text" name="" id="" class="form-control">
+                    <input type="text" name="name" id="" class="form-control" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Email :</label>
-                    <input type="text" name="" id="" class="form-control">
+                    <input type="text" name="email" id="" class="form-control" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="">Role :</label>
-                    <select name="" id="" class="form-control">
+                    <select name="role" id="" class="form-control">
                         <option value="">Administrator</option>
                     </select>
                 </div>
@@ -60,12 +61,15 @@
                         @if($user->status == 1)<span class="badge badge-success">Active</span>@elseif($user->status == 0)<span class="badge badge-danger">Inactive</span>@endif
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Activate User">
-                            <i data-feather="user"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Inactivate User">
+                        @if($user->status == 1) <button type="button" class="btn btn-danger btn-icon" data-toggle="tooltip" data-placement="top" title="Inactivate User">
                             <i data-feather="user-x"></i>
-                        </button>
+                            </button> 
+                        @elseif($user->status == 0) <button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Activate User">
+                            <i data-feather="user"></i>
+                            </button>
+                        @endif
+                        
+                        
                     </td>
                 </tr>
                 @endforeach

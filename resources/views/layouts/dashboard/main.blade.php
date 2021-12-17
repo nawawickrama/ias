@@ -137,7 +137,7 @@
             </nav>
             <div class="page-content">
                 @yield('content')
-                @include('layouts.aleart.msg');
+                @include('layouts.aleart.msg')
                 @include('sweetalert::alert')
             </div>
             <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between">
