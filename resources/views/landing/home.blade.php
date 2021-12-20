@@ -652,7 +652,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="">How did you know about IAS College? :</label>
+                                <label for="">How did you come to know about IAS College? :</label>
                                 <br>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">

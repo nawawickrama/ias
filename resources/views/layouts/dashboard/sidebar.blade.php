@@ -48,6 +48,24 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item nav-category">User Management</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#userser" role="button" aria-expanded="false" aria-controls="emails">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">User Settings</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="userser">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{route('user-settings')}}" class="nav-link">Staff</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('agents')}}" class="nav-link">Agents</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="nav-item nav-category">Web Settings</li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#settings" role="button" aria-expanded="false" aria-controls="emails">
@@ -57,9 +75,6 @@
                 </a>
                 <div class="collapse" id="settings">
                     <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{route('user-settings')}}" class="nav-link">User Settings</a>
-                        </li>
                         <li class="nav-item">
                             <a href="{{route('smtp')}}" class="nav-link">SMTP Settings</a>
                         </li>
