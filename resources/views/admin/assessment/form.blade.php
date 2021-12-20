@@ -48,7 +48,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="addmission" id="" value="3">
+                            <input type="radio" class="form-check-input f" name="addmission" id="" value="3">
                             Selected for the FK program with the condition.
                         </label>
                     </div>
