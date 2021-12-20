@@ -69,6 +69,7 @@ Route::post('/admin/send-mail', [ApplicationController::class, 'send_email'])->n
 Route::post('/admin/button-mail', [ApplicationController::class, 'email_button'])->name('email_button');
 
 //Landing
+Route::get('/', function(){ return view('landing.home'); });
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
 
 Route::view('/admin/agents', 'admin.agents.agent')->name('agents');

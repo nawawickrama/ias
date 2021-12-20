@@ -8,7 +8,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-8">
-                <p>Applying for :<em class="text-secondary">{{ $application_details->program }} course</em></p>
+                <p>Applying for :<em class="text-secondary">{{ $application_details->program }} </em></p>
             </div>
             <div class="col-md-4">
                 <p>Intake :<em class="text-secondary"> 2022</em></p>
@@ -86,25 +86,12 @@
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <p> As you have gained experience in the hospitality field you have good chance to go to Germany and start a career here. Also as a condition <br> to get this opportunity a langauge
-                    of Al till B2 level is in need and the college offers this langauge coursework (intensive: 4 hours per day and 5 days a week). <br> Between thelanguage level of B2.1 and B2.2
-                    an interview would be arranged for you with the condition that 31 level is passed <br> (IAS College internal and Goethe) and as well as good communication skill and character are shown.
-                </p>
-                <br>
-                <p>
-                    <b>Note for AAF: </b>due to lack of personal details DOB. No. Visa copy. address etc a final decision cannot be made.
-                </p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <img style="height: 250px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
+                <img style="height: 250px; width:270px;" src="{{url('assets/images/txt.png')}}" alt="">
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p>Datum :22.09.2021, Unterschrift/Stempel prufer(n).</p>
+                <p>Datum @php echo date('d.m.Y'); @endphp, Unterschrift/Stempel prufer(n).</p>
             </div>
         </div>
         <br>
