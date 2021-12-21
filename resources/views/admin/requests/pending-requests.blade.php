@@ -14,6 +14,7 @@
                         <th scope="col">Program</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Agent</th>
                         <th scope="col">Contact Number</th>
                         <th scope="col">Country</th>
                         <th scope="col">Action</th>
@@ -22,10 +23,14 @@
                 <tbody>
                     @foreach ($application_details as $candidate)
                     <tr>
-                        <th scope="row">{{ $candidate->candidate_id }}</th>
+                        <td scope="row">{{ $candidate->candidate_id }}</td>
                         <td>{{ $candidate->program }}</td>
                         <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                         <td>{{ $candidate->email }}</td>
+                        @php
+                            $agent = App\Models\Agent::find($candidate->agent_id);
+                        @endphp
+                        <td>{{ $agent->agent_name }}</td>
                         <td>{{ $candidate->telephone }}</td>
                         <td>{{ $candidate->country }}</td>
                         <td>

@@ -14,6 +14,7 @@
                         <th scope="col">Program</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Agent</th>
                         <th scope="col">Contact Number</th>
                         <th scope="col">Country</th>
                         <th scope="col">Action</th>
@@ -26,6 +27,10 @@
                         <td>{{ $candidate->program }}</td>
                         <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                         <td>{{ $candidate->email }}</td>
+                        @php
+                            $agent = App\Models\Agent::find($candidate->agent_id);
+                        @endphp
+                        <td>{{ $agent->agent_name }}</td>
                         <td>{{ $candidate->telephone }}</td>
                         <td>{{ $candidate->country }}</td>
                         <td>
@@ -33,6 +38,9 @@
                                 @csrf
                                 <input type="hidden" name="email" value="" id="email_form">
                                 <input type="hidden" name="appli_id" value="{{ $candidate->candidate_id }}">
+                                <a href="{{ route('view-application', $candidate->candidate_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
+                                    <i data-feather="eye"></i></a>
+                                </button>
                                 <a href="{{ route('download-application', $candidate->candidate_id) }}" target="_blank" class="text-white">
                                     <button type="button" class="btn btn-warning btn-icon" data-toggle="tooltip" data-placement="top" title="Download Application">
                                         <i data-feather="download"></i>

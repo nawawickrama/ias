@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidareController;
 use App\Http\Controllers\ProfileController;
@@ -69,7 +70,11 @@ Route::post('/admin/send-mail', [ApplicationController::class, 'send_email'])->n
 Route::post('/admin/button-mail', [ApplicationController::class, 'email_button'])->name('email_button');
 
 //Landing
-Route::get('/', function(){ return view('landing.home'); });
+Route::get('/', [CandidareController::class, 'application']);
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
 
-Route::view('/admin/agents', 'admin.agents.agent')->name('agents');
+//Agent
+Route::get('/admin/agents', [AgentController::class, 'agent_page'])->name('agents');
+Route::post('/admin/agents', [AgentController::class, 'add_agents'])->name('add_agents');
+Route::post('/admin/agents-update', [AgentController::class, 'edit_agents'])->name('edit_agents');
+Route::post('/admin/agents-active_deactive', [AgentController::class, 'act_dea_agents'])->name('act_dea_agents');

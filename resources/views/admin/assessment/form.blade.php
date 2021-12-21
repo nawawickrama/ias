@@ -39,7 +39,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="addmission" id="" value="1" checked>
-                            Selected for the FK program.
+                            Selected for the {{ $application_details->program }} program.
                         </label>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input f" name="addmission" id="" value="3">
-                            Selected for the FK program with the condition.
+                            Selected for the {{ $application_details->program }} program with the condition.
                         </label>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p>Datum @php echo date('d.m.Y'); @endphp, Unterschrift/Stempel prufer(n).</p>
+                <p>Datum :@php if($application_details->status_date != null ){echo $application_details->status_date; }else{ echo date('d.m.Y');} @endphp, Unterschrift/Stempel prufer(n).</p>
             </div>
         </div>
         <br>

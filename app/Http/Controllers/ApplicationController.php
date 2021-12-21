@@ -157,16 +157,18 @@ class ApplicationController extends Controller
                 $application_details->update([
                     'application_status' => $addmission,
                     'comment_institute' => $comments,
+                    'status_date' => date('Y-m-d'),
                 ]);
             }catch(Throwable $e){
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
+
             $data['program'] = $application_details->program;
             $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
             $data['address'] = $application_details->address.' '.$application_details->country;
             $data['adimssion'] = $application_details->application_status;
             $data['comment_institute'] = $application_details->comment_institute;
-
+            $data['status_date'] = $application_details->status_date;
 
             $pdf = PDF::loadView('admin.assessment.pdf', $data);
 
@@ -211,6 +213,7 @@ class ApplicationController extends Controller
             $data['address'] = $application_details->address.' '.$application_details->country;
             $data['adimssion'] = $application_details->application_status;
             $data['comment_institute'] = $application_details->comment_institute;
+            $data['status_date'] = $application_details->status_date;
 
 
             $pdf = PDF::loadView('admin.assessment.pdf', $data);

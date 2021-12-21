@@ -29,11 +29,12 @@ class CreateCandidatesTable extends Migration
             $table->boolean('ge_lang'); //1->yes , 0-> no
             $table->string('ge_lang_level')->nullable();
             $table->string('how_to_know')->nullable();
-            $table->string('agent_name')->nullable();
+            $table->unsignedBigInteger('agent_id')->nullable();
             $table->text('comment')->nullable();
 
             $table->text('comment_institute')->nullable();
             $table->integer('application_status')->default(2); //2-> pending 1->approve 0->reject 3->select with condition
+            $table->date('status_date')->nullable();
             $table->timestamps();
         });
     }

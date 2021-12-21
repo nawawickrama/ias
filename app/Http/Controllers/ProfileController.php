@@ -88,7 +88,7 @@ class ProfileController extends Controller
                 return back()->with(['error' => 'User active/deactive failed', 'error_type' => 'error']);
             }
 
-            return back()->with(['success']);
+            return back()->with(['success' => 'Updated']);
 
         }else{
             Auth::logout();

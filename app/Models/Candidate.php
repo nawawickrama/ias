@@ -28,9 +28,10 @@ class Candidate extends Model
         'ge_lang',
         'ge_lang_level',
         'how_to_know',
-        'agent_name',
+        'agent_id',
         'comment',
         'application_status',
+        'status_date',
         'comment_institute'
     ];
 

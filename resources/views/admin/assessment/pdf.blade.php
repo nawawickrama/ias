@@ -51,7 +51,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="checkbox1" id="" value="1" @if($adimssion == 1){{ 'checked' }} @endif>
-                            Selected for the FK program.
+                            Selected for the {{ $program }} program.
                         </label>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="checkbox1" id="" value="3" @if($adimssion == 3){{ 'checked' }} @endif>
-                            Selected for the FK program with the condition.
+                            Selected for the {{ $program }} program with the condition.
                         </label>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Datum :22.09.2021, Unterschrift/Stempel prufer(n).</p>
+                    <p>Datum :{{ $status_date }}, Unterschrift/Stempel prufer(n).</p>
                 </div>
             </div>
             <hr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
 use App\Models\Candidate;
 use App\Models\HigherEdu;
 use App\Models\SecondaryEdu;
@@ -17,6 +18,13 @@ class CandidareController extends Controller
     // {
     //     $this->middleware('guest');
     // }
+
+    public function application()
+    {
+        $agent_details = Agent::where('agent_status', 1)->get();
+        return view('landing.home')->with(['agent_details' => $agent_details]);
+    }
+
     public function reg_candi(Request $request)
     {
         $request->validate([
@@ -119,10 +127,11 @@ class CandidareController extends Controller
 
         if(request('how_to_know_agent') !=  null){
             $request->validate([
-                'agent_name' => 'required',
+                'agent_id' => 'required',
             ]);
         }
 
+        // return request('agent_id');
         try{
             DB::transaction(function () {
                 $candidate_info = Candidate::create([
@@ -140,7 +149,7 @@ class CandidareController extends Controller
                     'ge_lang' => request('german_language'),
                     'ge_lang_level' => request('german_level'),
                     'how_to_know' => json_encode(request('how_to_know')),
-                    'agent_name' => request('agent_name'),
+                    'agent_id' => request('agent_id'),
                     'comment' => request('comment'),
                 ]);
 

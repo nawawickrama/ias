@@ -696,9 +696,16 @@
                             <div class="form-group col-md-12">
                                 <label for="">Name of the agent or education consultancy (If you know IAS college from agent
                                     or education consultancy) :</label>
-                                <input type="text" class="form-control @error('agent_name') is-invalid @enderror"
+                                {{-- <input type="text" class="form-control @error('agent_name') is-invalid @enderror"
                                     name="agent_name" id="agent_text" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('agent_name') }}">
+                                    value="{{ old('agent_name') }}"> --}}
+
+                                    <select name="agent_id" id="agent_text" class="form-control @error('agent_name') is-invalid @enderror">
+                                        <option value="" selected disabled>Select Agent</option>
+                                        @foreach ($agent_details as $agent)
+                                            <option value="{{ $agent->agent_id }}" >{{ $agent->agent_name }}</option>
+                                        @endforeach
+                                    </select>
                                 @error('agent_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
