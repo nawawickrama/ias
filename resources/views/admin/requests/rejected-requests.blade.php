@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <p>Selected Student Requests</p>
+        <p>Rejected Student Requests</p>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -30,7 +30,7 @@
                         @php
                             $agent = App\Models\Agent::find($candidate->agent_id);
                         @endphp
-                        <td>{{ $agent->agent_name }}</td>
+                        <td>@if(isset($agent->agent_name)) {{ $agent->agent_name }} @else {{ 'N/A' }} @endif</td>
                         <td>{{ $candidate->telephone }}</td>
                         <td>{{ $candidate->country }}</td>
                         <td>

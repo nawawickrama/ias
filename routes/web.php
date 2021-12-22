@@ -72,6 +72,7 @@ Route::post('/admin/button-mail', [ApplicationController::class, 'email_button']
 //Landing
 Route::get('/', [CandidareController::class, 'application']);
 Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
+Route::post('/indicator', [CandidareController::class, 'check_pending_application'])->name('check_pending_application');
 
 //Agent
 Route::get('/admin/agents', [AgentController::class, 'agent_page'])->name('agents');

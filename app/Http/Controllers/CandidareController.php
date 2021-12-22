@@ -220,4 +220,11 @@ class CandidareController extends Controller
 
         return back()->with(['success' => 'Form submition succesful.']);
     }
+
+    public function check_pending_application()
+    {
+        $app_count = Candidate::where('application_status', '2')->count();
+
+        return response()->json($app_count);
+    }
 }
