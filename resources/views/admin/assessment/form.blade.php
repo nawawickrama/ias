@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="addmission" id="" value="1" checked>
+                            <input type="radio" class="form-check-input" name="addmission" id="" value="1" >
                             Selected for the {{ $application_details->program }} program.
                         </label>
                     </div>
