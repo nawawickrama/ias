@@ -31,7 +31,7 @@ Auth::routes([
 Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 //Admin Dashboard
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Admin Application 
 Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_application'])->name('pending-requests');
