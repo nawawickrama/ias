@@ -28,7 +28,7 @@
 
 <body>
 @yield('content')
-@include('layouts.aleart.msg');
+@include('layouts.aleart.msg')
 @include('sweetalert::alert')
 
     <script src="{{url('assets/js/select2.js')}}"></script>

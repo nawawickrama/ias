@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="addmission" id="" value="1" >
+                            <input type="radio" class="form-check-input" name="addmission" id="addmission_form" value="1" >
                             Selected for the {{ $application_details->program }} program.
                         </label>
                     </div>
@@ -48,7 +48,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input f" name="addmission" id="" value="3">
+                            <input type="radio" class="form-check-input" name="addmission" id="addmission_form" value="3">
                             Selected for the {{ $application_details->program }} program with the condition.
                         </label>
                     </div>
@@ -58,7 +58,7 @@
                 <div class="col-md-12">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="addmission" id="" value="0">
+                            <input type="radio" class="form-check-input" name="addmission" id="addmission_form" value="0">
                             Not selected.
                         </label>
                     </div>
@@ -78,7 +78,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <textarea name="comments" class="form-control" id="" cols="30" rows="5"></textarea>
+                    <textarea name="comments" class="form-control" id="comments_form" cols="30" rows="5"></textarea>
                 </div>
             </div>
             <input type="hidden" name="appli_id" value="{{ $application_details->candidate_id }}">
@@ -97,10 +97,10 @@
         <br>
         <div class="row">
             <div class="col-md-3">
-                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#ModalEmail">Email Aseesment form</button>
+                <button type="button" class="btn btn-block btn-success" id="btn-email" candy_id_form="{{ $application_details->candidate_id }}">Email Aseesment form</button>
             </div>
             <div class="col-md-3">
-                <button type="button" class="btn btn-block btn-primary">Download Aseesment form</button>
+                <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Aseesment form</button>
             </div>
         </div>
     </div>
@@ -108,8 +108,15 @@
 <script>
     $('document').ready(function(){
         $('#btn-email').click(function(){
-            $('#send-form').attr('action', "{{ route('email_assessment_form') }}");
-            $('#send-form').submit();
+            let comment_info = $('#comments_form').val()
+            let candy_id_info = $(this).attr('candy_id_form');
+            let addmission_info = $('#addmission_form').val();
+
+            $('#appli_id').val(candy_id_info);
+            $('#comments').val(comment_info);
+            $('#addmission').val(addmission_info);
+
+            $('#ModalEmail').modal('show');
         });
 
         $('#btn-download').click(function(){
@@ -130,30 +137,36 @@
         </button>
       </div>
       <div class="modal-body">
-        <label>Send this assessment form to :</label>
-        <div class="form-check">
-            <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
-            Student
-          </label>
-        </div>
-        <div class="form-check">
-            <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
-            Agent
-          </label>
-        </div>
-        <div class="form-check">
-            <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
-            Both
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Send Email</button>
-      </div>
+            <form action="{{ route('email_assessment_form') }}" method="POST">
+                @csrf
+                <label>Send this assessment form to :</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="1">
+                    Student
+                </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="2">
+                    Agent
+                </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="3">
+                    Both
+                </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="" id="appli_id" name="appli_id">
+                <input type="hidden" value="" id="comments" name="comments">
+                <input type="hidden" value="" id="addmission" name="addmission">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Send Email</button>
+            </div>
+        </form>
     </div>
   </div>
 </div>

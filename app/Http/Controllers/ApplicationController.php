@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\sendEmail;
+use App\Models\Agent;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,6 +151,7 @@ class ApplicationController extends Controller
             $appli_id = request('appli_id');
             $comments = request('comments');
             $addmission = request('addmission');
+            $email_method = request('email_method');
 
             $application_details = Candidate::find($appli_id);
 
@@ -170,13 +172,46 @@ class ApplicationController extends Controller
             $data['comment_institute'] = $application_details->comment_institute;
             $data['status_date'] = $application_details->status_date;
 
-            $pdf = PDF::loadView('admin.assessment.pdf', $data);
+            $pdf = PDF::loadView('admin.assessment.email', $data);
 
-            Mail::send('admin.assessment.pdf', $data, function($message)use($pdf, $application_details) {
-                $message->to($application_details->email)
-                        ->subject('Addmission Details')
-                        ->attachData($pdf->output(), "admission.pdf");
-            });
+            if($email_method == 1){
+                Mail::send('admin.assessment.email', $data, function($message)use($pdf, $application_details) {
+                    $message->to($application_details->email)
+                            ->subject('Addmission Details')
+                            ->attachData($pdf->output(), "admission.pdf");
+                });
+            }elseif($email_method == 2){
+                if($application_details->agent_id != null){
+                    $agent_email = Agent::find($application_details->agent_id)->agent_email;
+                    Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email) {
+                        $message->to($agent_email)
+                                ->subject('Addmission Details')
+                                ->attachData($pdf->output(), "admission.pdf");
+                    });
+                }else{
+                    back()->with(['error' => 'There is not agent for this application.' , 'error_type' => 'info']);
+                }
+               
+            }elseif($email_method == 3){
+                if($application_details->agent_id != null){
+                    $agent_email = Agent::find($application_details->agent_id)->agent_email;
+                    $st_mail = $application_details->email;
+                    Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email, $st_mail) {
+                        $message->to($agent_email)
+                                ->cc($st_mail)
+                                ->subject('Addmission Details')
+                                ->attachData($pdf->output(), "admission.pdf");
+                    });
+                }else{
+
+                    Mail::send('admin.assessment.email', $data, function($message)use($pdf, $application_details) {
+                        $message->to($application_details->email)
+                                ->subject('Addmission Details')
+                                ->attachData($pdf->output(), "admission.pdf");
+                    });
+                    back()->with(['error' => 'Student email sent but there is not agent for this application.' , 'error_type' => 'info']);
+                }
+            }
             
             return back()->with(['success' => 'succesful.']);
 
@@ -204,20 +239,24 @@ class ApplicationController extends Controller
                 $application_details->update([
                     'application_status' => $addmission,
                     'comment_institute' => $comments,
+                    'status_date' => date('Y-m-d'),
                 ]);
             }catch(Throwable $e){
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
-            $data['program'] = $application_details->program;
-            $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
-            $data['address'] = $application_details->address.' '.$application_details->country;
-            $data['adimssion'] = $application_details->application_status;
-            $data['comment_institute'] = $application_details->comment_institute;
-            $data['status_date'] = $application_details->status_date;
+            // $data['program'] = $application_details->program;
+            // $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
+            // $data['address'] = $application_details->address.' '.$application_details->country;
+            // $data['adimssion'] = $application_details->application_status;
+            // $data['comment_institute'] = $application_details->comment_institute;
+            // $data['status_date'] = $application_details->status_date;
 
 
-            $pdf = PDF::loadView('admin.assessment.pdf', $data);
-            return $pdf->download($application_details->name.'_'.time().'.pdf');
+            // $pdf = PDF::loadView('admin.assessment.pdf', $data);
+            // return $pdf->download($application_details->name.'_'.time().'.pdf');
+            return view('admin.assessment.pdf')->with(['application_details' => $application_details]);
+
+
             
             return back()->with(['success' => 'succesful.']);
 
@@ -240,17 +279,20 @@ class ApplicationController extends Controller
 
             $application_details = Candidate::find($appli_id);
 
-            $data['program'] = $application_details->program;
-            $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
-            $data['address'] = $application_details->address.' '.$application_details->country;
-            $data['adimssion'] = $application_details->application_status;
-            $data['comment_institute'] = $application_details->comment_institute;
+            // $data['program'] = $application_details->program;
+            // $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
+            // $data['address'] = $application_details->address.' '.$application_details->country;
+            // $data['adimssion'] = $application_details->application_status;
+            // $data['comment_institute'] = $application_details->comment_institute;
+            // $data['status_date'] = $application_details->status_date;
 
 
-            $pdf = PDF::loadView('admin.assessment.pdf', $data);
-            return $pdf->download($application_details->name.'_'.time().'.pdf');
+            // $pdf = PDF::loadView('admin.assessment.pdf', $data);
+            // return $pdf->download($application_details->name.'_'.time().'.pdf');
             
-            return back()->with(['success' => 'succesful.']);
+            // return back()->with(['success' => 'succesful.']);
+
+            return view('admin.assessment.pdf')->with(['application_details' => $application_details]);
 
 
         }else{
