@@ -97,10 +97,10 @@
         <br>
         <div class="row">
             <div class="col-md-3">
-                <button type="button" class="btn btn-block btn-success" id="btn-email">Email Aseesment form</button>
+                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#ModalEmail">Email Aseesment form</button>
             </div>
             <div class="col-md-3">
-                <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Aseesment form</button>
+                <button type="button" class="btn btn-block btn-primary">Download Aseesment form</button>
             </div>
         </div>
     </div>
@@ -118,4 +118,43 @@
         });
     });
 </script>
+
+<!-- Modal Email -->
+<div class="modal fade" id="ModalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Email Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>Send this assessment form to :</label>
+        <div class="form-check">
+            <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
+            Student
+          </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
+            Agent
+          </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="new1" id="" value="checkedValue">
+            Both
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Send Email</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
