@@ -110,7 +110,8 @@
         $('#btn-email').click(function(){
             let comment_info = $('#comments_form').val()
             let candy_id_info = $(this).attr('candy_id_form');
-            let addmission_info = $('#addmission_form').val();
+            // let addmission_info = $('#addmission_form').val();
+            let addmission_info = $('input[name="addmission"]:checked').val();
 
             $('#appli_id').val(candy_id_info);
             $('#comments').val(comment_info);
@@ -142,19 +143,19 @@
                 <label>Send this assessment form to :</label>
                 <div class="form-check">
                     <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="email_method" id="" value="1">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="1" required>
                     Student
                 </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="email_method" id="" value="2">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="2" required>
                     Agent
                 </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="email_method" id="" value="3">
+                    <input type="radio" class="form-check-input" name="email_method" id="" value="3" required>
                     Both
                 </label>
                 </div>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
 use Throwable;
 
@@ -213,7 +214,9 @@ class ApplicationController extends Controller
                 }
             }
             
-            return back()->with(['success' => 'succesful.']);
+            // return back()->with(['success' => 'succesful.']);
+            // return redirect('/admin/pending-requests')->with(['success' => 'succesful.']);
+            return Redirect::route('pending-requests')->with(['success' => 'succesful']);
 
         }else{
             Auth::logout();
@@ -365,6 +368,7 @@ class ApplicationController extends Controller
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
             }
             
+            // return redirect(route('send-mail'))->with(['success' => 'succesful.']);
             return back()->with(['success' => 'succesful.']);
 
         

@@ -93,7 +93,7 @@
   </div>
   <div class="row">
     <div class="column1">
-      <img src="./txt.png" alt="">
+      <img src="txt.png" alt="">
       <p class="arial"><b>Datum :</b> {{ $status_date }}, Unterschrift/Stempel prufer(n).</p>
     </div>
   </div>
