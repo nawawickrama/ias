@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use PDF;
 use Throwable;
 
@@ -190,7 +191,7 @@ class ApplicationController extends Controller
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
                 }else{
-                    back()->with(['error' => 'There is not agent for this application.' , 'error_type' => 'info']);
+                    back()->with(['error' => 'No agent found!' , 'error_type' => 'warning']);
                 }
                
             }elseif($email_method == 3){
@@ -210,13 +211,15 @@ class ApplicationController extends Controller
                                 ->subject('Addmission Details')
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
-                    back()->with(['error' => 'Student email sent but there is not agent for this application.' , 'error_type' => 'info']);
+
+
+                    Session::put(['error' => 'Student email sent but there is not agent for this application.' , 'error_type' => 'warning']);
+                    return Redirect::route('pending-requests');
                 }
             }
             
-            // return back()->with(['success' => 'succesful.']);
-            // return redirect('/admin/pending-requests')->with(['success' => 'succesful.']);
-            return Redirect::route('pending-requests')->with(['success' => 'succesful']);
+            Session::put('success', 'Send Successful');
+            return Redirect::route('pending-requests');
 
         }else{
             Auth::logout();
@@ -360,15 +363,17 @@ class ApplicationController extends Controller
             $data = request('body');
             $email = request('email');
 
-            Mail::to($email)->send( new sendEmail($data, $subject));
+            try{
+                Mail::to($email)->send( new sendEmail($data, $subject));
 
-            if (Mail::failures()) {
-                // return response showing failed emails
+            }catch(Throwable){
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
+            }
 
-            }            
-            
-            return redirect(route('send-mail'))->with(['success' => 'succesful.']);
+            // return redirect(route('send-mail'))->with(['success' => 'succesful.']);
+            // Session::put('msg', 'Email Send Successfull');
+            Session::put('success', '1');
+            return Redirect::route('send-mail');
             // return back()->with(['success' => 'succesful.']);
 
         
