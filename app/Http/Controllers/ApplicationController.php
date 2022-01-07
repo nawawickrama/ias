@@ -360,16 +360,16 @@ class ApplicationController extends Controller
             $data = request('body');
             $email = request('email');
 
-            try{
-                Mail::to($email)->send( new sendEmail($data, $subject));
+            Mail::to($email)->send( new sendEmail($data, $subject));
 
-            }catch(Throwable $e){
-                // dd($e);
+            if (Mail::failures()) {
+                // return response showing failed emails
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
-            }
+
+            }            
             
-            // return redirect(route('send-mail'))->with(['success' => 'succesful.']);
-            return back()->with(['success' => 'succesful.']);
+            return redirect(route('send-mail'))->with(['success' => 'succesful.']);
+            // return back()->with(['success' => 'succesful.']);
 
         
         }else{
