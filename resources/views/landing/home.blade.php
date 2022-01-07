@@ -179,10 +179,12 @@
                                 {{-- <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
                                     id="" aria-describedby="helpId" placeholder="" value="{{ old('state') }}"> --}}
 
-                                <select name="state" id="" class="js-example-basic-single w-100 @error('state') is-invalid @enderror">
+                                <select name="state" id="state"
+                                    class="js-example-basic-single w-100 @error('state') is-invalid @enderror">
                                     <option selected disabled>Select Country</option>
                                     @foreach ($country as $cou)
-                                        <option value="{{ $cou->id }}" @if(old('state') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}</option>                                        
+                                        <option value="{{ $cou->id }}" @if (old('state') == $cou->id) {{ 'selected' }} @endif>
+                                            {{ $cou->nicename }}</option>
                                     @endforeach
                                 </select>
                                 @error('state')
@@ -263,10 +265,12 @@
                                 {{-- <input type="text" class="form-control @error('country') is-invalid @enderror"
                                     name="country" id="" aria-describedby="helpId" placeholder="Country"
                                     value="{{ old('country') }}"> --}}
-                                <select name="country" id="" class="js-example-basic-single w-100 @error('country') is-invalid @enderror">
+                                <select name="country" id="country"
+                                    class="js-example-basic-single w-100 @error('country') is-invalid @enderror">
                                     <option selected disabled>Select Country</option>
                                     @foreach ($country as $cou)
-                                        <option value="{{ $cou->id }}" @if(old('country') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}</option>                                        
+                                        <option value="{{ $cou->id }}" @if (old('country') == $cou->id) {{ 'selected' }} @endif>
+                                            {{ $cou->nicename }}</option>
                                     @endforeach
                                 </select>
                                 @error('country')
@@ -381,7 +385,7 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="v_training_tick"
-                                        id="vocational_check_box" value="1`" @if(old('v_training_tick') == 1) {{ 'checked' }} @endif>
+                                        id="vocational_check_box" value="1`" @if (old('v_training_tick') == 1) {{ 'checked' }} @endif>
                                     Vocational Training?
                                 </label>
                             </div>
@@ -538,7 +542,7 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="w_experience_tick"
-                                        id="expirience_box" value="1" @if(old('w_experience_tick') == 1) {{ 'checked' }} @endif>
+                                        id="expirience_box" value="1" @if (old('w_experience_tick') == 1) {{ 'checked' }} @endif>
                                     Working experience?
                                 </label>
                             </div>
@@ -669,38 +673,38 @@
                                 <br>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input @error('how_to_know') is-invalid @enderror"
-                                            type="checkbox" name="how_to_know[]" id="agent_check_box"
-                                            value="Agent/Educational Consultancy" @if (old('how_to_know') == 'Agent/Educational Consultancy') {{ 'checked' }} @endif> Agent /
+                                        <input class="form-check-input" type="checkbox" name="how_to_know[]"
+                                            id="agent_check_box" value="Agent/Educational Consultancy"
+                                            @if (is_array(old('how_to_know')) == 'Agent/Educational Consultancy') {{ 'checked' }} @endif> Agent /
                                         Educational Consultancy
-                                        @error('how_to_know')
+                                        {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Facebook Advertiesments" @if (old('how_to_know') == 'Facebook Advertiesments') {{ 'checked' }} @endif> Facebook
+                                            value="Facebook Advertiesments" @if (is_array(old('how_to_know')) == 'Facebook Advertiesments') {{ 'checked' }} @endif> Facebook
                                         Advertiesments
-                                        @error('how_to_know')
+                                        {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Promotional Email" @if (old('how_to_know') == "Promotional Email") {{ 'checked' }} @endif> Promotional Email
-                                        @error('how_to_know')
+                                            value="Promotional Email" @if (is_array(old('how_to_know')) == 'Promotional Email') {{ 'checked' }} @endif> Promotional Email
+                                        {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </label>
                                 </div>
                             </div>
@@ -713,12 +717,13 @@
                                     name="agent_name" id="agent_text" aria-describedby="helpId" placeholder=""
                                     value="{{ old('agent_name') }}"> --}}
 
-                                    <select name="agent_id" id="agent_text" class="form-control @error('agent_name') is-invalid @enderror">
-                                        <option value="" selected disabled>Select Agent</option>
-                                        @foreach ($agent_details as $agent)
-                                            <option value="{{ $agent->agent_id }}" >{{ $agent->agent_name }}</option>
-                                        @endforeach
-                                    </select>
+                                <select name="agent_id" id="agent_text"
+                                    class="form-control @error('agent_name') is-invalid @enderror">
+                                    <option value="" selected disabled>Select Agent</option>
+                                    @foreach ($agent_details as $agent)
+                                        <option value="{{ $agent->agent_id }}">{{ $agent->agent_name }}</option>
+                                    @endforeach
+                                </select>
                                 @error('agent_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -799,7 +804,7 @@
             $('#expirience_field').hide();
             $('#agent_field').hide();
             $('#ge_level_field').hide();
-            
+
 
             $('.program-radio').change(() => {
                 program();
@@ -820,7 +825,27 @@
             $('.Ge_lang').change(() => {
                 ge_lang();
             });
+
+            $('#state').change(function() {
+                let country = $(this).val();
+                $.ajax({
+                    url: "{{ route('country_agent') }}",
+                    type: "POST",
+                    data: {
+                        country: country,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: function(data) {
+                        $('#agent_text').html(data);
+                        // console.log(data);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
         });
+
 
         function v_training() {
             let select_vocational = $('#vocational_check_box').prop('checked');
@@ -835,14 +860,14 @@
         function program() {
             var select_direct = $('#direct_job').prop('checked');
             // alert(select_direct);
-                if (select_direct) {
-                    $('#job_field').slideDown();
-                    $('#which_job').focus();
-                    $('#which_job').attr('required', true);
-                } else {
-                    $('#job_field').slideUp();
-                    $('#which_job').attrRemove('required');
-                }
+            if (select_direct) {
+                $('#job_field').slideDown();
+                $('#which_job').focus();
+                $('#which_job').attr('required', true);
+            } else {
+                $('#job_field').slideUp();
+                $('#which_job').attrRemove('required');
+            }
         };
 
         function experience() {
@@ -856,7 +881,7 @@
             }
         };
 
-        function agent(){
+        function agent() {
             let select_agent = $('#agent_check_box').prop('checked');
 
             if (select_agent) {
@@ -869,7 +894,7 @@
             }
         };
 
-        function ge_lang(){
+        function ge_lang() {
             let ge_lan = $('#Ge_lang_yes').prop('checked');
 
             if (ge_lan) {

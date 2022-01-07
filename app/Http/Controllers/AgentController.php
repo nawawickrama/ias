@@ -161,4 +161,14 @@ class AgentController extends Controller
             abort(403);
         }
     }
+
+    public function country_agent(Request $request)
+    {
+        $country = request('country');
+        $agent_details = Agent::where('agent_country', $country)->get();
+
+        foreach($agent_details as $agent){
+            echo "<option value='$agent->agent_id'>$agent->agent_name</option>";
+        }
+    }
 }

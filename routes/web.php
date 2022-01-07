@@ -79,3 +79,6 @@ Route::get('/admin/agents', [AgentController::class, 'agent_page'])->name('agent
 Route::post('/admin/agents', [AgentController::class, 'add_agents'])->name('add_agents');
 Route::post('/admin/agents-update', [AgentController::class, 'edit_agents'])->name('edit_agents');
 Route::post('/admin/agents-active_deactive', [AgentController::class, 'act_dea_agents'])->name('act_dea_agents');
+
+//select country and get agents
+Route::post('/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
