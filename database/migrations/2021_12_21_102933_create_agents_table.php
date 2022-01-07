@@ -18,7 +18,7 @@ class CreateAgentsTable extends Migration
             $table->string('agent_name');
             $table->string('agent_email')->unique();
             $table->string('agent_tp')->unique();
-            $table->string('agent_country');
+            $table->unsignedBigInteger('agent_country');
             $table->string('agent_contact_person_name');
             $table->string('agent_whtaspp')->unique();
             $table->string('agent_web_site')->unique();

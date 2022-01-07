@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
@@ -16,19 +17,20 @@ class AgentController extends Controller
 
     public function agent_page()
     {
-         /** @var App\Models\User $user */
-         $user = Auth::user();
-         $permission = $user->can('agent-add');
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('agent-add');
         
-         if($permission){
+        if($permission){
              
+            $country = Country::all();
             $agent_details = Agent::all();
-            return view('admin.agents.agent')->with(['agent_details' => $agent_details]);
+            return view('admin.agents.agent')->with(['agent_details' => $agent_details, 'country' => $country]);
  
-         }else{
-             Auth::logout();
-             abort(403);
-         }
+        }else{
+            Auth::logout();
+            abort(403);
+        }
     }
 
     public function add_agents(Request $request)

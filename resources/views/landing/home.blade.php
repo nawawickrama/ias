@@ -176,8 +176,15 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Country / State : </label>
-                                <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
-                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('state') }}">
+                                {{-- <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
+                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('state') }}"> --}}
+
+                                <select name="state" id="" class="js-example-basic-single w-100 @error('state') is-invalid @enderror">
+                                    <option selected disabled>Select Country</option>
+                                    @foreach ($country as $cou)
+                                        <option value="{{ $cou->id }}" @if(old('state') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}</option>                                        
+                                    @endforeach
+                                </select>
                                 @error('state')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -188,7 +195,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Telephone number (with ISD code) :</label>
-                                <input type="text" class="form-control @error('telephone') is-invalid @enderror"
+                                <input type="number" class="form-control @error('telephone') is-invalid @enderror"
                                     name="telephone" id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('telephone') }}">
                                 @error('telephone')
@@ -253,9 +260,15 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control @error('country') is-invalid @enderror"
+                                {{-- <input type="text" class="form-control @error('country') is-invalid @enderror"
                                     name="country" id="" aria-describedby="helpId" placeholder="Country"
-                                    value="{{ old('country') }}">
+                                    value="{{ old('country') }}"> --}}
+                                <select name="country" id="" class="js-example-basic-single w-100 @error('country') is-invalid @enderror">
+                                    <option selected disabled>Select Country</option>
+                                    @foreach ($country as $cou)
+                                        <option value="{{ $cou->id }}" @if(old('country') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}</option>                                        
+                                    @endforeach
+                                </select>
                                 @error('country')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\Candidate;
+use App\Models\Country;
 use App\Models\HigherEdu;
 use App\Models\SecondaryEdu;
 use App\Models\VocationalTraining;
@@ -21,8 +22,9 @@ class CandidareController extends Controller
 
     public function application()
     {
+        $country = Country::all();
         $agent_details = Agent::where('agent_status', 1)->get();
-        return view('landing.home')->with(['agent_details' => $agent_details]);
+        return view('landing.home')->with(['agent_details' => $agent_details, 'country' => $country]);
     }
 
     public function reg_candi(Request $request)

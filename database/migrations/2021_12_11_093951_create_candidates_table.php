@@ -25,7 +25,7 @@ class CreateCandidatesTable extends Migration
             $table->string('telephone')->unique();
             $table->string('email')->unique();
             $table->string('address');
-            $table->string('country');
+            $table->unsignedBigInteger('country'); // relation with countries table
             $table->boolean('ge_lang'); //1->yes , 0-> no
             $table->string('ge_lang_level')->nullable();
             $table->string('how_to_know')->nullable();
