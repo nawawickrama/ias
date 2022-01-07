@@ -675,7 +675,7 @@
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="how_to_know[]"
                                             id="agent_check_box" value="Agent/Educational Consultancy"
-                                            @if (is_array(old('how_to_know')) == 'Agent/Educational Consultancy') {{ 'checked' }} @endif> Agent /
+                                            @if(is_array(old('how_to_know')) && in_array('Agent/Educational Consultancy', old('how_to_know'))) checked @endif> Agent /
                                         Educational Consultancy
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -687,7 +687,7 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Facebook Advertiesments" @if (is_array(old('how_to_know')) == 'Facebook Advertiesments') {{ 'checked' }} @endif> Facebook
+                                            value="Facebook Advertiesments" @if(is_array(old('how_to_know')) && in_array('Facebook Advertiesments', old('how_to_know'))) checked @endif> Facebook
                                         Advertiesments
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -699,7 +699,7 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Promotional Email" @if (is_array(old('how_to_know')) == 'Promotional Email') {{ 'checked' }} @endif> Promotional Email
+                                            value="Promotional Email" @if(is_array(old('how_to_know')) && in_array('Promotional Email', old('how_to_know'))) checked @endif> Promotional Email
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
