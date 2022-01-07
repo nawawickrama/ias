@@ -191,7 +191,7 @@ class ApplicationController extends Controller
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
                 }else{
-                    back()->with(['error' => 'There is not agent for this application.' , 'error_type' => 'info']);
+                    back()->with(['error' => 'No agent found!' , 'error_type' => 'warning']);
                 }
                
             }elseif($email_method == 3){

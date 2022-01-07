@@ -5,7 +5,7 @@
     }
 
     if(Session::has('error')){
-        toast(session::get('error'),session::get('error_type'))->timerProgressBar()->autoClose(10000);
+        toast(session::get('error'),session::get('error_type'))->timerProgressBar()->autoClose(7000);
         Session::forget('error');
         Session::forget('error_type');
     }
