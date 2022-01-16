@@ -67,7 +67,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    PAP (PAP is a Preparation program for being a registered Nurse in Germany).
+                                    PAP PAP( German license preparation program for foreign nurses seeking jobs in Germany).
                                 </label>
                             </div>
                             <div class="form-check col-md-12">
@@ -93,7 +93,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    Direct job apply
+                                    Directs jobs ( Technical and IT fields )
                                 </label>
                             </div>
                         </div>
@@ -141,9 +141,9 @@
                             <div class="form-group col-md-6">
                                 <label for="">Sex :</label>
                                 <select class="form-control @error('sex') is-invalid @enderror" name="sex" id="">
-                                    <option disabled selected>Select</option>
-                                    <option value="1" @if (old('sex') == 1) {{ 'selected' }} @endif>Male</option>
-                                    <option value="0" @if (old('sex') == 0) {{ 'selected' }} @endif>Female</option>
+                                    <option selected disabled>Select</option>
+                                    <option value="1" @if (old('sex') != null && old('sex') == 1) {{ 'selected' }} @endif>Male</option>
+                                    <option value="0" @if (old('sex') != null && old('sex') == 0) {{ 'selected' }} @endif>Female</option>
                                 </select>
                                 @error('sex')
                                     <span class="invalid-feedback" role="alert">
@@ -163,31 +163,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Nationality / Nationalities required :</label>
+                            <div class="form-group col-md-12">
+                                <label>Nationality / Nationalities:</label>
                                 <input type="text" class="form-control @error('nationality') is-invalid @enderror"
                                     name="nationality" id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('nationality') }}">
                                 @error('nationality')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Country / State : </label>
-                                {{-- <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
-                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('state') }}"> --}}
-
-                                <select name="state" id="state"
-                                    class="js-example-basic-single w-100 @error('state') is-invalid @enderror">
-                                    <option selected disabled>Select Country</option>
-                                    @foreach ($country as $cou)
-                                        <option value="{{ $cou->id }}" @if (old('state') == $cou->id) {{ 'selected' }} @endif>
-                                            {{ $cou->nicename }}</option>
-                                    @endforeach
-                                </select>
-                                @error('state')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -198,7 +179,7 @@
                             <div class="form-group col-md-6">
                                 <label>Telephone number (with ISD code) :</label>
                                 <input type="number" class="form-control @error('telephone') is-invalid @enderror"
-                                    name="telephone" id="" aria-describedby="helpId" placeholder=""
+                                    name="telephone" id="" aria-describedby="helpId" placeholder="Country Code & number"
                                     value="{{ old('telephone') }}">
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
