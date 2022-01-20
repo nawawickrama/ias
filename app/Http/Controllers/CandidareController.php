@@ -65,7 +65,6 @@ class CandidareController extends Controller
 
             'how_to_know' => 'required'
         ]);
-        
         if(request('project') == 'Direct job'){
             $request->validate([
                 'job_feild' => 'required',
@@ -131,7 +130,7 @@ class CandidareController extends Controller
                 'agent_id' => 'required',
             ]);
         }
-
+        
         try{
             DB::transaction(function () {
                 $candidate_info = Candidate::create([

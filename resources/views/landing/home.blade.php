@@ -9,7 +9,7 @@
                     <p class="text-center mt-2">IAS College - Candidate Profile Form (CPF)</p>
                 </div>
                 <di class="card-body">
-                    <form action="{{ route('reg_candi') }}" method="POST">
+                    <form action="{{ route('reg_candi') }}" method="POST" id="form-data">
                         @csrf
                         <div class="form-row">
                             <p class="font-weight-bold">Select the program</p>
@@ -19,12 +19,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="STEP" @if (old('project') != null && old('project') == 'STEP') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="" value="STEP" @if (old('project') == 'STEP') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     STEP (Study Eligibility Program) is a Pre-bachelors program for students who completed
                                     their 12 yrs of Schooling
                                 </label>
@@ -33,12 +33,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="E-STEP" @if (old('project') != null && old('project') == 'E-STEP') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="" value="E-STEP" @if (old('project') == 'E-STEP') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     E-STEP (English -Study Eligibility Program) is a Pre-bachelors program for students who
                                     completed their 12 yrs of Schooling
                                 </label>
@@ -47,12 +47,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="MEP" @if (old('project') != null && old('project') == 'MEP') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="" value="MEP" @if (old('project') == 'MEP') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     MEP (Master Eligibility Program) is Pre- Master program for students who wish to start
                                     their Masters In Germany
                                 </label>
@@ -61,12 +61,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="PAP" @if (old('project') != null && old('project') == 'PAP') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="" value="PAP" @if (old('project') == 'PAP') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     PAP PAP( German license preparation program for foreign nurses seeking jobs in Germany).
                                 </label>
                             </div>
@@ -74,12 +74,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="GVET" @if (old('project') != null && old('project') == 'GVET') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="" value="GVET" @if (old('project') == 'GVET') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     GVET Vocational Training
                                 </label>
                             </div>
@@ -87,12 +87,12 @@
                                 <label class="form-check-label">
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="direct_job" value="Direct job" @if (old('project') != null && old('project') == 'Direct job') {{ 'checked' }} @endif>
-                                    @error('project')
+                                        name="project" id="direct_job" value="Direct job" @if (old('project') == 'Direct job') {{ 'checked' }} @endif>
+                                    {{-- @error('project')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                     Directs jobs ( Technical and IT fields )
                                 </label>
                             </div>
@@ -366,7 +366,7 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="v_training_tick"
-                                        id="vocational_check_box" value="1`" @if (old('v_training_tick') == 1) {{ 'checked' }} @endif>
+                                        id="vocational_check_box" value="1" @if (old('v_training_tick') == 1) {{ 'checked' }} @endif>
                                     Vocational Training?
                                 </label>
                             </div>
@@ -523,7 +523,7 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="w_experience_tick"
-                                        id="expirience_box" value="1" @if (old('w_experience_tick') == 1) {{ 'checked' }} @endif>
+                                        id="expirience_box" value="1" @if(old('w_experience_tick') == 1) checked @endif>
                                     Working experience?
                                 </label>
                             </div>
@@ -571,7 +571,7 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input Ge_lang" type="radio" name="german_language"
-                                            id="Ge_lang_no" value="0" @if (old('german_language') == 0) {{ 'checked' }} @endif> No
+                                            id="Ge_lang_no" value="0" @if (old('german_language') == 0 && old('german_language') != null) {{ 'checked' }} @endif> No
                                     </label>
                                 </div>
                             </div>
@@ -584,11 +584,11 @@
                                     <label class="form-check-label">
                                         <input class="form-check-input @error('german_level') is-invalid @enderror"
                                             type="radio" name="german_level" id="" value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
-                                        @error('german_level')
+                                        {{-- @error('german_level')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -751,7 +751,7 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input @error('agree') is-invalid @enderror"
-                                            type="checkbox" name="agree" id="" value="I agree to all terms and conditions"
+                                            type="checkbox" name="agree" id="aggree" value="I agree to all terms and conditions"
                                             required> I agree to all terms and conditions
                                         @error('agree')
                                             <span class="invalid-feedback" role="alert">
@@ -764,7 +764,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <button type="submit" class="btn btn-primary btn-block">Submit Application</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-submit">Submit Application</button>
                             </div>
                         </div>
                     </form>
@@ -774,31 +774,36 @@
     </div>
 
     <script>
-        $('document').ready(() => {
+        // window.onload = function() {
+        //     program();
+        //     v_training();
+        // };
+
+        $('document').ready(function() {
             $('#job_field').hide();
             $('#vocational_fields').hide();
             $('#expirience_field').hide();
             $('#agent_field').hide();
             $('#ge_level_field').hide();
+            
 
-
-            $('.program-radio').change(() => {
+            $('.program-radio').change(function() {
                 program();
             });
 
-            $('#vocational_check_box').change(() => {
+            $('#vocational_check_box').change(function() {
                 v_training();
             });
 
-            $('#expirience_box').change(() => {
+            $('#expirience_box').change(function() {
                 experience();
             });
 
-            $('.how_to_know').change(() => {
+            $('.how_to_know').change(function() {
                 agent();
             });
 
-            $('.Ge_lang').change(() => {
+            $('.Ge_lang').change(function() {
                 ge_lang();
             });
 
@@ -820,23 +825,17 @@
                     }
                 });
             });
+
+            // $('.btn-submit').click(function(){
+            //     $('#form-data').submit();
+            // });
         });
 
-
-        function v_training() {
-            let select_vocational = $('#vocational_check_box').prop('checked');
-            if (select_vocational) {
-                $('#vocational_fields').slideDown();
-                $('#vocational').focus();
-            } else {
-                $('#vocational_fields').slideUp();
-            }
-        };
-
         function program() {
-            var select_direct = $('#direct_job').prop('checked');
+            let select_direct = $('input[name="project"]:checked').val();
             // alert(select_direct);
-            if (select_direct) {
+
+            if (select_direct == 'Direct job') {
                 $('#job_field').slideDown();
                 $('#which_job').focus();
                 $('#which_job').attr('required', true);
@@ -846,8 +845,23 @@
             }
         };
 
+        function v_training() {
+            // let select_vocational = $('#vocational_check_box').prop('checked');
+            let select_vocational = $('input[name="v_training_tick"]:checked').val();
+            // alert(select_vocational);
+
+            if (select_vocational) {
+                $('#vocational_fields').slideDown();
+                $('#vocational').focus();
+            } else {
+                $('#vocational_fields').slideUp();
+            }
+        };
+
         function experience() {
-            let select_expirience = $('#expirience_box').prop('checked');
+            // let select_expirience = $('#expirience_box').prop('checked');
+            let select_expirience = $('input[name="w_experience_tick"]:checked').val();
+            // alert(select_expirience);
 
             if (select_expirience) {
                 $('#expirience_field').slideDown();
