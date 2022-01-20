@@ -62,7 +62,7 @@ class ProfileController extends Controller
                     $user_data = User::create([
                         'name' => request('name'),
                         'email' => request('email'),
-                        'password' => Hash::make(request($pwrd)),
+                        'password' => Hash::make($pwrd),
                         'status' => 1,
                     ]);
 

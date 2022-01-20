@@ -339,7 +339,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('email-send');
+        $permission = $user->can('email-send.view');
 
         if($permission){
             
@@ -355,7 +355,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('email-send');
+        $permission = $user->can('email-send.create');
 
         if($permission){
             
@@ -387,7 +387,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('email-send');
+        $permission = $user->can('email-send.create');
 
         if($permission){
         

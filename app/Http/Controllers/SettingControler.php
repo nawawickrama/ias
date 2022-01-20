@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PermissionList;
 use App\Models\Smtp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -117,10 +118,44 @@ class SettingControler extends Controller
         $permission = $user->can('permission-management.view');
  
         if($permission){
-            $permission_details = Permission::all();
+            $permission_details = PermissionList::all();
             $role_details = Role::all();
 
             return view('admin.settings.role-permission')->with(['permission_details' => $permission_details, 'role_details' => $role_details]);
+        }else{
+            Auth::logout();
+            abort(403);
+        }
+    }
+
+    public function permission_role_post(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('permission-management.create');
+ 
+        if($permission){
+            $all_permission = PermissionList::all();
+            $role_id = request('role_id');
+            $role = Role::find($role_id);
+
+            try{
+                foreach($all_permission as $per){
+                    $input = request($per->name);
+                    if($input != null){
+                        foreach($input as $in){
+                            $permission = $per->name.'.'.$in;
+                            $role->givePermissionTo($permission);
+                        }
+                    }
+                    
+                }
+            }catch(Throwable $e){
+                return back()->with(['error' => 'Permission added faild.', 'error_type' => 'error']);
+            }
+
+            return back()->with(['success' => 'Permission added successful.']);
+            
         }else{
             Auth::logout();
             abort(403);

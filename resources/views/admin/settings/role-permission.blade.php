@@ -6,18 +6,18 @@
             <p>Role and Permission</p>
         </div>
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="{{ route('permission_role_post') }}" method="POST">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="">Role Name :</label>
-                        <select name="role" id="" class="form-control  @error('role') is-invalid @enderror">
+                        <select name="role_id" id="" class="form-control  @error('role_id') is-invalid @enderror">
                             <option value="null" selected disabled>Select User Role</option>
                             @foreach ($role_details as $role)
-                                <option value="{{ $role->id }}" @if (old('role') == $role->id){{ 'selected' }}@endif>{{ $role->name }}</option>
+                                <option value="{{ $role->id }}" @if (old('role_id') == $role->id){{ 'selected' }}@endif>{{ $role->name }}</option>
                             @endforeach
                         </select>
-                        @error('role')
+                        @error('role_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -40,10 +40,10 @@
                                 @foreach ($permission_details as $permission)
                                 <tr>
                                     <td>{{ $permission->name }}</td>
-                                    <td><input type="checkbox" name="wildcard[]" value="create"></td>
-                                    <td><input type="checkbox" name="wildcard[]" value="view"></td>
-                                    <td><input type="checkbox" name="wildcard[]" value="update"></td>
-                                    <td><input type="checkbox" name="wildcard[]" value="delete"></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="create"></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="view"></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="update"></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="delete"></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <button type="button" class="btn btn-success btn-block">Assign Permissions</button>
+                        <button type="submit" class="btn btn-success btn-block">Assign Permissions</button>
                     </div>
                 </div>
             </form>
