@@ -654,9 +654,8 @@
                                 <br>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="how_to_know[]"
-                                            id="agent_check_box" value="Agent/Educational Consultancy"
-                                            @if(is_array(old('how_to_know')) && in_array('Agent/Educational Consultancy', old('how_to_know'))) checked @endif> Agent /
+                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know"
+                                            value="Agent/Educational Consultancy"> Agent /
                                         Educational Consultancy
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -667,8 +666,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Facebook Advertiesments" @if(is_array(old('how_to_know')) && in_array('Facebook Advertiesments', old('how_to_know'))) checked @endif> Facebook
+                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
+                                            value="Facebook Advertiesments"> Facebook
                                         Advertiesments
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
@@ -679,8 +678,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="how_to_know[]" id=""
-                                            value="Promotional Email" @if(is_array(old('how_to_know')) && in_array('Promotional Email', old('how_to_know'))) checked @endif> Promotional Email
+                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
+                                            value="Promotional Email"> Promotional Email
                                         {{-- @error('how_to_know')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -694,18 +693,14 @@
                             <div class="form-group col-md-12">
                                 <label for="">Name of the agent or education consultancy (If you know IAS college from agent
                                     or education consultancy) :</label>
-                                {{-- <input type="text" class="form-control @error('agent_name') is-invalid @enderror"
-                                    name="agent_name" id="agent_text" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('agent_name') }}"> --}}
-
                                 <select name="agent_id" id="agent_text"
-                                    class="form-control @error('agent_name') is-invalid @enderror">
+                                    class="form-control @error('agent_id') is-invalid @enderror">
                                     <option value="" selected disabled>Select Agent</option>
                                     @foreach ($agent_details as $agent)
                                         <option value="{{ $agent->agent_id }}">{{ $agent->agent_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('agent_name')
+                                @error('agent_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -799,7 +794,7 @@
                 experience();
             });
 
-            $('#agent_check_box').change(() => {
+            $('.how_to_know').change(() => {
                 agent();
             });
 
@@ -807,7 +802,7 @@
                 ge_lang();
             });
 
-            $('#state').change(function() {
+            $('#country').change(function() {
                 let country = $(this).val();
                 $.ajax({
                     url: "{{ route('country_agent') }}",
@@ -863,9 +858,9 @@
         };
 
         function agent() {
-            let select_agent = $('#agent_check_box').prop('checked');
-
-            if (select_agent) {
+            let select_agent = $('input[name="how_to_know"]:checked').val();
+            
+            if (select_agent == 'Agent/Educational Consultancy') {
                 $('#agent_field').slideDown();
                 $('#agent_text').focus();
                 $('#agent_text').attr('required', true);

@@ -54,7 +54,7 @@
       <p class="arial"><b>Applying for :</b>{{ $program }}</p>
     </div>
     <div class="column">
-      <p class="arial right"><b>Intake :</b> 2022</p>
+      <p class="arial"><b>Intake :</b> 2022</p>
     </div>
   </div>
   <div class="row">
@@ -64,21 +64,23 @@
   </div>
   <div class="row">
     <div class="column1">
-      <p class="arial"><b>Address :</b> {{ $name }}</p>
+      <p class="arial"><b>Address :</b> {{ $address }}</p>
     </div>
   </div>
   <div class="row">
     <div class="column1">
-      @php
-        if($adimssion == 1){
-            echo "Selected for the $program program.";
-        }elseif($adimssion == 3){
-            echo "Selected for the $program program with the condition.";
-        }elseif($adimssion == 0){
-            echo "Not selected.";
-        }
-    @endphp
-      <p class="arial"><b>Adimission decision :</b> Selected for the E-STEP program.</p>
+      
+      <p class="arial"><b>Adimission decision :</b>
+          @php
+            if($adimssion == 1){
+                echo "Selected for the $program program.";
+            }elseif($adimssion == 3){
+                echo "Selected for the $program program with the condition.";
+            }elseif($adimssion == 0){
+                echo "Not selected.";
+            }
+          @endphp
+      </p>
     </div>
   </div>
   <div class="row">
@@ -93,7 +95,7 @@
   </div>
   <div class="row">
     <div class="column1">
-      <img src="txt.png" alt="">
+      <img src="{{url('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png')}}"  alt="Logo" width="30%" height="30%">
       <p class="arial"><b>Datum :</b> {{ $status_date }}, Unterschrift/Stempel prufer(n).</p>
     </div>
   </div>

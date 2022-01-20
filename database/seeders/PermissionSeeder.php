@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Arr;
+use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
@@ -15,8 +15,26 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::find(1);
-        Role::create(['name' => 'Super Admin']);
-        $user->assignRole('Super Admin');
+        $permission_info = [
+            'permission-management',
+            'user-management',
+            'pending-candidates',
+            'selected-candidates',
+            'selected-candidates-under-condition',
+            'rejected-candidates',
+            'application',
+            'application-download',
+            'assesment-form-send',
+            'assesment-form-email',
+            'assesment-form-download',
+            'application-reverse',
+            'email-send',
+            'smtp-setting',
+        ];
+
+        foreach($permission_info as $permission){
+            Permission::create(['name' => $permission]);
+        }
+        
     }
 }

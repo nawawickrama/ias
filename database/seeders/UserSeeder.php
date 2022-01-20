@@ -21,5 +21,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'status' => 1,
         ]);
+
+        $user = User::find(1);
+        $user->assignRole('Super Admin');
     }
 }

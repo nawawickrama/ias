@@ -75,14 +75,14 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <textarea name="" class="form-control" id="" cols="30" rows="5">{{ $application_details->comment_institute }}</textarea>
+                    <textarea name="" class="form-control" id="" cols="30" rows="5" readonly>{{ $application_details->comment_institute }}</textarea>
                 </div>
             </div>
             <hr>
 
             <div class="row">
                 <div class="col-md-12">
-                    <img style="height: 250px; width:270px; float:right;" src="{{url('assets/images/txt.png')}}" alt="">
+                    <img style="height: 250px; width:270px;" src="{{url('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png')}}" alt="">
                 </div>
             </div>
             <div class="row">

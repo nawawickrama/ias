@@ -37,7 +37,6 @@ class CandidareController extends Controller
             'dob' => 'required|date',
             'nationality' => 'required',
             'telephone' => 'required',
-            'state' => 'required',
             'telephone' => 'required|numeric',
             'email' => 'required|email',
             'address' => 'required',
@@ -127,13 +126,12 @@ class CandidareController extends Controller
             ]);
         }
 
-        if(request('how_to_know_agent') !=  null){
+        if(request('how_to_know') ==  'Agent/Educational Consultancy'){
             $request->validate([
                 'agent_id' => 'required',
             ]);
         }
 
-        // return request('agent_id');
         try{
             DB::transaction(function () {
                 $candidate_info = Candidate::create([
@@ -150,7 +148,7 @@ class CandidareController extends Controller
                     'country' => request('country'),
                     'ge_lang' => request('german_language'),
                     'ge_lang_level' => request('german_level'),
-                    'how_to_know' => json_encode(request('how_to_know')),
+                    'how_to_know' => request('how_to_know'),
                     'agent_id' => request('agent_id'),
                     'comment' => request('comment'),
                 ]);

@@ -183,24 +183,17 @@
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <p>How did you know about IAS College? : <em class="text-secondary">
-                        @php
-                            $howto = json_decode($application_details->how_to_know);
-                            foreach ($howto as $how) {
-                                if($how == 'Agent/Educational Consultancy'){
-                                    $agent = 1;
-                                }else{
-                                    $agent = 0;
-                                }
-                                echo " $how,";
-                            }
-                        @endphp
+                        {{ $application_details->how_to_know }}
                     </em></p>
                 </div>
             </div>
-           @if($agent == 1)
+           @if($application_details->how_to_know == 'Agent/Educational Consultancy')
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <p>Name of the agent or education consultancy (If you know IAS college from agent or education consultancy) : <em class="text-secondary">{{ $application_details->agent_name }}</em></p>
+                        @php
+                            $agent_name = App\Models\Agent::find($application_details->agent_id)->agent_name;
+                        @endphp
+                        <p>Name of the agent or education consultancy (If you know IAS college from agent or education consultancy) : <em class="text-secondary">{{ $agent_name }}</em></p>
                     </div>
                 </div>
             @endif

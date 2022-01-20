@@ -11,19 +11,39 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="">Name :</label>
-                        <input type="text" name="name" id="" class="form-control" required>
+                        <input type="text" name="name" id="" value="{{ old('name') }}"
+                            class="form-control @error('name') is-invalid @enderror">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Email :</label>
-                        <input type="text" name="email" id="" class="form-control" required>
+                        <input type="text" name="email" id="" value="{{ old('email') }}"
+                            class="form-control @error('email') is-invalid @enderror">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="">Role :</label>
-                        <select name="role" id="" class="form-control">
-                            <option value="">Administrator</option>
+                        <select name="role" id="" class="form-control  @error('role') is-invalid @enderror">
+                            <option value="null" selected disabled>Select User Role</option>
+                            @foreach ($role_details as $role)
+                                <option value="{{ $role->id }}" @if (old('role') == $role->id){{ 'selected' }}@endif>{{ $role->name }}</option>
+                            @endforeach
                         </select>
+                        @error('role')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-row">
@@ -56,26 +76,31 @@
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>Admin</td>
+                            <td>@php
+                                $user_role = $user->getRoleNames();
+                            @endphp
+                                @foreach ($user_role as $role)
+                                    {{ $role }}
+                                @endforeach
+                            </td>
                             <td>
                                 @if ($user->status == 1)<span class="badge badge-success">Active</span>@elseif($user->status == 0)<span class="badge badge-danger">Inactive</span>@endif
                             </td>
                             <td>
-                                    @if ($user->status == 1) 
-                                        <button
-                                            type="button" data-id="{{ $user->id }}" status="0" 
-                                            class="btn btn-danger btn-icon btn-status" data-toggle="tooltip"
-                                            data-placement="top" title="Inactivate User">
-                                            <i data-feather="user-x"></i>
-                                        </button>
-                                    @elseif($user->status == 0)
-                                        <button type="button" 
-                                            data-id="{{ $user->id }}" status="1" class="btn btn-success btn-icon btn-status" data-toggle="tooltip"
-                                            data-placement="top" title="Activate User">
-                                            <i data-feather="user"></i>
-                                        </button>
-                                    @endif
-                                
+                                @if ($user->status == 1)
+                                    <button type="button" data-id="{{ $user->id }}" status="0"
+                                        class="btn btn-danger btn-icon btn-status" data-toggle="tooltip"
+                                        data-placement="top" title="Inactivate User">
+                                        <i data-feather="user-x"></i>
+                                    </button>
+                                @elseif($user->status == 0)
+                                    <button type="button" data-id="{{ $user->id }}" status="1"
+                                        class="btn btn-success btn-icon btn-status" data-toggle="tooltip"
+                                        data-placement="top" title="Activate User">
+                                        <i data-feather="user"></i>
+                                    </button>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach

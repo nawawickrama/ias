@@ -69,7 +69,13 @@
                 <div class="collapse" id="userser">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{route('user-settings')}}" class="nav-link">Staff</a>
+                            <a href="{{route('role_get')}}" class="nav-link">Role Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('permission_role_get')}}" class="nav-link">Permission Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('user-settings')}}" class="nav-link">User Management</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('agents')}}" class="nav-link">Agents</a>

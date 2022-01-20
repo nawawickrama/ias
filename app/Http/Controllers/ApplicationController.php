@@ -25,7 +25,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view pending candidates');
+        $permission = $user->can('pending-candidates.view');
        
         if($permission){
             $application_details = Candidate::where('application_status', 2)->get();
@@ -41,7 +41,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view selected candidates');
+        $permission = $user->can('selected-candidates.view');
        
         if($permission){
             $application_details = Candidate::where('application_status', 1)->get();
@@ -57,7 +57,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view selected candidates by condition');
+        $permission = $user->can('selected-candidates-under-condition.view');
        
         if($permission){
             $application_details = Candidate::where('application_status', 3)->get();
@@ -73,7 +73,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view rejected candidates');
+        $permission = $user->can('rejected-candidates.view');
        
         if($permission){
             $application_details = Candidate::where('application_status', 0)->get();
@@ -89,7 +89,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('view application');
+        $permission = $user->can('application.view');
 
         if($permission){
             $application_details = Candidate::find($candidate_id);
@@ -107,7 +107,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('download application');
+        $permission = $user->can('application-download');
 
         if($permission){
             $application_details = Candidate::find($candidate_id);
@@ -130,7 +130,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('send assesment form');
+        $permission = $user->can('assesment-form-send');
         
         if($permission){
             $application_details = Candidate::find($appli_id);
@@ -146,7 +146,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('email assesment form');
+        $permission = $user->can('assesment-form-email');
 
         if($permission){
             
@@ -231,7 +231,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('download assesment form');
+        $permission = $user->can('assesment-form-download');
 
         if($permission){
             
@@ -277,7 +277,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('download assesment form');
+        $permission = $user->can('assesment-form-download');
 
         if($permission){
             
@@ -311,7 +311,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('application convert to pending');
+        $permission = $user->can('application-reverse');
 
         if($permission){
 
@@ -339,7 +339,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('send email');
+        $permission = $user->can('email-send');
 
         if($permission){
             
@@ -355,7 +355,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('send email');
+        $permission = $user->can('email-send');
 
         if($permission){
             
@@ -387,7 +387,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('send email');
+        $permission = $user->can('email-send');
 
         if($permission){
         

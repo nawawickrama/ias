@@ -82,3 +82,11 @@ Route::post('/admin/agents-active_deactive', [AgentController::class, 'act_dea_a
 
 //select country and get agents
 Route::post('/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
+
+//user management
+Route::get('/admin/user-management/role-management', [SettingControler::class, 'role_get'])->name('role_get');
+Route::post('/admin/user-management/role-management', [SettingControler::class, 'role_post'])->name('role_post');
+
+//permission management
+Route::get('/admin/user-management/permission-role-management', [SettingControler::class, 'permission_role_get'])->name('permission_role_get');
+Route::post('/admin/user-management/permission-role-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');

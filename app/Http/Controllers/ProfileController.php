@@ -7,8 +7,11 @@ use App\Mail\newUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 class ProfileController extends Controller
@@ -22,12 +25,12 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('view user');
+        $permission = $user->can('view-management.user');
 
         if($permission){
             $user_details = User::all();
-
-            return view('admin.settings.user')->with(['user_details' => $user_details]);
+            $role_details = Role::all();
+            return view('admin.settings.user')->with(['user_details' => $user_details, 'role_details' => $role_details]);
         }else{
             Auth::logout();
             abort(403);
@@ -39,27 +42,43 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('add user');
+        $permission = $user->can('user-management.create');
         
         if($permission){
+            // return 1;
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'role' => 'required',
+            ]);
+
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             $pwrd = substr(str_shuffle($chars),0,8);
+            $role = Role::find(request('role'));
+            $user_data = null;
 
             try{
-                $user_data = User::create([
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'password' => Hash::make(request($pwrd)),
-                    'status' => 1,
-                ]);
+                DB::transaction(function () use($pwrd, $role, &$user_data){
+                    $user_data = User::create([
+                        'name' => request('name'),
+                        'email' => request('email'),
+                        'password' => Hash::make(request($pwrd)),
+                        'status' => 1,
+                    ]);
 
-                $user_data->assignRole('Super Admin');
+                    $user_data->assignRole($role->name);
+                });
+                
             }catch(Throwable $e){
                 return back()->with(['error' => 'User Registration failed', 'error_type' => 'error']);
             }
 
-            Mail::to($user_data->email)->send(new newUser($pwrd));
-            return back()->with(['success' => 'User Registration Successful']);
+            if($user_data != null){
+                Mail::to($user_data->email)->send(new newUser($pwrd));
+            }
+
+            Session::put(['success' => 'User Registration Successful']);
+            return back();
 
         }else{
             Auth::logout();
@@ -73,7 +92,7 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('make active inactive user');
+        $permission = $user->can('user-management.edit');
 
         if($permission){
 
