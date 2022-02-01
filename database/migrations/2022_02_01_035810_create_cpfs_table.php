@@ -18,7 +18,6 @@ class CreateCpfsTable extends Migration
             
             $table->string('program');
             $table->string('job_feild')->nullable(); //if program is direct job
-            $table->boolean('sex'); //1->male,  0->female
             
             $table->boolean('ge_lang'); //1->yes , 0-> no
             $table->string('ge_lang_level')->nullable();

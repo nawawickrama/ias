@@ -9,6 +9,12 @@
                     <p class="text-center mt-2">IAS College - Candidate Profile Form (CPF)</p>
                 </div>
                 <di class="card-body">
+                    {{-- @if()
+                        <div class="alert alert-danger">
+                            {{ Session::session('error') }}
+                        </div>
+                    @endif --}}
+                   
                     <form action="{{ route('reg_candidates') }}" method="POST" id="form-data">
                         @csrf
                         <div class="form-row">
@@ -18,8 +24,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="STEP" @if (old('project') == 'STEP') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="" value="STEP" @if (old('program') == 'STEP') {{ 'checked' }} @endif>
 
                                     STEP (Study Eligibility Program) is a Pre-bachelors program for students who completed
                                     their 12 yrs of Schooling
@@ -28,8 +34,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="E-STEP" @if (old('project') == 'E-STEP') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="" value="E-STEP" @if (old('program') == 'E-STEP') {{ 'checked' }} @endif>
 
                                     E-STEP (English -Study Eligibility Program) is a Pre-bachelors program for students who
                                     completed their 12 yrs of Schooling
@@ -38,8 +44,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="MEP" @if (old('project') == 'MEP') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="" value="MEP" @if (old('program') == 'MEP') {{ 'checked' }} @endif>
 
                                     MEP (Master Eligibility Program) is Pre- Master program for students who wish to start
                                     their Masters In Germany
@@ -48,8 +54,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="PAP" @if (old('project') == 'PAP') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="" value="PAP" @if (old('program') == 'PAP') {{ 'checked' }} @endif>
 
                                     PAP PAP( German license preparation program for foreign nurses seeking jobs in Germany).
                                 </label>
@@ -57,8 +63,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="" value="GVET" @if (old('project') == 'GVET') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="" value="GVET" @if (old('program') == 'GVET') {{ 'checked' }} @endif>
 
                                     GVET Vocational Training
                                 </label>
@@ -66,8 +72,8 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="radio"
-                                        class="form-check-input program-radio @error('project') is-invalid @enderror"
-                                        name="project" id="direct_job" value="Direct job" @if (old('project') == 'Direct job') {{ 'checked' }} @endif>
+                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
+                                        name="program" id="direct_job" value="Direct job" @if (old('program') == 'Direct job') {{ 'checked' }} @endif>
 
                                     Directs jobs ( Technical and IT fields )
                                 </label>
@@ -254,9 +260,9 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="">From :</label>
-                                <input type="number" class="form-control @error('sec_from') is-invalid @enderror"
-                                    name="sec_from" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('sec_from') }}">
+                                <input type="number" name="sec_from"
+                                    class="form-control @error('sec_from') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('sec_from') }}">
                                 @error('sec_from')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -265,9 +271,9 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="">To :</label>
-                                <input type="number" class="form-control @error('sec_to') is-invalid @enderror"
-                                    name="sec_to" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('sec_to') }}">
+                                <input type="number" name="sec_to"
+                                    class="form-control @error('sec_to') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('sec_to') }}">
                                 @error('sec_to')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -276,9 +282,9 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="">Overall Result Percentage (%)</label>
-                                <input type="number" class="form-control @error('sec_result') is-invalid @enderror"
-                                    name="sec_result" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('sec_result') }}">
+                                <input type="number" name="sec_result"
+                                    class="form-control @error('sec_result') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('sec_result') }}">
                                 @error('sec_result')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -289,8 +295,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="">Higher Secondary Schooling :</label>
-                                <select class="form-control @error('higher_sec_school') is-invalid @enderror"
-                                    name="higher_sec_school" id="">
+                                <select name="higher_sec_school"
+                                    class="form-control @error('higher_sec_school') is-invalid @enderror" id="">
                                     <option disabled selected>Select</option>
                                     <option value="A level" @if (old('higher_sec_school') == 'A level') {{ 'selected' }} @endif>A Level</option>
                                     <option value="12 years" @if (old('higher_sec_school') == '12 years') {{ 'selected' }} @endif>12 Years</option>
@@ -303,10 +309,10 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="">From :</label>
-                                <input type="number" class="form-control @error('highter_from') is-invalid @enderror"
-                                    name="highter_from" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('highter_from') }}">
-                                @error('highter_from')
+                                <input type="number" name="higher_from"
+                                    class="form-control @error('higher_from') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('higher_from') }}">
+                                @error('higher_from')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -314,10 +320,10 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="">To :</label>
-                                <input type="number" class="form-control @error('highter_to') is-invalid @enderror"
-                                    name="highter_to" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('highter_to') }}">
-                                @error('highter_to')
+                                <input type="number" name="higher_to"
+                                    class="form-control @error('higher_to') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('higher_to') }}">
+                                @error('higher_to')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -325,10 +331,10 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="">Overall Result Percentage (%)</label>
-                                <input type="number" class="form-control @error('highter_result') is-invalid @enderror"
-                                    name="highter_result" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('highter_result') }}">
-                                @error('highter_result')
+                                <input type="number" name="higher_result"
+                                    class="form-control @error('higher_result') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('higher_result') }}">
+                                @error('higher_result')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -348,9 +354,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="">Field of the vocational training</label>
-                                    <input type="text" class="form-control @error('v_field') is-invalid @enderror"
-                                        name="v_field" id="vocational" aria-describedby="helpId" placeholder=""
-                                        value="{{ old('v_field') }}">
+                                    <input type="text" name="v_field"
+                                        class="form-control @error('v_field') is-invalid @enderror" id="vocational"
+                                        aria-describedby="helpId" placeholder="" value="{{ old('v_field') }}">
                                     @error('v_field')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -359,9 +365,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="">Year of completion</label>
-                                    <input type="text" class="form-control @error('v_complete_year') is-invalid @enderror"
-                                        name="v_complete_year" id="" aria-describedby="helpId" placeholder=""
-                                        value="{{ old('v_complete_year') }}">
+                                    <input type="number" name="v_complete_year"
+                                        class="form-control @error('v_complete_year') is-invalid @enderror" id=""
+                                        aria-describedby="helpId" placeholder="" value="{{ old('v_complete_year') }}">
                                     @error('v_complete_year')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -372,9 +378,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="">Overall Result Percentage (%)</label>
-                                    <input type="number" class="form-control @error('v_result') is-invalid @enderror"
-                                        name="v_result" id="" aria-describedby="helpId" placeholder=""
-                                        value="{{ old('v_result') }}">
+                                    <input type="number" name="v_result"
+                                        class="form-control @error('v_result') is-invalid @enderror" id=""
+                                        aria-describedby="helpId" placeholder="" value="{{ old('v_result') }}">
                                     @error('v_result')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -383,9 +389,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="">Duration of the vocational training (Months)</label>
-                                    <input type="text" class="form-control @error('v_duration') is-invalid @enderror"
-                                        name="v_duration" id="" aria-describedby="helpId" placeholder=""
-                                        value="{{ old('v_duration') }}">
+                                    <input type="number" name="v_duration"
+                                        class="form-control @error('v_duration') is-invalid @enderror" id=""
+                                        aria-describedby="helpId" placeholder="" value="{{ old('v_duration') }}">
                                     @error('v_duration')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -410,9 +416,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Major subject :</label>
-                                <input type="text" class="form-control @error('b_major_sub') is-invalid @enderror"
-                                    name="b_major_sub" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('b_major_sub') }}">
+                                <input type="text" name="b_major_sub"
+                                    class="form-control @error('b_major_sub') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('b_major_sub') }}">
                                 @error('b_major_sub')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -423,7 +429,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="">Years of the degree program</label>
-                                <input type="text" class="form-control @error('b_year') is-invalid @enderror" name="b_year"
+                                <input type="number" name="b_year" class="form-control @error('b_year') is-invalid @enderror"
                                     id="" aria-describedby="helpId" placeholder="" value="{{ old('b_year') }}">
                                 @error('b_year')
                                     <span class="invalid-feedback" role="alert">
@@ -433,9 +439,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="number" class="form-control @error('b_result') is-invalid @enderror"
-                                    name="b_result" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('b_result') }}">
+                                <input type="number" name="b_result" class="form-control @error('b_result') is-invalid @enderror"
+                                id="" aria-describedby="helpId" placeholder="" value="{{ old('b_result') }}">
                                 @error('b_result')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -459,8 +464,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Major subject :</label>
-                                <input type="text" class="form-control @error('m_major_sub') is-invalid @enderror"
-                                    name="m_major_sub" id="" aria-describedby="helpId" placeholder=""
+                                <input type="text"  name="m_major_sub" class="form-control @error('m_major_sub') is-invalid @enderror"
+                                    id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('m_major_sub') }}">
                                 @error('m_major_sub')
                                     <span class="invalid-feedback" role="alert">
@@ -472,7 +477,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="">Years of the degree program</label>
-                                <input type="text" class="form-control @error('m_year') is-invalid @enderror" name="m_year"
+                                <input type="number" name="m_year" class="form-control @error('m_year') is-invalid @enderror" 
                                     id="" aria-describedby="helpId" placeholder="" value="{{ old('m_year') }}">
                                 @error('m_year')
                                     <span class="invalid-feedback" role="alert">
@@ -482,8 +487,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="number" class="form-control @error('m_result') is-invalid @enderror"
-                                    name="m_result" id="" aria-describedby="helpId" placeholder=""
+                                <input type="number" name="m_result" class="form-control @error('m_result') is-invalid @enderror"
+                                     id="" aria-describedby="helpId" placeholder=""
                                     value="{{ old('m_result') }}">
                                 @error('m_result')
                                     <span class="invalid-feedback" role="alert">
@@ -517,7 +522,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="">How many years of experience? :</label>
-                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('first_name') is-invalid @enderror"
                                         name="w_year" id="" aria-describedby="helpId" placeholder=""
                                         value="{{ old('w_year') }}">
                                     @error('w_year')
@@ -556,8 +561,8 @@
                                 <br>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
+                                        <input type="radio" name="german_level" class="form-check-input @error('german_level') is-invalid @enderror"
+                                             id="" value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
                                         @error('german_level')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -739,56 +744,56 @@
 
     <script>
         $('document').ready(function() {
-            $('#job_field').hide();
-            $('#vocational_fields').hide();
-            $('#expirience_field').hide();
-            $('#agent_field').hide();
-            $('#ge_level_field').hide();
+        //     $('#job_field').hide();
+        //     $('#vocational_fields').hide();
+        //     $('#expirience_field').hide();
+        //     $('#agent_field').hide();
+        //     $('#ge_level_field').hide();
 
 
-            $('.program-radio').change(function() {
-                program();
-            });
+        //     $('.program-radio').change(function() {
+        //         program();
+        //     });
 
-            $('#vocational_check_box').change(function() {
-                v_training();
-            });
+        //     $('#vocational_check_box').change(function() {
+        //         v_training();
+        //     });
 
-            $('#expirience_box').change(function() {
-                experience();
-            });
+        //     $('#expirience_box').change(function() {
+        //         experience();
+        //     });
 
-            $('.how_to_know').change(function() {
-                agent();
-            });
+        //     $('.how_to_know').change(function() {
+        //         agent();
+        //     });
 
-            $('.Ge_lang').change(function() {
-                ge_lang();
-            });
+        //     $('.Ge_lang').change(function() {
+        //         ge_lang();
+        //     });
 
-            $('#country').change(function() {
-                let country = $(this).val();
-                $.ajax({
-                    url: "{{ route('country_agent') }}",
-                    type: "POST",
-                    data: {
-                        country: country,
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(data) {
-                        $('#agent_text').html(data);
-                        // console.log(data);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            });
+        //     $('#country').change(function() {
+        //         let country = $(this).val();
+        //         $.ajax({
+        //             url: "{{ route('country_agent') }}",
+        //             type: "POST",
+        //             data: {
+        //                 country: country,
+        //                 _token: "{{ csrf_token() }}",
+        //             },
+        //             success: function(data) {
+        //                 $('#agent_text').html(data);
+        //                 // console.log(data);
+        //             },
+        //             error: function(error) {
+        //                 console.log(error);
+        //             }
+        //         });
+        //     });
 
         });
 
         function program() {
-            let select_direct = $('input[name="project"]:checked').val();
+            let select_direct = $('input[name="program"]:checked').val();
             // alert(select_direct);
 
             if (select_direct == 'Direct job') {

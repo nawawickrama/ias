@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\CpfForm;
+use App\Http\Controllers\CpfController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -72,8 +72,8 @@ Route::post('/admin/button-mail', [EmailController::class, 'email_button'])->nam
 Route::get('/', [HomeController::class, 'index']);
 
 //cpf form
-Route::get('/cpf', [CpfForm::class, 'cpf'])->name('cpf');
-Route::post('/cpf', [CpfForm::class, 'reg_candidates'])->name('reg_candidates');
+Route::get('/cpf', [CpfController::class, 'cpf'])->name('cpf');
+Route::post('/cpf', [CpfController::class, 'reg_candidates'])->name('reg_candidates');
 
 //Agent
 Route::get('/agents', [AgentController::class, 'agent_page'])->name('agents');
@@ -91,7 +91,7 @@ Route::post('/admin/permission-management', [SettingControler::class, 'permissio
 
 //ajax
 //Pending indicator
-Route::post('/ajax/pending', [CpfForm::class, 'check_pending_cpf'])->name('check_pending_cpf');
+Route::post('/ajax/pending', [CpfController::class, 'check_pending_cpf'])->name('check_pending_cpf');
 
 //select country and get agents
 Route::post('ajax/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
