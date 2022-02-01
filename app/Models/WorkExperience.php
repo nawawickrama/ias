@@ -16,6 +16,11 @@ class WorkExperience extends Model
     protected $fillable = [
         'field',
         'duration',
-        'candidate_id',
+        'cpf_id',
     ];
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class, 'cpf_id');
+    }
 }

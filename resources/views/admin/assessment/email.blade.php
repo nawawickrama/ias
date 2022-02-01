@@ -95,7 +95,7 @@
   </div>
   <div class="row">
     <div class="column1">
-      <img src="{{url('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png')}}"  alt="Logo" width="30%" height="30%">
+      <img src="{{url('assets/images/txt.png')}}"  alt="Logo" width="30%" height="30%">
       <p class="arial"><b>Datum :</b> {{ $status_date }}, Unterschrift/Stempel prufer(n).</p>
     </div>
   </div>

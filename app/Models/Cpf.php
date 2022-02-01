@@ -14,6 +14,7 @@ class Cpf extends Model
     protected $primaryKey = 'cpf_id';
 
     protected $fillable = [
+        'year',
         'program',
         'job_feild',
         'ge_lang',
@@ -26,4 +27,29 @@ class Cpf extends Model
         'comment_institute',
         'candidate_id'
     ];
+
+    public function sec_sch()
+    {
+        return $this->hasMany(SecondaryEdu::class, 'cpf_id');
+    }
+
+    public function vocational_t()
+    {
+        return $this->hasOne(VocationalTraining::class, 'cpf_id');
+    }
+
+    public function higher_edu()
+    {
+        return $this->hasMany(HigherEdu::class, 'cpf_id');
+    }
+
+    public function work_exp()
+    {
+        return $this->hasMany(WorkExperience::class, 'cpf_id', 'cpf_id');
+    }
+    
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class, 'candidate_id');
+    }
 }

@@ -21,8 +21,8 @@ class CreateSecondaryEdusTable extends Migration
             $table->integer('result_percentage');
             $table->string('sec_edu_type');
 
-            $table->unsignedBigInteger('candidate_id');
-            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
+            $table->unsignedBigInteger('cpf_id');
+            $table->foreign('cpf_id')->references('cpf_id')->on('cpfs');
             
             $table->timestamps();
         });

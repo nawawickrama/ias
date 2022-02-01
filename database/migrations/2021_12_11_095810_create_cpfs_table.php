@@ -16,6 +16,7 @@ class CreateCpfsTable extends Migration
         Schema::create('cpfs', function (Blueprint $table) {
             $table->id('cpf_id');
             
+            $table->integer('year')->nullable();
             $table->string('program');
             $table->string('job_feild')->nullable(); //if program is direct job
             

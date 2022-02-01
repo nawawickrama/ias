@@ -8,22 +8,27 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-8">
-                <p>Applying for :<em class="text-secondary">{{ $application_details->program }} </em></p>
+                <p>Applying for :<em class="text-secondary">{{ $cpf_details->program }} @if($cpf_details->program == 'Direct job') ({{ $cpf_details->job_feild }}) @endif</em></p>
             </div>
             <div class="col-md-4">
-                <p>Intake :<em class="text-secondary"> 2022</em></p>
+                <p>Intake :<em class="text-secondary"> {{ $cpf_details->year?? date('Y') }}</em></p>
+            </div>
+        </div>
+        <hr>
+
+        @php
+            $candidate_info = $cpf_details->candidate;
+        @endphp
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Applicant Name :<em class="text-secondary">{{ $candidate_info->first_name }} {{ $candidate_info->sur_name }}</em></p>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <p>Applicant Name :<em class="text-secondary">{{ $application_details->first_name }} {{ $application_details->sur_name }}</em></p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <p>Address :<em class="text-secondary">{{ $application_details->address }} {{ $application_details->country }}</em></p>
+                <p>Address :<em class="text-secondary">{{ $candidate_info->address }} {{ $candidate_info->country }}</em></p>
             </div>
         </div>
         <hr>
@@ -39,7 +44,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="addmission" id="addmission_form" value="1" >
-                            Selected for the {{ $application_details->program }} program.
+                            Selected for the {{ $cpf_details->program }} @if($cpf_details->program == 'Direct job') ({{ $cpf_details->job_feild }}) @endif program.
                         </label>
                     </div>
                 </div>
@@ -49,7 +54,7 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="addmission" id="addmission_form" value="3">
-                            Selected for the {{ $application_details->program }} program with the condition.
+                            Selected for the {{ $cpf_details->program }} @if($cpf_details->program == 'Direct job') ({{ $cpf_details->job_feild }}) @endif program with the condition.
                         </label>
                     </div>
                 </div>
@@ -81,7 +86,7 @@
                     <textarea name="comments" class="form-control" id="comments_form" cols="30" rows="5"></textarea>
                 </div>
             </div>
-            <input type="hidden" name="appli_id" value="{{ $application_details->candidate_id }}">
+            <input type="hidden" name="appli_id" value="{{ $cpf_details->cpf_id }}">
         </form>
         <hr>
         <div class="row">
@@ -91,13 +96,13 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p>Datum :@php if($application_details->status_date != null ){echo $application_details->status_date; }else{ echo date('d.m.Y');} @endphp, Unterschrift/Stempel prufer(n).</p>
+                <p>Datum :@php if($cpf_details->status_date != null ){echo $cpf_details->status_date; }else{ echo date('d.m.Y');} @endphp, Unterschrift/Stempel prufer(n).</p>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-md-3">
-                <button type="button" class="btn btn-block btn-success" id="btn-email" candy_id_form="{{ $application_details->candidate_id }}">Email Aseesment form</button>
+                <button type="button" class="btn btn-block btn-success" id="btn-email" cpf_id="{{ $cpf_details->cpf_id }}">Email Aseesment form</button>
             </div>
             <div class="col-md-3">
                 <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Aseesment form</button>
@@ -109,11 +114,11 @@
     $('document').ready(function(){
         $('#btn-email').click(function(){
             let comment_info = $('#comments_form').val()
-            let candy_id_info = $(this).attr('candy_id_form');
+            let cpf_id = $(this).attr('cpf_id');
             // let addmission_info = $('#addmission_form').val();
             let addmission_info = $('input[name="addmission"]:checked').val();
 
-            $('#appli_id').val(candy_id_info);
+            $('#appli_id').val(cpf_id);
             $('#comments').val(comment_info);
             $('#addmission').val(addmission_info);
 

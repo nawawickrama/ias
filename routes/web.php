@@ -35,17 +35,17 @@ Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'ind
 //Admin Application 
 Route::get('/admin/pending-requests', [ApplicationController::class, 'pending_cpf'])->name('pending-requests');
 Route::get('/admin/application/view/{candyId}', [ApplicationController::class, 'cpf_view'])->name('view-application');
-Route::get('/admin/application/download/{candyId}', [ApplicationController::class, 'cpf_download'])->name('download-application');
+Route::get('/admin/application/download/{cpfId}', [ApplicationController::class, 'cpf_download'])->name('download-application');
 
 Route::get('/admin/approved-requests', [ApplicationController::class, 'select_cpf'])->name('approved-requests');
 Route::get('/admin/waiting-requests', [ApplicationController::class, 'select_cpf_by_conditions'])->name('waiting-requests');
 Route::get('/admin/rejected-requests', [ApplicationController::class, 'rejected_cpf'])->name('rejected-requests');
 
-Route::post('/admin/covert-pending', [ApplicationController::class, 'cpf_back_to_pending'])->name('convert_pending');
+Route::post('/admin/covert-pending', [ApplicationController::class, 'cpf_rollback'])->name('convert_pending');
 
 
 //Admin Assesment Form 
-Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
+Route::get('/admin/assessment-form/{cpfId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
 Route::post('/admin/assessment-email/', [ApplicationController::class, 'email_assestment_form'])->name('email_assessment_form');
 Route::post('/admin/assessment-down/', [ApplicationController::class, 'download_assestment_form'])->name('download_assessment_form');
 Route::post('/admin/assessment-down-approve/', [ApplicationController::class, 'download_assestment_form_by_approve'])->name('download_assessment_form_by_approve');

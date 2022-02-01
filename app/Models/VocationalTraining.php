@@ -18,6 +18,11 @@ class VocationalTraining extends Model
         'complete_year',
         'result_percentage',
         'duration',
-        'candidate_id'
+        'cpf_id'
     ];
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class, 'cpf_id');
+    }
 }

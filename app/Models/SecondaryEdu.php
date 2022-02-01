@@ -18,7 +18,12 @@ class SecondaryEdu extends Model
         'duration',
         'result_percentage',
         'sec_edu_type',
-        'candidate_id'
+        'cpf_id'
 
     ];
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class, 'cpf_id');
+    }
 }

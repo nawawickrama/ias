@@ -11,6 +11,7 @@ use App\Models\HigherEdu;
 use App\Models\SecondaryEdu;
 use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -67,13 +68,13 @@ class CpfController extends Controller
             'agree' => 'required',
         ]);
 
-        if(request('program') == 'Direct job'){
+        if (request('program') == 'Direct job') {
             $request->validate([
                 'job_feild' => 'required',
             ]);
         }
 
-        if(request('secondary_school') != NULL){
+        if (request('secondary_school') != NULL) {
             $request->validate([
                 'sec_from' => 'required|numeric',
                 'sec_to' => 'required|numeric',
@@ -81,7 +82,7 @@ class CpfController extends Controller
             ]);
         }
 
-        if(request('higher_sec_school') != NULL){
+        if (request('higher_sec_school') != NULL) {
             $request->validate([
                 'higher_from' => 'required|numeric',
                 'higher_to' => 'required|numeric',
@@ -89,7 +90,7 @@ class CpfController extends Controller
             ]);
         }
 
-        if(request('v_training_tick')){
+        if (request('v_training_tick')) {
             $request->validate([
                 'v_field' => 'required',
                 'v_complete_year' => 'required|numeric',
@@ -98,7 +99,7 @@ class CpfController extends Controller
             ]);
         }
 
-        if(request('b_uni') != NULL){
+        if (request('b_uni') != NULL) {
             $request->validate([
                 'b_major_sub' => 'required',
                 'b_year' => 'required|numeric',
@@ -106,7 +107,7 @@ class CpfController extends Controller
             ]);
         }
 
-        if(request('m_uni') != NULL){
+        if (request('m_uni') != NULL) {
             $request->validate([
                 'm_major_sub' => 'required',
                 'm_year' => 'required|numeric',
@@ -114,34 +115,42 @@ class CpfController extends Controller
             ]);
         }
 
-        if(request('w_experience_tick')){
+        if (request('w_experience_tick')) {
             $request->validate([
                 'w_exp_field' => 'required',
                 'w_year' => 'required|numeric',
             ]);
         }
 
-        if(request('german_language') == '1'){
+        if (request('german_language') == '1') {
             $request->validate([
                 'german_level' => 'required',
             ]);
         }
 
-        try{
-            DB::transaction(function() {
-                $candidate_info = Candidate::create([
-                    'first_name' => request('first_name'),
-                    'sur_name' => request('sur_name'),
-                    'sex' => request('sex'),
-                    'dob' => request('dob'),
-                    'nationality' => request('nationality'),
-                    'telephone' => request('telephone'),
-                    'email' => request('email'),
-                    'address' => request('address'),
-                    'country' => request('country'),
-                ]);
-        
-                Cpf::create([
+        //check candidate
+        $candidate_details = Candidate::where('email', request('email'));
+
+        try {
+            DB::transaction(function () use ($candidate_details) {
+
+                if ($candidate_details->count() > 0) {
+                    $candidate_info = $candidate_details->first();
+                } else {
+                    $candidate_info = Candidate::create([
+                        'first_name' => request('first_name'),
+                        'sur_name' => request('sur_name'),
+                        'sex' => request('sex'),
+                        'dob' => request('dob'),
+                        'nationality' => request('nationality'),
+                        'telephone' => request('telephone'),
+                        'email' => request('email'),
+                        'address' => request('address'),
+                        'country' => request('country'),
+                    ]);
+                }
+
+                $cpf_info = Cpf::create([
                     'program' => request('program'),
                     'job_feild' => request('job_feild'),
                     'ge_lang' => request('german_language'),
@@ -153,21 +162,92 @@ class CpfController extends Controller
                     'comment_institute' => request('comment_institute'),
                     'candidate_id' => $candidate_info->candidate_id,
                 ]);
+
+
+                if (request('secondary_school') != NULL) {
+                    SecondaryEdu::create([
+                        'years_level' => request('secondary_school'),
+                        'duration' => request('sec_from') - request('sec_to'),
+                        'result_percentage' => request('sec_result'),
+                        'sec_edu_type' => 'Secondary School',
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
+
+                if (request('higher_sec_school') != NULL) {
+                    SecondaryEdu::create([
+                        'years_level' => request('higher_sec_school'),
+                        'duration' => request('higher_from') - request('higher_to'),
+                        'result_percentage' => request('higher_result'),
+                        'sec_edu_type' => 'Higher School',
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
+
+                if (request('v_training_tick')) {
+                    VocationalTraining::create([
+                        'field' => request('v_field'),
+                        'complete_year' => request('v_complete_year'),
+                        'result_percentage' => request('v_result'),
+                        'duration' => request('v_duration'),
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
+
+                if (request('w_experience_tick')) {
+                    WorkExperience::create([
+                        'field' => request('w_exp_field'),
+                        'duration' => request('w_year'),
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
+
+                if (request('b_uni') != NULL) {
+                    HigherEdu::create([
+                        'university' => request('b_uni'),
+                        'major_subject' => request('b_major_sub'),
+                        'year' => request('b_year'),
+                        'result_percentage' => request('b_result'),
+                        'higher_edu_type' => 'Bachelors',
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
+
+                if (request('m_uni') != NULL) {
+                    HigherEdu::create([
+                        'university' => request('m_uni'),
+                        'major_subject' => request('m_major_sub'),
+                        'year' => request('m_year'),
+                        'result_percentage' => request('m_result'),
+                        'higher_edu_type' => 'Masters',
+                        'cpf_id' => $cpf_info->cpf_id,
+                    ]);
+                }
             });
-        }catch(Throwable $e){
-            // dd($e);
+        } catch (Throwable $e) {
+            dd($e);
             return back()->with(['error' => 'Application submision failed.', 'error_type' => 'error']);
         }
 
         return back()->with(['success' => 'Application submision successful.']);
-        
     }
 
     public function check_pending_cpf()
     {
-        $app_count = Candidate::where('application_status', '2')->count();
+        /** @var User $user */
+        $user = Auth::user();
+        $permission = $user->can('pending-request.view');
 
-        return response()->json($app_count);
+        if ($permission) {
+            $app_count = Cpf::where('application_status', '2');
+
+            if ($user->hasRole('Agent')) {
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $app_count = $app_count->where('agent_id', $agent_id);
+            }
+
+            $app_count = $app_count->count();
+            return response()->json($app_count);
+        }
     }
 }
-

@@ -25,23 +25,8 @@ class Candidate extends Model
         'country',
     ];
 
-    public function sec_sch()
+    public function cpf()
     {
-        return $this->hasMany(SecondaryEdu::class, 'candidate_id');
-    }
-
-    public function vocational_t()
-    {
-        return $this->hasOne(VocationalTraining::class, 'candidate_id');
-    }
-
-    public function higher_edu()
-    {
-        return $this->hasMany(HigherEdu::class, 'candidate_id');
-    }
-
-    public function work_exp()
-    {
-        return $this->hasMany(WorkExperience::class, 'candidate_id');
+        return $this->hasMany(Cpf::class, 'candidate_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\Candidate;
+use App\Models\Cpf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +24,19 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('pending-candidates.view');
+        $permission = $user->can('pending-request.view');
        
         if($permission){
-            $application_details = Candidate::where('application_status', 2)->get();
-            return view('admin.requests.pending-requests')->with(['application_details' => $application_details]);
+            
+            $cpf_details = Cpf::where('application_status', 2);
+
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->get();
+            return view('admin.requests.pending-requests')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -39,11 +48,18 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('selected-candidates.view');
+        $permission = $user->can('selected-request.view');
        
         if($permission){
-            $application_details = Candidate::where('application_status', 1)->get();
-            return view('admin.requests.approved-requests')->with(['application_details' => $application_details]);
+            $cpf_details = Cpf::where('application_status', 1);
+
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->get();
+            return view('admin.requests.approved-requests')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -55,11 +71,19 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('selected-candidates-under-condition.view');
+        $permission = $user->can('selected-under-condition-request.view');
        
         if($permission){
-            $application_details = Candidate::where('application_status', 3)->get();
-            return view('admin.requests.waiting-requests')->with(['application_details' => $application_details]);
+            
+            $cpf_details = Cpf::where('application_status', 3);
+            
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->get();
+            return view('admin.requests.waiting-requests')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -71,11 +95,18 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('rejected-candidates.view');
+        $permission = $user->can('rejected-request.view');
        
         if($permission){
-            $application_details = Candidate::where('application_status', 0)->get();
-            return view('admin.requests.rejected-requests')->with(['application_details' => $application_details]);
+            $cpf_details = Cpf::where('application_status', 0);
+
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->get();
+            return view('admin.requests.rejected-requests')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -83,15 +114,22 @@ class ApplicationController extends Controller
         }
     }
 
-    public function cpf_view($candidate_id)
+    public function cpf_view($cpf_id)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('application.view');
+        $permission = $user->can('cpf.view');
 
         if($permission){
-            $application_details = Candidate::find($candidate_id);
-            return view('admin.requests.view-application')->with(['application_details' => $application_details]);
+            $cpf_details = Cpf::where('cpf_id', $cpf_id);
+            
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->first();
+            return view('admin.requests.view-application')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -101,22 +139,28 @@ class ApplicationController extends Controller
         
     }
 
-    public function cpf_download($candidate_id)
+    public function cpf_download($cpfId)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('application-download');
+        $permission = $user->can('cpf.download');
 
         if($permission){
-            $application_details = Candidate::find($candidate_id);
-            $sec_school = Candidate::find($application_details->candidate_id)->sec_sch;
-            $vacational = Candidate::find($application_details->candidate_id)->vocational_t;
-            $higher_edu = Candidate::find($application_details->candidate_id)->higher_edu;
-            $work_exp = Candidate::find($application_details->candidate_id)->work_exp;
+            $cpf_details = Cpf::where('cpf_id', $cpfId);
+        
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
 
-            // $pdf = PDF::loadView('admin.requests.download-application', ['application_details' => $application_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
-            // return $pdf->download('invoice.pdf');
-            return view('admin.requests.download-application')->with(['application_details' => $application_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
+            $cpf_details = $cpf_details->first();
+
+            $sec_school = $cpf_details->sec_sch;
+            $vacational = $cpf_details->vocational_t;
+            $higher_edu = $cpf_details->higher_edu;
+            $work_exp = $cpf_details->work_exp;
+
+            return view('admin.requests.download-application')->with(['cpf_details' => $cpf_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
 
         }else{
             Auth::logout();
@@ -124,15 +168,22 @@ class ApplicationController extends Controller
         }
     }
 
-    public function send_assestment_form($appli_id)
+    public function send_assestment_form($cpfId)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assesment-form-send');
+        $permission = $user->can('assestment-form.download');
         
         if($permission){
-            $application_details = Candidate::find($appli_id);
-            return view('admin.assessment.form')->with(['application_details' => $application_details]);
+            $cpf_details = Cpf::where('cpf_id', $cpfId);
+
+            if($user->hasRole('Agent')){
+                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
+                $cpf_details = $cpf_details->where('agent_id', $agent_id);
+            }
+
+            $cpf_details = $cpf_details->first();
+            return view('admin.assessment.form')->with(['cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -144,19 +195,20 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assesment-form-email');
+        $permission = $user->can('assestment-form.download');
 
         if($permission){
             
-            $appli_id = request('appli_id');
+            $cpf_id = request('appli_id');
             $comments = request('comments');
             $addmission = request('addmission');
             $email_method = request('email_method');
 
-            $application_details = Candidate::find($appli_id);
+            $cpf_details = Cpf::find($cpf_id);
+            $candidate = $cpf_details->candidate;
 
             try{
-                $application_details->update([
+                $cpf_details->update([
                     'application_status' => $addmission,
                     'comment_institute' => $comments,
                     'status_date' => date('Y-m-d'),
@@ -165,24 +217,24 @@ class ApplicationController extends Controller
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
 
-            $data['program'] = $application_details->program;
-            $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
-            $data['address'] = $application_details->address.' '.$application_details->country;
-            $data['adimssion'] = $application_details->application_status;
-            $data['comment_institute'] = $application_details->comment_institute;
-            $data['status_date'] = $application_details->status_date;
+            $data['program'] = $cpf_details->program;
+            $data['name'] = $candidate->first_name.' '.$candidate->sur_name;
+            $data['address'] = $candidate->address.' '.$candidate->country;
+            $data['adimssion'] = $cpf_details->application_status;
+            $data['comment_institute'] = $cpf_details->comment_institute;
+            $data['status_date'] = $cpf_details->status_date;
 
             $pdf = PDF::loadView('admin.assessment.email', $data);
 
             if($email_method == 1){
-                Mail::send('admin.assessment.email', $data, function($message)use($pdf, $application_details) {
-                    $message->to($application_details->email)
+                Mail::send('admin.assessment.email', $data, function($message)use($pdf, $candidate) {
+                    $message->to($candidate->email)
                             ->subject('Addmission Details')
                             ->attachData($pdf->output(), "admission.pdf");
                 });
             }elseif($email_method == 2){
-                if($application_details->agent_id != null){
-                    $agent_email = Agent::find($application_details->agent_id)->agent_email;
+                if($cpf_details->agent_id != null){
+                    $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email) {
                         $message->to($agent_email)
                                 ->subject('Addmission Details')
@@ -193,9 +245,9 @@ class ApplicationController extends Controller
                 }
                
             }elseif($email_method == 3){
-                if($application_details->agent_id != null){
-                    $agent_email = Agent::find($application_details->agent_id)->agent_email;
-                    $st_mail = $application_details->email;
+                if($cpf_details->agent_id != null){
+                    $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
+                    $st_mail = $candidate->email;
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email, $st_mail) {
                         $message->to($agent_email)
                                 ->cc($st_mail)
@@ -204,8 +256,8 @@ class ApplicationController extends Controller
                     });
                 }else{
 
-                    Mail::send('admin.assessment.email', $data, function($message)use($pdf, $application_details) {
-                        $message->to($application_details->email)
+                    Mail::send('admin.assessment.email', $data, function($message)use($pdf, $candidate) {
+                        $message->to($candidate->email)
                                 ->subject('Addmission Details')
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
@@ -229,18 +281,18 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assesment-form-download');
+        $permission = $user->can('assestment-form.download');
 
         if($permission){
             
-            $appli_id = request('appli_id');
+            $cpf_id = request('appli_id');
             $comments = request('comments');
             $addmission = request('addmission');
 
-            $application_details = Candidate::find($appli_id);
+            $cpf_details = Cpf::find($cpf_id);
 
             try{
-                $application_details->update([
+                $cpf_details->update([
                     'application_status' => $addmission,
                     'comment_institute' => $comments,
                     'status_date' => date('Y-m-d'),
@@ -248,23 +300,8 @@ class ApplicationController extends Controller
             }catch(Throwable $e){
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
-            // $data['program'] = $application_details->program;
-            // $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
-            // $data['address'] = $application_details->address.' '.$application_details->country;
-            // $data['adimssion'] = $application_details->application_status;
-            // $data['comment_institute'] = $application_details->comment_institute;
-            // $data['status_date'] = $application_details->status_date;
-
-
-            // $pdf = PDF::loadView('admin.assessment.pdf', $data);
-            // return $pdf->download($application_details->name.'_'.time().'.pdf');
-            return view('admin.assessment.pdf')->with(['application_details' => $application_details]);
-
-
             
-            return back()->with(['success' => 'succesful.']);
-
-
+            return view('admin.assessment.pdf')->with(['cpf_details' => $cpf_details]);
         }else{
             Auth::logout();
             abort(403);
@@ -275,28 +312,15 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assesment-form-download');
+        $permission = $user->can('assestment-form.download');
 
         if($permission){
             
-            $appli_id = request('appli_id');
+            $cpf_id = request('appli_id');
 
-            $application_details = Candidate::find($appli_id);
+            $cpf_details = Cpf::find($cpf_id);
 
-            // $data['program'] = $application_details->program;
-            // $data['name'] = $application_details->first_name.' '.$application_details->sur_name;
-            // $data['address'] = $application_details->address.' '.$application_details->country;
-            // $data['adimssion'] = $application_details->application_status;
-            // $data['comment_institute'] = $application_details->comment_institute;
-            // $data['status_date'] = $application_details->status_date;
-
-
-            // $pdf = PDF::loadView('admin.assessment.pdf', $data);
-            // return $pdf->download($application_details->name.'_'.time().'.pdf');
-            
-            // return back()->with(['success' => 'succesful.']);
-
-            return view('admin.assessment.pdf')->with(['application_details' => $application_details]);
+            return view('admin.assessment.pdf')->with(['cpf_details' => $cpf_details]);
 
 
         }else{
@@ -305,24 +329,24 @@ class ApplicationController extends Controller
         }
     }
 
-    public function cpf_back_to_pending(Request $request)
+    public function cpf_rollback(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('application-reverse');
+        $permission = $user->can('selected-under-condition-request.rollback') || $user->can('rejected-request.rollback');
 
         if($permission){
 
-            $appli_id = request('appli_id');
-            $application_details = Candidate::find($appli_id);
+            $cpf_id = request('appli_id');
+            $cpf_details = cpf::find($cpf_id);
             
             try{
-                $application_details->update([
+                $cpf_details->update([
                     'application_status' => '2'
                 ]);
 
             }catch(Throwable $e){
-                return back()->with(['error' => 'Application Reverse Failed', 'error_type' => 'error']);
+                return back()->with(['error' => 'Application Rollback Failed', 'error_type' => 'error']);
             }
 
             return back()->with(['success' => 'succesful.']);
