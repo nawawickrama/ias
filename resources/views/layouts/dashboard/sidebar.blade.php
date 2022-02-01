@@ -21,47 +21,68 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{route('send-mail')}}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Send Email</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">Student Management</li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails" id="req-ex">
-                    <i class="link-icon" data-feather="mail"></i>
-                    <span class="link-title">Student Requests</span> &nbsp;
-                    <div class="spinner-grow spinner-grow-sm text-white invisible pending-header-req" role="status">
-                        <span class="badge badge-light badge-pill bg-warning text-black text-header-indicater"></span>
+            @can('email-send.create')
+                <li class="nav-item">
+                    <a href="{{ route('send-mail') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Send Email</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('pending-request.view' || 'selected-request.view' || 'selected-under-condition-request.view' ||
+                'rejected-request.view')
+                <li class="nav-item nav-category">Student Management</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                        aria-controls="emails" id="req-ex">
+                        <i class="link-icon" data-feather="mail"></i>
+                        <span class="link-title">Student Requests</span> &nbsp;
+                        <div class="spinner-grow spinner-grow-sm text-white invisible pending-header-req" role="status">
+                            <span class="badge badge-light badge-pill bg-warning text-black text-header-indicater"></span>
+                        </div>
+                        <i class="link-arrow" data-feather="chevron-down" id="toggle-indicater"></i>
+                    </a>
+                    <div class="collapse" id="emails">
+                        <ul class="nav sub-menu">
+
+                            @can('pending-request.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('pending-requests') }}" class="nav-link">Pending Requests &nbsp;
+                                        <div class="spinner-grow spinner-grow-sm text-white invisible pending-sub-req"
+                                            role="status">
+                                            <span
+                                                class="badge badge-light badge-pill bg-danger text-white text-sub-indicater"></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('selected-request.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('approved-requests') }}" class="nav-link">Selected Requests</a>
+                                </li>
+                            @endcan
+                            @can('selected-under-condition-request.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('waiting-requests') }}" class="nav-link">Selected Under
+                                        Condition</a>
+                                </li>
+                            @endcan
+                            @can('rejected-request.view')
+                                <li class="nav-item">
+                                    <a href="{{ route('rejected-requests') }}" class="nav-link">Rejected Requests</a>
+                                </li>
+                            @endcan
+
+                        </ul>
                     </div>
-                    <i class="link-arrow" data-feather="chevron-down" id="toggle-indicater"></i>
-                </a>
-                <div class="collapse" id="emails">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{route('pending-requests')}}" class="nav-link">Pending Requests &nbsp;
-                                <div class="spinner-grow spinner-grow-sm text-white invisible pending-sub-req" role="status">
-                                    <span class="badge badge-light badge-pill bg-danger text-white text-sub-indicater"></span>
-                                </div>
-                            </a>
-                            
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('approved-requests')}}" class="nav-link">Selected Requests</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('waiting-requests')}}" class="nav-link">Selected Under Condition</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('rejected-requests')}}" class="nav-link">Rejected Requests</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                </li>
+            @endcan
+            
             <li class="nav-item nav-category">User Management</li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#userser" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link" data-toggle="collapse" href="#userser" role="button" aria-expanded="false"
+                    aria-controls="emails">
                     <i class="link-icon" data-feather="mail"></i>
                     <span class="link-title">User Settings</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
@@ -69,23 +90,25 @@
                 <div class="collapse" id="userser">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{route('role_get')}}" class="nav-link">Role Management</a>
+                            <a href="{{ route('role_get') }}" class="nav-link">Role Management</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('permission_role_get')}}" class="nav-link">Permission Management</a>
+                            <a href="{{ route('permission_role_get') }}" class="nav-link">Permission
+                                Management</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('user-settings')}}" class="nav-link">User Management</a>
+                            <a href="{{ route('user-settings') }}" class="nav-link">User Management</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('agents')}}" class="nav-link">Agents</a>
+                            <a href="{{ route('agents') }}" class="nav-link">Agents</a>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item nav-category">Web Settings</li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#settings" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link" data-toggle="collapse" href="#settings" role="button" aria-expanded="false"
+                    aria-controls="emails">
                     <i class="link-icon" data-feather="mail"></i>
                     <span class="link-title">Settings</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
@@ -93,7 +116,7 @@
                 <div class="collapse" id="settings">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{route('smtp')}}" class="nav-link">SMTP Settings</a>
+                            <a href="{{ route('smtp') }}" class="nav-link">SMTP Settings</a>
                         </li>
                     </ul>
                 </div>
@@ -103,7 +126,7 @@
 </nav>
 
 <script>
-    $('document').ready(function(){
+    $('document').ready(function() {
         auto();
 
         setInterval(() => {
@@ -112,28 +135,28 @@
 
     });
 
-    function indicator(){
+    function indicator() {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url:"{{ route('check_pending_application') }}",
-            type:'POST',
-            dataType:"json",
-            success:function(data){
-                if(data > 0){
+            url: "{{ route('check_pending_cpf') }}",
+            type: 'POST',
+            dataType: "json",
+            success: function(data) {
+                if (data > 0) {
 
-                    $('#req-ex').click(function(){
+                    $('#req-ex').click(function() {
                         let area = $(this).attr('aria-expanded');
 
-                        if(area == 'false'){
+                        if (area == 'false') {
                             // alert(1);
                             $('.text-sub-indicater').text(data);
                             $('.pending-sub-req').removeClass('invisible');
 
                             $('.text-header-indicater').text('');
                             $('.pending-header-req').class('invisible');
-                        }else{
+                        } else {
                             $('.text-header-indicater').text(data);
                             $('.pending-header-req').removeClass('invisible');
 
@@ -141,35 +164,32 @@
                             $('.pending-sub-req').class('invisible');
                         }
                     });
-                    
-                    // $('.text-header-indicater').text(data);
-                    // $('.pending-header-req').removeClass('invisible');
                 }
             }
         });
     };
 
-    function auto(){
+    function auto() {
 
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url:"{{ route('check_pending_application') }}",
-            type:'POST',
-            dataType:"json",
-            success:function(data){
-                if(data > 0){
+            url: "{{ route('check_pending_cpf') }}",
+            type: 'POST',
+            dataType: "json",
+            success: function(data) {
+                if (data > 0) {
                     let ss = $('#req-ex').attr('aria-expanded');
 
-                    if(ss == 'false'){
+                    if (ss == 'false') {
                         // alert(1);
                         $('.text-header-indicater').text(data);
                         $('.pending-header-req').removeClass('invisible');
-                            
+
                         $('.text-sub-indicater').text('');
                         $('.pending-sub-req').class('invisible');
-                    }else{
+                    } else {
                         $('.text-sub-indicater').text(data);
                         $('.pending-sub-req').removeClass('invisible');
 
@@ -179,6 +199,6 @@
                 }
             }
         });
-        
+
     };
 </script>

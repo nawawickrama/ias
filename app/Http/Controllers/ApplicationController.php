@@ -2,26 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\sendEmail;
 use App\Models\Agent;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Throwable;
 
 class ApplicationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'actived']);
+        $this->middleware(['auth', 'actived', 'agent']);
     }
 
-    public function pending_application(Request $request)
+    public function pending_cpf(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -37,7 +35,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function select_application(Request $request)
+    public function select_cpf(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -53,7 +51,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function select_application_by_conditions(Request $request)
+    public function select_cpf_by_conditions(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -69,7 +67,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function rejected_application(Request $request)
+    public function rejected_cpf(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -85,7 +83,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function appli_view($candidate_id)
+    public function cpf_view($candidate_id)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -103,7 +101,7 @@ class ApplicationController extends Controller
         
     }
 
-    public function appli_download($candidate_id)
+    public function cpf_download($candidate_id)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -126,7 +124,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function send_assestment($appli_id)
+    public function send_assestment_form($appli_id)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -142,7 +140,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function email_assestment(Request $request)
+    public function email_assestment_form(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -227,7 +225,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function download_form(Request $request)
+    public function download_assestment_form(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -273,7 +271,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function download_form_by_approve(Request $request)
+    public function download_assestment_form_by_approve(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -307,7 +305,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function convert_pending(Request $request)
+    public function cpf_back_to_pending(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -333,72 +331,6 @@ class ApplicationController extends Controller
             Auth::logout();
             abort(403);
         }
-    }
-
-    public function send_email_page(Request $request)
-    {
-        /** @var App\Models\User $user */
-        $user = Auth::user();
-        $permission = $user->can('email-send.view');
-
-        if($permission){
-            
-            return view('admin.mail.send-mail');
-        
-        }else{
-            Auth::logout();
-            abort(403);
-        }
-    }
-
-    public function send_email(Request $request)
-    {
-        /** @var App\Models\User $user */
-        $user = Auth::user();
-        $permission = $user->can('email-send.create');
-
-        if($permission){
-            
-            $subject = request('subject');
-            $data = request('body');
-            $email = request('email');
-
-            try{
-                Mail::to($email)->send( new sendEmail($data, $subject));
-
-            }catch(Throwable){
-                return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
-            }
-
-            // return redirect(route('send-mail'))->with(['success' => 'succesful.']);
-            // Session::put('msg', 'Email Send Successfull');
-            Session::put('success', '1');
-            return Redirect::route('send-mail');
-            // return back()->with(['success' => 'succesful.']);
-
-        
-        }else{
-            Auth::logout();
-            abort(403);
-        }
-    }
-
-    public function email_button(Request $request)
-    {
-        /** @var App\Models\User $user */
-        $user = Auth::user();
-        $permission = $user->can('email-send.create');
-
-        if($permission){
-        
-            $email_add = request('email');
-            return view('admin.mail.send-mail')->with(['email_add' => $email_add]);
-        
-        }else{
-            Auth::logout();
-            abort(403);
-        }
-
     }
     
 }

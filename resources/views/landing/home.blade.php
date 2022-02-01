@@ -9,7 +9,7 @@
                     <p class="text-center mt-2">IAS College - Candidate Profile Form (CPF)</p>
                 </div>
                 <di class="card-body">
-                    <form action="{{ route('reg_candi') }}" method="POST" id="form-data">
+                    <form action="{{ route('reg_candidates') }}" method="POST" id="form-data">
                         @csrf
                         <div class="form-row">
                             <p class="font-weight-bold">Select the program</p>
@@ -20,11 +20,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="" value="STEP" @if (old('project') == 'STEP') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     STEP (Study Eligibility Program) is a Pre-bachelors program for students who completed
                                     their 12 yrs of Schooling
                                 </label>
@@ -34,11 +30,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="" value="E-STEP" @if (old('project') == 'E-STEP') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     E-STEP (English -Study Eligibility Program) is a Pre-bachelors program for students who
                                     completed their 12 yrs of Schooling
                                 </label>
@@ -48,11 +40,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="" value="MEP" @if (old('project') == 'MEP') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     MEP (Master Eligibility Program) is Pre- Master program for students who wish to start
                                     their Masters In Germany
                                 </label>
@@ -62,11 +50,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="" value="PAP" @if (old('project') == 'PAP') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     PAP PAP( German license preparation program for foreign nurses seeking jobs in Germany).
                                 </label>
                             </div>
@@ -75,11 +59,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="" value="GVET" @if (old('project') == 'GVET') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     GVET Vocational Training
                                 </label>
                             </div>
@@ -88,11 +68,7 @@
                                     <input type="radio"
                                         class="form-check-input program-radio @error('project') is-invalid @enderror"
                                         name="project" id="direct_job" value="Direct job" @if (old('project') == 'Direct job') {{ 'checked' }} @endif>
-                                    {{-- @error('project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+
                                     Directs jobs ( Technical and IT fields )
                                 </label>
                             </div>
@@ -243,9 +219,6 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                {{-- <input type="text" class="form-control @error('country') is-invalid @enderror"
-                                    name="country" id="" aria-describedby="helpId" placeholder="Country"
-                                    value="{{ old('country') }}"> --}}
                                 <select name="country" id="country"
                                     class="js-example-basic-single w-100 @error('country') is-invalid @enderror">
                                     <option selected disabled>Select Country</option>
@@ -427,7 +400,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="">Name of the university :</label>
-                                <input type="text" class="form-control @error('b_uni') is-invalid @enderror" name="b_uni"
+                                <input type="text" name="b_uni" class="form-control @error('b_uni') is-invalid @enderror"
                                     id="" aria-describedby="helpId" placeholder="" value="{{ old('b_uni') }}">
                                 @error('b_uni')
                                     <span class="invalid-feedback" role="alert">
@@ -523,7 +496,7 @@
                             <div class="form-check col-md-12">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="w_experience_tick"
-                                        id="expirience_box" value="1" @if(old('w_experience_tick') == 1) checked @endif>
+                                        id="expirience_box" value="1" @if (old('w_experience_tick') == 1) checked @endif>
                                     Working experience?
                                 </label>
                             </div>
@@ -532,8 +505,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="">Name of the field that you work :</label>
-                                    <input type="text" class="form-control @error('w_exp_field') is-invalid @enderror"
-                                        name="w_exp_field" id="expirience_text" aria-describedby="helpId" placeholder=""
+                                    <input name="w_exp_field" type="text"
+                                        class="form-control @error('w_exp_field') is-invalid @enderror"
+                                        id="expirience_text" aria-describedby="helpId" placeholder=""
                                         value="{{ old('w_exp_field') }}">
                                     @error('w_exp_field')
                                         <span class="invalid-feedback" role="alert">
@@ -584,11 +558,11 @@
                                     <label class="form-check-label">
                                         <input class="form-check-input @error('german_level') is-invalid @enderror"
                                             type="radio" name="german_level" id="" value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
-                                        {{-- @error('german_level')
+                                        @error('german_level')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror --}}
+                                        @enderror
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -657,11 +631,7 @@
                                         <input class="form-check-input how_to_know" type="radio" name="how_to_know"
                                             value="Agent/Educational Consultancy"> Agent /
                                         Educational Consultancy
-                                        {{-- @error('how_to_know')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror --}}
+
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -669,22 +639,14 @@
                                         <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
                                             value="Facebook Advertiesments"> Facebook
                                         Advertiesments
-                                        {{-- @error('how_to_know')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror --}}
+
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
                                             value="Promotional Email"> Promotional Email
-                                        {{-- @error('how_to_know')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror --}}
+
                                     </label>
                                 </div>
                             </div>
@@ -751,8 +713,9 @@
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input class="form-check-input @error('agree') is-invalid @enderror"
-                                            type="checkbox" name="agree" id="aggree" value="I agree to all terms and conditions"
-                                            required> I agree to all terms and conditions
+                                            type="checkbox" name="agree" id="aggree"
+                                            value="I agree to all terms and conditions" required> I agree to all terms and
+                                        conditions
                                         @error('agree')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -764,7 +727,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <button type="submit" class="btn btn-primary btn-block btn-submit">Submit Application</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-submit">Submit
+                                    Application</button>
                             </div>
                         </div>
                     </form>
@@ -774,18 +738,13 @@
     </div>
 
     <script>
-        // window.onload = function() {
-        //     program();
-        //     v_training();
-        // };
-
         $('document').ready(function() {
             $('#job_field').hide();
             $('#vocational_fields').hide();
             $('#expirience_field').hide();
             $('#agent_field').hide();
             $('#ge_level_field').hide();
-            
+
 
             $('.program-radio').change(function() {
                 program();
@@ -826,9 +785,6 @@
                 });
             });
 
-            // $('.btn-submit').click(function(){
-            //     $('#form-data').submit();
-            // });
         });
 
         function program() {
@@ -873,7 +829,7 @@
 
         function agent() {
             let select_agent = $('input[name="how_to_know"]:checked').val();
-            
+
             if (select_agent == 'Agent/Educational Consultancy') {
                 $('#agent_field').slideDown();
                 $('#agent_text').focus();

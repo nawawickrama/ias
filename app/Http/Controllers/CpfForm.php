@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Agent;
 use App\Models\Candidate;
 use App\Models\Country;
@@ -9,25 +10,19 @@ use App\Models\HigherEdu;
 use App\Models\SecondaryEdu;
 use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-class CandidareController extends Controller
+class CpfForm extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
-
-    public function application()
+    public function cpf()
     {
         $country = Country::all();
         $agent_details = Agent::where('agent_status', 1)->get();
         return view('landing.home')->with(['agent_details' => $agent_details, 'country' => $country]);
     }
 
-    public function reg_candi(Request $request)
+    public function reg_candidates(Request $request)
     {
         $request->validate([
             'project' => 'required',
@@ -220,7 +215,53 @@ class CandidareController extends Controller
         return back()->with(['success' => 'Form submition succesful.']);
     }
 
-    public function check_pending_application()
+    public function cpf_new(Request $request)
+    {
+        $request->validate([
+            //cpf
+            'project' => 'required',
+
+            //candidate
+            'first_name' => 'required',
+            'sur_name' => 'required',
+            'sex' => 'required',
+            'dob' => 'required|date',
+            'nationality' => 'required',
+            'telephone' => 'required|numeric',
+            'email' => 'required|email',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'zip' => 'required',
+            'country' => 'required',
+
+            //edu
+            'secondary_school' => 'nullable',
+            'higher_sec_school' => 'nullable',
+
+            //training
+            'v_training_tick' => 'nullable',
+
+            //university
+            'b_uni' => 'nullable',
+            'm_uni' => 'nullable',
+
+            //exp & lang
+            'w_experience_tick' => 'nullable',
+            'german_language' => 'nullable',
+
+            //awaireness
+            'how_to_know' => 'required',
+            'comment' => 'nullable',
+
+            //turms and cond.
+            'agree' => 'required',
+        ]);
+
+        if()
+    }
+
+    public function check_pending_cpf()
     {
         $app_count = Candidate::where('application_status', '2')->count();
 

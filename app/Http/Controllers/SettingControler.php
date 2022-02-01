@@ -14,7 +14,7 @@ class SettingControler extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'actived']);
+        $this->middleware(['auth', 'actived', 'agent']);
     }
 
     public function smtp_page()

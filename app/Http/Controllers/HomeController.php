@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'actived', 'agent']);
     }
 
     /**
@@ -29,35 +29,6 @@ class HomeController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
 
-        // $array = [
-        //     ['permission' => ['group' => 'permission-management','name' => ['permission-management-add','permission-management-view']]],
-        //     ['permission' => ['group' => 'user-management','name' => ['user-management-add','user-management-view']]],
-        // ];
-
-        // $per_groups = Arr::pluck($array, 'permission.group');
-        // foreach($per_groups as $group){
-        //     return $names = Arr::pluck($array, 'permission.name', 'permission.group');
-
-        // }
-
-        
-        // return $names = Arr::pluck($array, 'permission.name', 'permission.group');
-        // $aa = [];
-        // $c = 0;
-        // foreach($names as $name){
-        //     foreach($name as $kk){
-        //     // return $kk;
-        //     $aa[$c] = $kk;
-        //     $c++;
-        //     }
-        // }
-
-        // return $aa;
-
-       
-
-        // Role::create(['name' => 'Super Admin']);
-        // $user->assignRole('Super Admin');
         return view('admin.home');
     }
 }

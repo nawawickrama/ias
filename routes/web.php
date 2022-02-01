@@ -2,12 +2,11 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\CandidareController;
+use App\Http\Controllers\CpfForm;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
-use App\Mail\newMailw;
-use App\Mail\NewUser;
-use App\Mail\newUser as MailNewUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,59 +33,68 @@ Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Admin Application 
-Route::get('/admin/pending-requests',[ApplicationController::class, 'pending_application'])->name('pending-requests');
-Route::get('/admin/application/view/{candyId}',[ApplicationController::class, 'appli_view'])->name('view-application');
-Route::get('/admin/application/download/{candyId}',[ApplicationController::class, 'appli_download'])->name('download-application');
+Route::get('/admin/pending-requests', [ApplicationController::class, 'pending_cpf'])->name('pending-requests');
+Route::get('/admin/application/view/{candyId}', [ApplicationController::class, 'cpf_view'])->name('view-application');
+Route::get('/admin/application/download/{candyId}', [ApplicationController::class, 'cpf_download'])->name('download-application');
 
-Route::get('/admin/approved-requests',[ApplicationController::class, 'select_application'])->name('approved-requests');
-Route::get('/admin/waiting-requests', [ApplicationController::class, 'select_application_by_conditions'])->name('waiting-requests');
-Route::get('/admin/rejected-requests', [ApplicationController::class, 'rejected_application'])->name('rejected-requests');
+Route::get('/admin/approved-requests', [ApplicationController::class, 'select_cpf'])->name('approved-requests');
+Route::get('/admin/waiting-requests', [ApplicationController::class, 'select_cpf_by_conditions'])->name('waiting-requests');
+Route::get('/admin/rejected-requests', [ApplicationController::class, 'rejected_cpf'])->name('rejected-requests');
 
-Route::post('/admin/covert-pending', [ApplicationController::class, 'convert_pending'])->name('convert_pending');
+Route::post('/admin/covert-pending', [ApplicationController::class, 'cpf_back_to_pending'])->name('convert_pending');
 
 
 //Admin Assesment Form 
-Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment'])->name('send_assessment_form');
-Route::post('/admin/assessment-email/', [ApplicationController::class, 'email_assestment'])->name('email_assessment_form');
-Route::post('/admin/assessment-down/', [ApplicationController::class, 'download_form'])->name('download_assessment_form');
-Route::post('/admin/assessment-down-approve/', [ApplicationController::class, 'download_form_by_approve'])->name('download_assessment_form_by_approve');
+Route::get('/admin/assessment-form/{appliId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
+Route::post('/admin/assessment-email/', [ApplicationController::class, 'email_assestment_form'])->name('email_assessment_form');
+Route::post('/admin/assessment-down/', [ApplicationController::class, 'download_assestment_form'])->name('download_assessment_form');
+Route::post('/admin/assessment-down-approve/', [ApplicationController::class, 'download_assestment_form_by_approve'])->name('download_assessment_form_by_approve');
 
 //Admin Settings 
-    //SMTP
-    Route::get('/admin/smtp',[SettingControler::class, 'smtp_page'])->name('smtp');
-    Route::post('/admin/smtp',[SettingControler::class, 'set_smtp'])->name('set_smtp');
+//SMTP
+Route::get('/admin/smtp', [SettingControler::class, 'smtp_page'])->name('smtp');
+Route::post('/admin/smtp', [SettingControler::class, 'set_smtp'])->name('set_smtp');
 
-    //User Accoutn
-    Route::get('/admin/user-settings', [ProfileController::class, 'user'])->name('user-settings');
-    Route::post('/admin/user-settings', [ProfileController::class, 'add_user'])->name('add-user');
-    Route::post('/admin/user-status', [ProfileController::class, 'active_inactive'])->name('active_inactive');
+//User Accoutn
+Route::get('/admin/user-settings', [ProfileController::class, 'user'])->name('user-settings');
+Route::post('/admin/user-settings', [ProfileController::class, 'add_user'])->name('add-user');
+Route::post('/admin/user-status', [ProfileController::class, 'active_inactive'])->name('active_inactive');
 
 //Admin Profile
-Route::view('/admin/profile','admin.profile.profile')->name('profile');
+Route::view('/admin/profile', 'admin.profile.profile')->name('profile');
 
 //Admin Email
-Route::get('/admin/send-mail', [ApplicationController::class, 'send_email_page'])->name('send-mail');
-Route::post('/admin/send-mail', [ApplicationController::class, 'send_email'])->name('send-mail-post');
-Route::post('/admin/button-mail', [ApplicationController::class, 'email_button'])->name('email_button');
+Route::get('/admin/send-mail', [EmailController::class, 'send_email_get'])->name('send-mail');
+Route::post('/admin/send-mail', [EmailController::class, 'send_email_post'])->name('send-mail-post');
+Route::post('/admin/button-mail', [EmailController::class, 'email_button'])->name('email_button');
 
 //Landing
-Route::get('/', [CandidareController::class, 'application']);
-Route::post('/', [CandidareController::class, 'reg_candi'])->name('reg_candi');
-Route::post('/indicator', [CandidareController::class, 'check_pending_application'])->name('check_pending_application');
+Route::get('/', [HomeController::class, 'index']);
+
+//cpf form
+Route::get('/cpf', [CpfForm::class, 'cpf'])->name('cpf');
+Route::post('/cpf', [CpfForm::class, 'reg_candidates'])->name('reg_candidates');
 
 //Agent
-Route::get('/admin/agents', [AgentController::class, 'agent_page'])->name('agents');
-Route::post('/admin/agents', [AgentController::class, 'add_agents'])->name('add_agents');
+Route::get('/agents', [AgentController::class, 'agent_page'])->name('agents');
+Route::post('/agents', [AgentController::class, 'add_agents'])->name('add_agents');
 Route::post('/admin/agents-update', [AgentController::class, 'edit_agents'])->name('edit_agents');
 Route::post('/admin/agents-active_deactive', [AgentController::class, 'act_dea_agents'])->name('act_dea_agents');
 
-//select country and get agents
-Route::post('/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
-
 //user management
-Route::get('/admin/user-management/role-management', [SettingControler::class, 'role_get'])->name('role_get');
-Route::post('/admin/user-management/role-management', [SettingControler::class, 'role_post'])->name('role_post');
+Route::get('/admin/role-management', [SettingControler::class, 'role_get'])->name('role_get');
+Route::post('/admin/role-management', [SettingControler::class, 'role_post'])->name('role_post');
 
 //permission management
-Route::get('/admin/user-management/permission-role-management', [SettingControler::class, 'permission_role_get'])->name('permission_role_get');
-Route::post('/admin/user-management/permission-role-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');
+Route::get('/admin/permission-management', [SettingControler::class, 'permission_role_get'])->name('permission_role_get');
+Route::post('/admin/permission-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');
+
+//ajax
+//Pending indicator
+Route::post('/ajax/pending', [CpfForm::class, 'check_pending_cpf'])->name('check_pending_cpf');
+
+//select country and get agents
+Route::post('ajax/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
+
+//agent name and email
+Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->name('name_email_ajax');

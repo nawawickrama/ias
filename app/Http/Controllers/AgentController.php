@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\Country;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 class AgentController extends Controller
@@ -19,13 +21,14 @@ class AgentController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('agent-add');
+        $permission = $user->can('agent.create');
         
         if($permission){
              
             $country = Country::all();
             $agent_details = Agent::all();
-            return view('admin.agents.agent')->with(['agent_details' => $agent_details, 'country' => $country]);
+            $user_agents = Role::where('name', 'Agent')->first()->users;
+            return view('admin.agents.agent')->with(['user_agents' => $user_agents, 'agent_details' => $agent_details, 'country' => $country]);
  
         }else{
             Auth::logout();
@@ -34,26 +37,40 @@ class AgentController extends Controller
     }
 
     public function add_agents(Request $request)
-    {
+    {   
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('add-agent');
-        
+        $permission = $user->can('agent.create');
+
+        $agent_details = User::where('email', request('email'));
+
+        if($agent_details == null){
+            return back()->with(['error' => 'Email error', 'error_type' => 'error']);
+        }
+        $agent_id = $agent_details->first()->id;
+
         if($permission){
 
+            $check = Agent::where('user_id', $agent_id)->count();
+            if($check >= 1){
+                return back()->with(['error' => 'Agent already registered', 'error_type' => 'error']);
+            }
+
             $request->validate([
-                'name' => 'required',
-                'email' => 'required|unique:agents,agent_email',
+                'name' => 'required',//agent -> name , other role -> user id
+                'email' => 'required|unique:users,email,'.$agent_id.',id',
                 'tp' => 'required|numeric',
+                'tp_2' => 'nullable|numeric',
                 'country' => 'required',
                 'person_name' => 'required',
                 'whatsapp_no' => 'required|numeric',
                 'web_site' => 'required',
             ]);
 
-            $agent_name = request('name');
+            $agent_name = request('name');//agent -> name , other role -> user id
             $agent_email = request('email');
             $agent_tp = request('tp');
+            $agent_tp_2 = request('tp_2');
             $agent_country = request('country');
             $agent_person_name = request('person_name');
             $agent_wa = request('whatsapp_no');
@@ -61,20 +78,21 @@ class AgentController extends Controller
 
             try{
                 Agent::create([
-                    'agent_name' => $agent_name,
-                    'agent_email' => $agent_email,
-                    'agent_tp' => $agent_tp,
+                    'agent_tp_1' => $agent_tp,
+                    'agent_tp_2' => $agent_tp_2,
                     'agent_country' => $agent_country,
                     'agent_contact_person_name' => $agent_person_name,
                     'agent_whtaspp' => $agent_wa,
                     'agent_web_site' => $agent_web,
-                    'agent_status' => 1
+                    'agent_status' => 1,
+                    'user_id' => $agent_id
                 ]);
+
             }catch(Throwable $e){
                 // dd($e);
                 return back()->with(['error' => 'Agent registration failed', 'error_type' => 'error']);
             }
-             
+
             return back()->with(['success' => 'Agent registerd']);
            
         }else{
@@ -87,7 +105,7 @@ class AgentController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('agent-edit');
+        $permission = $user->can('agent.edit');
         
         if($permission){
 
@@ -112,9 +130,9 @@ class AgentController extends Controller
 
             try{
                 Agent::find(request('agent_id'))->update([
-                    'agent_name' => $agent_name,
-                    'agent_tp' => $agent_tp,
-                    'agent_email' => $agent_email,
+                    // 'agent_name' => $agent_name,
+                    // 'agent_email' => $agent_email,
+                    'agent_tp_1' => $agent_tp,
                     'agent_country' => $agent_country,
                     'agent_contact_person_name' => $agent_person_name,
                     'agent_whtaspp' => $agent_wa,
@@ -139,7 +157,7 @@ class AgentController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('make active inactive agebt');
+        $permission = $user->can('aget.edit');
 
         if($permission){
 
@@ -170,5 +188,13 @@ class AgentController extends Controller
         foreach($agent_details as $agent){
             echo "<option value='$agent->agent_id'>$agent->agent_name</option>";
         }
+    }
+
+    public function name_email(Request $request)
+    {
+        $user_id = request('user_id');
+        $agent_info = User::find($user_id);
+
+        return response()->json($agent_info);
     }
 }

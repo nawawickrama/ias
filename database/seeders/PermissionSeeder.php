@@ -6,6 +6,7 @@ use App\Models\PermissionList;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -17,74 +18,49 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permission_info = [
-            'permission-management.create',
-            'permission-management.edit',
-            'permission-management.view',
-            'permission-management.delete',
-            'user-management.create',
-            'user-management.edit',
-            'user-management.view',
-            'user-management.delete',
 
-            'pending-candidates.create',
-            'pending-candidates.edit',
-            'pending-candidates.view',
-            'pending-candidates.delete',
+            //request
+            'pending-request.view',
+            'selected-request.view',
+            'rejected-request.view',
+            'rejected-request.rollback',
+            'selected-under-condition-request.view',
+            'selected-under-condition-request.rollback',
 
-            'selected-candidates.create',
-            'selected-candidates.edit',
-            'selected-candidates.view',
-            'selected-candidates.delete',
+            //cpf form
+            'pending-request.accept',
+            'cpf.view',
+            'cpf.download',
 
-            'rejected-candidates.create',
-            'rejected-candidates.edit',
-            'rejected-candidates.view',
-            'rejected-candidates.delete',
-            
-            'selected-candidates-under-condition.create',
-            'selected-candidates-under-condition.edit',
-            'selected-candidates-under-candidates.view',
-            'selected-candidates-under-candidates.delete',
-
-            'application.create',
-            'application.edit',
-            'application.view',
-            'application.delete',
-
-            'application-download.create',
-            'application-download.edit',
-            'application-download.view',
-            'application-download.delete',
-
-            'assesment-form-send.create',
-            'assesment-form-send.edit',
-            'assesment-form-send.view',
-            'assesment-form-send.delete',
-
-            'assesment-form-email.create',
-            'assesment-form-email.edit',
-            'assesment-form-email.view',
-            'assesment-form-email.delete',
-
-            'assesment-form-download.create',
-            'assesment-form-download.edit',
-            'assesment-form-download.view',
-            'assesment-form-download.delete',
-
-            'application-reverse.create',
-            'application-reverse.edit',
-            'application-reverse.view',
-            'application-reverse.delete',
-
+            //assestment form
+            'assestment-form.download',
+    
+            //email-send
             'email-send.create',
-            'email-send.edit',
-            'email-send.view',
-            'email-send.delete',
 
+            //Roll management
+            'role.create',
+            'role.view',
+
+            //user management
+            'user.create',
+            'user.view',
+            'user.edit',
+            'user.active/deactive',
+
+            //model and role
+            'model-role.view',
+            'model-role.create',
+            'model-role.remove',
+
+            //agent
+            'agent.view',
+            'agent.create',
+
+            //smtp settings
             'smtp-setting.create',
             'smtp-setting.edit',
             'smtp-setting.view',
-            'smtp-setting.delete',
         ];
 
         foreach($permission_info as $permission){
@@ -92,28 +68,61 @@ class PermissionSeeder extends Seeder
         }
 
         $permission_list = [
-            'permission-management',
-            'user-management',
-            'pending-candidates',
-            'selected-candidates',
-            'selected-candidates-under-condition',
-            'rejected-candidates',
-            'application',
-            'application-download',
-            'assesment-form-send',
-            'assesment-form-email',
-            'assesment-form-download',
-            'application-reverse',
-            'email-send',
-            'smtp-setting',
+            'pending-request' => ['catagory' => 'pending-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'selected-request' => ['catagory' => 'selected-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'rejected-request' => ['catagory' => 'rejected-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '1', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'selected-under-condition-request' => ['catagory' => 'selected-under-condition-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '1', 'active/deactive' => '0', 'accept' => '0'],
+
+            'cpf' => ['catagory' => 'cpf', 'view' => '1', 'download' => '1', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'assestment-form' => ['catagory' => 'assestment-form', 'view' => '0', 'download' => '1', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'email-send' => ['catagory' => 'email-send', 'view' => '0', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'role' => ['catagory' => 'role', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
+            'user' => ['catagory' => 'user', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '1', 'accept' => '0'],
+
+            'model-role' => ['catagory' => 'model-role', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+
+            'agent' => ['catagory' => 'agent', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+
+            'smtp-setting' => ['catagory' => 'smtp-setting', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
         ];
 
         foreach($permission_list as $permission){
-            PermissionList::create([
-                'name' => $permission,
-            ]);
+            
+                PermissionList::create([
+                    'name' => $permission['catagory'],
+                    'view' => $permission['view'],
+                    'edit' => $permission['edit'],
+                    'accept' => $permission['accept'],
+                    'remove' => $permission['remove'],
+                    'rollback' => $permission['rollback'],
+                    'download' => $permission['download'],
+                    'create' => $permission['create'],
+                    'active/deactive' => $permission['active/deactive'],
+                ]);
+            
         }
 
+        //permission
+        $permissions = [
+            'Agent1' => ['role' => 'Agent', 'permission' => 'agent.create'],
+            'Agent2' => ['role' => 'Agent', 'permission' => 'pending-request.view'],
+            'Agent3' => ['role' => 'Agent', 'permission' => 'selected-request.view'],
+            'Agent4' => ['role' => 'Agent', 'permission' => 'rejected-request.view'],
+            'Agent5' => ['role' => 'Agent', 'permission' => 'selected-under-condition-request.view'],
+        ];
+
+        foreach($permissions as $per){
+            $role = Role::where('name', $per['role'])->first();
+            $role->givePermissionTo($per['permission']); 
+        }
         
     }
 }

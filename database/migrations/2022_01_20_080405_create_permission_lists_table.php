@@ -14,8 +14,17 @@ class CreatePermissionListsTable extends Migration
     public function up()
     {
         Schema::create('permission_lists', function (Blueprint $table) {
-            $table->id();
+            $table->id('permission_list_id');
+
             $table->string('name');
+            $table->boolean('view')->default(0);
+            $table->boolean('create')->default(0);
+            $table->boolean('edit')->default(0);
+            $table->boolean('remove')->default(0);
+            $table->boolean('accept')->default(0);
+            $table->boolean('download')->default(0);
+            $table->boolean('rollback')->default(0);
+            $table->boolean('active/deactive')->default(0);
             $table->timestamps();
         });
     }

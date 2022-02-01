@@ -17,22 +17,12 @@ class Candidate extends Model
         'first_name',
         'sur_name',
         'sex',
-        'program',
-        'job_feild',
         'dob',
         'nationality',
         'telephone',
         'email',
         'address',
         'country',
-        'ge_lang',
-        'ge_lang_level',
-        'how_to_know',
-        'agent_id',
-        'comment',
-        'application_status',
-        'status_date',
-        'comment_institute'
     ];
 
     public function sec_sch()
