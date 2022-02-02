@@ -73,7 +73,11 @@ Route::get('/', [HomeController::class, 'index']);
 
 //cpf form
 Route::get('/cpf', [CpfController::class, 'cpf'])->name('cpf');
-Route::post('/cpf', [CpfController::class, 'reg_candidates'])->name('reg_candidates');
+Route::post('/cpf', [CpfController::class, 'cpf_post'])->name('cpf_post');
+
+//Agent CPF
+Route::get('/reg_cpf/{reference_no}', [CpfController::class, 'agent_cpf'])->name('agent_cpf');
+
 
 //Agent
 Route::get('/agents', [AgentController::class, 'agent_page'])->name('agents');

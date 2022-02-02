@@ -9,13 +9,8 @@
                     <p class="text-center mt-2">IAS College - Candidate Profile Form (CPF)</p>
                 </div>
                 <di class="card-body">
-                    {{-- @if()
-                        <div class="alert alert-danger">
-                            {{ Session::session('error') }}
-                        </div>
-                    @endif --}}
-                   
-                    <form action="{{ route('reg_candidates') }}" method="POST" id="form-data">
+
+                    <form action="{{ route('cpf_post') }}" method="POST" id="form-data">
                         @csrf
                         <div class="form-row">
                             <p class="font-weight-bold">Select the program</p>
@@ -429,8 +424,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="">Years of the degree program</label>
-                                <input type="number" name="b_year" class="form-control @error('b_year') is-invalid @enderror"
-                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('b_year') }}">
+                                <input type="number" name="b_year"
+                                    class="form-control @error('b_year') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('b_year') }}">
                                 @error('b_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -439,8 +435,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="number" name="b_result" class="form-control @error('b_result') is-invalid @enderror"
-                                id="" aria-describedby="helpId" placeholder="" value="{{ old('b_result') }}">
+                                <input type="number" name="b_result"
+                                    class="form-control @error('b_result') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('b_result') }}">
                                 @error('b_result')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -464,9 +461,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Major subject :</label>
-                                <input type="text"  name="m_major_sub" class="form-control @error('m_major_sub') is-invalid @enderror"
-                                    id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('m_major_sub') }}">
+                                <input type="text" name="m_major_sub"
+                                    class="form-control @error('m_major_sub') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('m_major_sub') }}">
                                 @error('m_major_sub')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -477,8 +474,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="">Years of the degree program</label>
-                                <input type="number" name="m_year" class="form-control @error('m_year') is-invalid @enderror" 
-                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('m_year') }}">
+                                <input type="number" name="m_year"
+                                    class="form-control @error('m_year') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('m_year') }}">
                                 @error('m_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -487,9 +485,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Overall result percentage (%)</label>
-                                <input type="number" name="m_result" class="form-control @error('m_result') is-invalid @enderror"
-                                     id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('m_result') }}">
+                                <input type="number" name="m_result"
+                                    class="form-control @error('m_result') is-invalid @enderror" id=""
+                                    aria-describedby="helpId" placeholder="" value="{{ old('m_result') }}">
                                 @error('m_result')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -561,8 +559,9 @@
                                 <br>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="german_level" class="form-check-input @error('german_level') is-invalid @enderror"
-                                             id="" value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
+                                        <input type="radio" name="german_level"
+                                            class="form-check-input @error('german_level') is-invalid @enderror" id=""
+                                            value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
                                         @error('german_level')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -631,48 +630,54 @@
                             <div class="form-group col-md-12">
                                 <label for="">How did you come to know about IAS College? :</label>
                                 <br>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know"
-                                            value="Agent/Educational Consultancy"> Agent /
-                                        Educational Consultancy
+                                @isset($reference_no)
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know" checked
+                                                value="Agent/Educational Consultancy"> Agent /
+                                            Educational Consultancy
+                                        </label>
+                                    </div>
+                                @endisset
 
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
-                                            value="Facebook Advertiesments"> Facebook
-                                        Advertiesments
+                                @if(!isset($reference_no))
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
+                                                value="Facebook Advertiesments"> Facebook
+                                            Advertiesments
 
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
-                                            value="Promotional Email"> Promotional Email
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
+                                                value="Promotional Email"> Promotional Email
 
-                                    </label>
-                                </div>
+                                        </label>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="form-row" id="agent_field">
-                            <div class="form-group col-md-12">
-                                <label for="">Name of the agent or education consultancy (If you know IAS college from agent
-                                    or education consultancy) :</label>
-                                <select name="agent_id" id="agent_text"
-                                    class="form-control @error('agent_id') is-invalid @enderror">
-                                    <option value="" selected disabled>Select Agent</option>
-                                    @foreach ($agent_details as $agent)
-                                        <option value="{{ $agent->agent_id }}">{{ $agent->agent_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('agent_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            @isset($reference_no)
+                                <div class="form-group col-md-12">
+                                    <label for="">Name of the agent or education consultancy (If you know IAS college from agent
+                                        or education consultancy) :</label>
+                                        @php
+                                            $agent_name = $agent_details->user;
+                                        @endphp
+                                    <select name="agent_id" id="agent_text" class="form-control @error('agent_id') is-invalid @enderror" readonly>
+                                            <option value="{{ $agent_details->agent_id }}">{{ $agent_name->name }}</option>
+                                    </select>
+                                    
+                                    @error('agent_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endisset
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -744,51 +749,51 @@
 
     <script>
         $('document').ready(function() {
-        //     $('#job_field').hide();
-        //     $('#vocational_fields').hide();
-        //     $('#expirience_field').hide();
-        //     $('#agent_field').hide();
-        //     $('#ge_level_field').hide();
+            //     $('#job_field').hide();
+            //     $('#vocational_fields').hide();
+            //     $('#expirience_field').hide();
+            //     $('#agent_field').hide();
+            //     $('#ge_level_field').hide();
 
 
-        //     $('.program-radio').change(function() {
-        //         program();
-        //     });
+            //     $('.program-radio').change(function() {
+            //         program();
+            //     });
 
-        //     $('#vocational_check_box').change(function() {
-        //         v_training();
-        //     });
+            //     $('#vocational_check_box').change(function() {
+            //         v_training();
+            //     });
 
-        //     $('#expirience_box').change(function() {
-        //         experience();
-        //     });
+            //     $('#expirience_box').change(function() {
+            //         experience();
+            //     });
 
-        //     $('.how_to_know').change(function() {
-        //         agent();
-        //     });
+            //     $('.how_to_know').change(function() {
+            //         agent();
+            //     });
 
-        //     $('.Ge_lang').change(function() {
-        //         ge_lang();
-        //     });
+            //     $('.Ge_lang').change(function() {
+            //         ge_lang();
+            //     });
 
-        //     $('#country').change(function() {
-        //         let country = $(this).val();
-        //         $.ajax({
-        //             url: "{{ route('country_agent') }}",
-        //             type: "POST",
-        //             data: {
-        //                 country: country,
-        //                 _token: "{{ csrf_token() }}",
-        //             },
-        //             success: function(data) {
-        //                 $('#agent_text').html(data);
-        //                 // console.log(data);
-        //             },
-        //             error: function(error) {
-        //                 console.log(error);
-        //             }
-        //         });
-        //     });
+            //     $('#country').change(function() {
+            //         let country = $(this).val();
+            //         $.ajax({
+            //             url: "{{ route('country_agent') }}",
+            //             type: "POST",
+            //             data: {
+            //                 country: country,
+            //                 _token: "{{ csrf_token() }}",
+            //             },
+            //             success: function(data) {
+            //                 $('#agent_text').html(data);
+            //                 // console.log(data);
+            //             },
+            //             error: function(error) {
+            //                 console.log(error);
+            //             }
+            //         });
+            //     });
 
         });
 

@@ -28,6 +28,6 @@ class newUser extends Mailable
      */
     public function build()
     {
-        return $this->markdown('admin.mail.new_user', ['data' => $this->data]);
+        return $this->subject('Welcome to IAS College')->markdown('admin.mail.new_user', ['data' => $this->data]);
     }
 }

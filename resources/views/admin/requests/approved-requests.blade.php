@@ -42,7 +42,7 @@
                                 <td>{{ $cpf->program }} @if ($cpf->program == 'Direct job') ({{ $cpf->job_feild }}) @endif</td>
                                 <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                                 <td>{{ $candidate->email }}</td>
-                                <td>{{ $agent->name ?? 'N/A' }}</td>
+                                <td>@if(isset($cpf->agent_id)) {{ $agent->name}} @else {{ 'N/A' }} @endif</td>
                                 <td>{{ $candidate->telephone }}</td>
                                 <td>{{ $country }}</td>
                                 <td>{{ $cpf->comment_institute ? $cpf->comment_institute : 'N/A' }}</td>

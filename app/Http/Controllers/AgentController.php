@@ -56,6 +56,15 @@ class AgentController extends Controller
                 return back()->with(['error' => 'Agent already registered', 'error_type' => 'error']);
             }
 
+            //genarate reference for agent
+            do{
+                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                $reference_no = substr(str_shuffle($chars),0,10);
+
+                //check uniqueness
+                $reference_unique = Agent::where('reference_no', $reference_no)->count();
+            }while($reference_unique != 0);
+            
             $request->validate([
                 'name' => 'required',//agent -> name , other role -> user id
                 'email' => 'required|unique:users,email,'.$agent_id.',id',
@@ -69,6 +78,7 @@ class AgentController extends Controller
 
             $agent_name = request('name');//agent -> name , other role -> user id
             $agent_email = request('email');
+
             $agent_tp = request('tp');
             $agent_tp_2 = request('tp_2');
             $agent_country = request('country');
@@ -85,6 +95,7 @@ class AgentController extends Controller
                     'agent_whtaspp' => $agent_wa,
                     'agent_web_site' => $agent_web,
                     'agent_status' => 1,
+                    'reference_no' => $reference_no,
                     'user_id' => $agent_id
                 ]);
 

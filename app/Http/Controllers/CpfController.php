@@ -20,12 +20,11 @@ class CpfController extends Controller
     public function cpf()
     {
         $country = Country::all();
-        $agent_details = Agent::where('agent_status', 1)->get();
-        return view('landing.home')->with(['agent_details' => $agent_details, 'country' => $country]);
+        return view('cpf.cpf')->with(['country' => $country]);
     }
 
 
-    public function reg_candidates(Request $request)
+    public function cpf_post(Request $request)
     {
         $request->validate([
             //cpf
@@ -249,5 +248,17 @@ class CpfController extends Controller
             $app_count = $app_count->count();
             return response()->json($app_count);
         }
+    }
+
+    public function agent_cpf($reference_no)
+    {
+        $agent_details = Agent::where([['agent_status', 1], ['reference_no', $reference_no]])->first();
+
+        if($agent_details == NULL){
+            return redirect('/login')->with(['error' => 'Invalid Reference / Inactive Agent', 'error_type' => 'warning']);
+        }
+
+        $country = Country::all();
+        return view('cpf.cpf')->with(['reference_no' => $reference_no, 'country' => $country, 'agent_details' => $agent_details]);
     }
 }

@@ -27,7 +27,7 @@ class CreateAgentsTable extends Migration
 
             $table->boolean('agent_status')->default('0');
             
-            $table->string('reference')->unique();
+            $table->string('reference_no')->unique();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
