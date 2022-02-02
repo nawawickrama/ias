@@ -17,6 +17,7 @@ class EmailController extends Controller
     {
         return $this->middleware(['auth', 'actived', 'agent']);
     }
+    
     public function send_email_get(Request $request)
     {
         /** @var App\Models\User $user */

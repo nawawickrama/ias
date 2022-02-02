@@ -16,15 +16,18 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->id('agent_id');
 
-            // $table->string('agent_name');
-            // $table->string('agent_email')->unique();
             $table->string('agent_tp_1')->unique();
             $table->string('agent_tp_2')->nullable();
             $table->unsignedBigInteger('agent_country');
+
             $table->string('agent_contact_person_name');
             $table->string('agent_whtaspp')->nullable();
+
             $table->string('agent_web_site')->nullable();
+
             $table->boolean('agent_status')->default('0');
+            
+            $table->string('reference')->unique();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

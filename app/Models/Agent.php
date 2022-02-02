@@ -23,6 +23,7 @@ class Agent extends Model
         'agent_whtaspp',
         'agent_web_site',
         'agent_status',
+        'reference_no',
         'user_id'
     ];
 
