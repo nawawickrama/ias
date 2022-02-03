@@ -1,31 +1,32 @@
 @extends('layouts.dashboard.main')
 
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            <p>Role and Permission</p>
-        </div>
-        <div class="card-body">
-            <form action="{{ route('permission_role_post') }}" method="POST">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="">Role Name :</label>
-                        <select name="role_id" id="" class="form-control  @error('role_id') is-invalid @enderror">
-                            <option value="null" selected disabled>Select User Role</option>
-                            @foreach ($role_details as $role)
-                                <option value="{{ $role->id }}" @if (old('role_id') == $role->id){{ 'selected' }}@endif>{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('role_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <p>Role and Permission</p>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('permission_role_post') }}" method="POST">
+            @csrf
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="">Role Name :</label>
+                    <select name="role_id" id="" class="form-control  @error('role_id') is-invalid @enderror">
+                        <option value="null" selected disabled>Select User Role</option>
+                        @foreach ($role_details as $role)
+                        <option value="{{ $role->id }}" @if (old('role_id')==$role->id){{ 'selected' }}@endif>{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('role_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -58,16 +59,17 @@
                         </table>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <button type="submit" class="btn btn-success btn-block">Assign Permissions</button>
-                    </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-success btn-block">Assign Permissions</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    {{-- <div class="card mt-4">
-        <div class="card-header">
+</div>
+{{-- <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
             <p>Role List</p>
         </div>
         <div class="card-body">
@@ -85,16 +87,16 @@
                 <tbody>
                     @foreach ($role_details as $role)
                         <td>{{ $role->name }}</td>
-                        @php
-                            $role_Per_info = $role->permissions->pluck('name');
-                        @endphp
-                        @foreach ($role_Per_info as $item)
-                            <td>{{ $item }}</td>
-                            <td>{{ $item }}</td>
-                        @endforeach
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div> --}}
+@php
+$role_Per_info = $role->permissions->pluck('name');
+@endphp
+@foreach ($role_Per_info as $item)
+<td>{{ $item }}</td>
+<td>{{ $item }}</td>
+@endforeach
+@endforeach
+</tbody>
+</table>
+</div>
+</div> --}}
 @endsection

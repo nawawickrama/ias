@@ -102,3 +102,10 @@ Route::post('ajax/country-agent', [AgentController::class, 'country_agent'])->na
 
 //agent name and email
 Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->name('name_email_ajax');
+
+
+//========================AYESH ADDED UI===========================
+//Admin -Settings Courses
+Route::view('/admin/courses','admin.settings.courses')->name('courses');
+//Admin - leads
+Route::view('/admin/pending-leads','admin.leads.pending-leads')->name('pending-leads');

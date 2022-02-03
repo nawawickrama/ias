@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
+        <div class="card-header bg-primary text-white">
             <p>Rejected Student Requests</p>
         </div>
         <div class="card-body">

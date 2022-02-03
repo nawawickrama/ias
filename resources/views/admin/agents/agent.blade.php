@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header" id="add-agent-head">
+        <div class="card-header bg-primary text-white" id="add-agent-head">
             <p>Add Agents </p>
         </div>
         <div class="card-body" id="add-agent">
@@ -122,7 +122,7 @@
     </div>
     @can('agent.view')
         <div class="card mt-4">
-            <div class="card-header">
+            <div class="card-header bg-primary text-white">
                 <p>Agent List</p>
             </div>
             <div class="card-body">

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row mt-4">
             <div class="card col-md-12">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <img src="https://iaos.de/wp-content/uploads/2019/03/logo.png" class="rounded mx-auto d-block" alt="...">
                     <p class="text-center mt-2">IAS College - Candidate Profile Form (CPF)</p>
                 </div>
