@@ -18,6 +18,16 @@
                 <button class="btn btn-outline-primary" type="button" id="copy_btn">Copy Link</button>
             </div>
         </div>
+    @else
+        <div class="input-group mb-3">
+
+            <input type="text" class="form-control" id="ref_link" placeholder="Agent Link"
+                value="{{ config('app.url') }}/direct_cpf" readonly>
+
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" id="copy_btn">Copy Link</button>
+            </div>
+        </div>
     @endif
 
     <script>

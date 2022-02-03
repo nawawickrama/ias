@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+        
         $permission_info = [
 
             //request
@@ -105,7 +106,7 @@ class PermissionSeeder extends Seeder
                     'rollback' => $permission['rollback'],
                     'download' => $permission['download'],
                     'create' => $permission['create'],
-                    'active/deactive' => $permission['active/deactive'],
+                    'active_deactive' => $permission['active/deactive'],
                 ]);
             
         }

@@ -32,18 +32,26 @@
                                     <th scope="col">Permisssion</th>
                                     <th scope="col">Create</th>
                                     <th scope="col">View</th>
-                                    <th scope="col">Update</th>
-                                    <th scope="col">Delete</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Remove</th>
+                                    <th scope="col">Accept</th>
+                                    <th scope="col">Download</th>
+                                    <th scope="col">Rollback</th>
+                                    <th scope="col">Active/ Deactive</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($permission_details as $permission)
                                 <tr>
                                     <td>{{ $permission->name }}</td>
-                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="create"></td>
-                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="view"></td>
-                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="update"></td>
-                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="delete"></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="create" @if(!$permission->create) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="view" @if(!$permission->view) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="edit" @if(!$permission->edit) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="remove" @if(!$permission->remove) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="accept" @if(!$permission->accept) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="download" @if(!$permission->download) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="rollback" @if(!$permission->rollback) {{ 'disabled' }} @endif></td>
+                                    <td><input type="checkbox" name="{{ $permission->name }}[]" value="active/deactive" @if(!$permission->active_deactive) {{ 'disabled' }} @endif></td>
                                 </tr>
                                 @endforeach
                             </tbody>

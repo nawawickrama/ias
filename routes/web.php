@@ -72,8 +72,8 @@ Route::post('/admin/button-mail', [EmailController::class, 'email_button'])->nam
 Route::get('/', [HomeController::class, 'index']);
 
 //cpf form
-Route::get('/cpf', [CpfController::class, 'cpf'])->name('cpf');
-Route::post('/cpf', [CpfController::class, 'cpf_post'])->name('cpf_post');
+Route::get('/direct_cpf', [CpfController::class, 'cpf'])->name('cpf');
+Route::post('/direct_cpf', [CpfController::class, 'cpf_post'])->name('cpf_post');
 
 //Agent CPF
 Route::get('/reg_cpf/{reference_no}', [CpfController::class, 'agent_cpf'])->name('agent_cpf');

@@ -24,7 +24,7 @@ class CreatePermissionListsTable extends Migration
             $table->boolean('accept')->default(0);
             $table->boolean('download')->default(0);
             $table->boolean('rollback')->default(0);
-            $table->boolean('active/deactive')->default(0);
+            $table->boolean('active_deactive')->default(0);
             $table->timestamps();
         });
     }
