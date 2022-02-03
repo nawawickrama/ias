@@ -93,7 +93,7 @@ Route::post('/admin/role-management', [SettingControler::class, 'role_post'])->n
 Route::get('/admin/permission-management', [SettingControler::class, 'permission_role_get'])->name('permission_role_get');
 Route::post('/admin/permission-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');
 
-//ajax
+//ajax==========================
 //Pending indicator
 Route::post('/ajax/pending', [CpfController::class, 'check_pending_cpf'])->name('check_pending_cpf');
 
@@ -102,6 +102,9 @@ Route::post('ajax/country-agent', [AgentController::class, 'country_agent'])->na
 
 //agent name and email
 Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->name('name_email_ajax');
+
+//permission fill
+Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
 
 
 //========================AYESH ADDED UI===========================

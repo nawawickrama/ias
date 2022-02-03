@@ -117,7 +117,7 @@ $user = Auth::user();
             </li>
             @endif
 
-            @if ($user->can('user.create') || $user->can('user.view') || $user->can('role.create') || $user->can('role.view') || $user->can('model-role.view') || $user->can('model-role.create') || $user->can('agent.view') || $user->can('agent.create'))
+            @if ($user->can('user.create') || $user->can('user.view') || $user->can('role.create') || $user->can('role.view') || $user->can('permission.view') || $user->can('permission.create') || $user->can('agent.view') || $user->can('agent.create'))
             <li class="nav-item nav-category">User Management</li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#userser" role="button" aria-expanded="false" aria-controls="emails">
@@ -127,20 +127,20 @@ $user = Auth::user();
                 </a>
                 <div class="collapse" id="userser">
                     <ul class="nav sub-menu">
-                        @can('user.create', 'user.view')
+                        @can('role.create', 'role.view')
                         <li class="nav-item">
                             <a href="{{ route('role_get') }}" class="nav-link">Role Management</a>
                         </li>
                         @endcan
 
-                        @if ($user->can('role.create') || $user->can('role.view'))
+                        @if ($user->can('permission.create') || $user->can('permission.view'))
                         <li class="nav-item">
                             <a href="{{ route('permission_role_get') }}" class="nav-link">Permission
                                 Management</a>
                         </li>
                         @endif
 
-                        @if ($user->can('model-role.view') || $user->can('model-role.create'))
+                        @if ($user->can('user.view') || $user->can('user.create'))
 
                         <li class="nav-item">
                             <a href="{{ route('user-settings') }}" class="nav-link">User Management</a>

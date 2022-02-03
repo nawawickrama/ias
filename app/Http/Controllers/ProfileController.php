@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AddUser;
-use App\Mail\newUser;
+use App\Mail\NewUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +24,7 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('view-management.user');
+        $permission = $user->can('user.view');
 
         if($permission){
             $user_details = User::all();
@@ -42,7 +41,7 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('user-management.create');
+        $permission = $user->can('user.create');
         
         if($permission){
             // return 1;
@@ -92,7 +91,7 @@ class ProfileController extends Controller
     {
         /** @var App\Model\User $user */
         $user = Auth::user();
-        $permission = $user->can('user-management.edit');
+        $permission = $user->can('user.active/deactive');
 
         if($permission){
 

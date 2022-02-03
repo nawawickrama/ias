@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\PermissionList;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -49,10 +48,11 @@ class PermissionSeeder extends Seeder
             'user.edit',
             'user.active/deactive',
 
-            //model and role
-            'model-role.view',
-            'model-role.create',
-            'model-role.remove',
+            //permission
+            'permission.view',
+            'permission.create',
+            'permission.edit',
+            'permission.remove',
 
             //agent
             'agent.view',
@@ -69,7 +69,7 @@ class PermissionSeeder extends Seeder
         }
 
         $permission_list = [
-            'pending-request' => ['catagory' => 'pending-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            'pending-request' => ['catagory' => 'pending-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '1'],
             
             'selected-request' => ['catagory' => 'selected-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
             
@@ -86,9 +86,9 @@ class PermissionSeeder extends Seeder
             'role' => ['catagory' => 'role', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
             
             'user' => ['catagory' => 'user', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '1', 'accept' => '0'],
-
-            'model-role' => ['catagory' => 'model-role', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
-
+            
+            'permission' => ['catagory' => 'permission', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+            
             'agent' => ['catagory' => 'agent', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
 
             'smtp-setting' => ['catagory' => 'smtp-setting', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
@@ -124,6 +124,5 @@ class PermissionSeeder extends Seeder
             $role = Role::where('name', $per['role'])->first();
             $role->givePermissionTo($per['permission']); 
         }
-        
     }
 }

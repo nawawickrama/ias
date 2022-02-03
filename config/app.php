@@ -2,6 +2,8 @@
 
 return [
 
+    'version' => env('APP_VERSION', '1.2.1'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -134,8 +136,6 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
-    'version' => env('APP_VERSION', '1.2.0'),
 
     'providers' => [
 
