@@ -74,7 +74,7 @@ class ProfileController extends Controller
             }
 
             if($user_data != null){
-                Mail::to($user_data->email)->send(new newUser($pwrd));
+                Mail::to($user_data->email)->send(new NewUser($pwrd));
             }
 
             Session::put(['success' => 'User Registration Successful']);
