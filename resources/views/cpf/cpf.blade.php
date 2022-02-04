@@ -16,63 +16,16 @@
                             <p class="font-weight-bold">Select the program</p>
                         </div>
                         <div class="form-row mt-2">
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="" value="STEP" @if (old('program') == 'STEP') {{ 'checked' }} @endif>
-
-                                    STEP (Study Eligibility Program) is a Pre-bachelors program for students who completed
-                                    their 12 yrs of Schooling
-                                </label>
-                            </div>
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="" value="E-STEP" @if (old('program') == 'E-STEP') {{ 'checked' }} @endif>
-
-                                    E-STEP (English -Study Eligibility Program) is a Pre-bachelors program for students who
-                                    completed their 12 yrs of Schooling
-                                </label>
-                            </div>
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="" value="MEP" @if (old('program') == 'MEP') {{ 'checked' }} @endif>
-
-                                    MEP (Master Eligibility Program) is Pre- Master program for students who wish to start
-                                    their Masters In Germany
-                                </label>
-                            </div>
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="" value="PAP" @if (old('program') == 'PAP') {{ 'checked' }} @endif>
-
-                                    PAP PAP( German license preparation program for foreign nurses seeking jobs in Germany).
-                                </label>
-                            </div>
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="" value="GVET" @if (old('program') == 'GVET') {{ 'checked' }} @endif>
-
-                                    GVET Vocational Training
-                                </label>
-                            </div>
-                            <div class="form-check col-md-12">
-                                <label class="form-check-label">
-                                    <input type="radio"
-                                        class="form-check-input program-radio @error('program') is-invalid @enderror"
-                                        name="program" id="direct_job" value="Direct job" @if (old('program') == 'Direct job') {{ 'checked' }} @endif>
-
-                                    Directs jobs ( Technical and IT fields )
-                                </label>
-                            </div>
+                            @foreach ($course_details as $course)
+                                <div class="form-check col-md-12">
+                                    <label class="form-check-label  @error('course_id') text-danger @enderror">
+                                        <input type="radio" class="form-check-input program-radio" name="course_id" id=""
+                                            course-code="{{ $course->course_code }}" value="{{ $course->course_id }}"
+                                            @if (old('course_id') == $course->course_id) {{ 'checked' }} @endif>
+                                        {{ $course->course_code }} - {{ $course->course_description }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="form-row" id='job_field'>
                             <div class="form-group col-md-12">
@@ -520,7 +473,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="">How many years of experience? :</label>
-                                    <input type="number" class="form-control @error('first_name') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('w_year') is-invalid @enderror"
                                         name="w_year" id="" aria-describedby="helpId" placeholder=""
                                         value="{{ old('w_year') }}">
                                     @error('w_year')
@@ -540,13 +493,13 @@
                                     Have your learnt German? :</label>
                                 <br>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
+                                    <label class="form-check-label @error('german_language') text-danger @enderror">
                                         <input class="form-check-input Ge_lang" type="radio" name="german_language"
                                             id="Ge_lang_yes" value="1" @if (old('german_language') == 1) {{ 'checked' }} @endif> Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
+                                    <label class="form-check-label @error('german_language') text-danger @enderror">
                                         <input class="form-check-input Ge_lang" type="radio" name="german_language"
                                             id="Ge_lang_no" value="0" @if (old('german_language') == 0 && old('german_language') != null) {{ 'checked' }} @endif> No
                                     </label>
@@ -558,70 +511,39 @@
                                 <label for="">Which level? :</label>
                                 <br>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="german_level"
-                                            class="form-check-input @error('german_level') is-invalid @enderror" id=""
-                                            value="A1" @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input type="radio" name="german_level" class="form-check-input" id="" value="A1"
+                                            @if (old('german_level') == 'A1') {{ 'checked' }} @endif> A1
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="A2" @if (old('german_level') == 'A2') {{ 'checked' }} @endif> A2
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input class="form-check-input" type="radio" name="german_level" id="" value="A2"
+                                            @if (old('german_level') == 'A2') {{ 'checked' }} @endif> A2
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="B1" @if (old('german_level') == 'B1') {{ 'checked' }} @endif> B1
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input class="form-check-input" type="radio" name="german_level" id="" value="B1"
+                                            @if (old('german_level') == 'B1') {{ 'checked' }} @endif> B1
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="B2" @if (old('german_level') == 'B2') {{ 'checked' }} @endif> B2
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input class="form-check-input" type="radio" name="german_level" id="" value="B2"
+                                            @if (old('german_level') == 'B2') {{ 'checked' }} @endif> B2
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="C1" @if (old('german_level') == 'C1') {{ 'checked' }} @endif> C1
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input class="form-check-input" type="radio" name="german_level" id="" value="C1"
+                                            @if (old('german_level') == 'C1') {{ 'checked' }} @endif> C1
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('german_level') is-invalid @enderror"
-                                            type="radio" name="german_level" id="" value="C2" @if (old('german_level') == 'C2') {{ 'checked' }} @endif> C2
-                                        @error('german_level')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <label class="form-check-label @error('german_level') text-danger @enderror">
+                                        <input class="form-check-input" type="radio" name="german_level" id="" value="C2"
+                                            @if (old('german_level') == 'C2') {{ 'checked' }} @endif> C2
                                     </label>
                                 </div>
                             </div>
@@ -632,7 +554,7 @@
                                 <br>
                                 @isset($reference_no)
                                     <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
+                                        <label class="form-check-label @error('how_to_know') text-danger @enderror">
                                             <input class="form-check-input how_to_know" type="radio" name="how_to_know" checked
                                                 value="Agent/Educational Consultancy"> Agent /
                                             Educational Consultancy
@@ -640,20 +562,19 @@
                                     </div>
                                 @endisset
 
-                                @if(!isset($reference_no))
+                                @if (!isset($reference_no))
                                     <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
-                                                value="Facebook Advertiesments"> Facebook
+                                        <label class="form-check-label @error('how_to_know') text-danger @enderror">
+                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know"
+                                                id="" value="Facebook Advertiesments" @if (old('how_to_know') == 'Facebook Advertiesments') {{ 'checked' }} @endif> Facebook
                                             Advertiesments
 
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know" id=""
-                                                value="Promotional Email"> Promotional Email
-
+                                        <label class="form-check-label @error('how_to_know') text-danger @enderror">
+                                            <input class="form-check-input how_to_know" type="radio" name="how_to_know"
+                                                id="" value="Promotional Email" @if (old('how_to_know') == 'Promotional Email') {{ 'checked' }} @endif> Promotional Email
                                         </label>
                                     </div>
                                 @endif
@@ -664,13 +585,14 @@
                                 <div class="form-group col-md-12">
                                     <label for="">Name of the agent or education consultancy (If you know IAS college from agent
                                         or education consultancy) :</label>
-                                        @php
-                                            $agent_name = $agent_details->user;
-                                        @endphp
-                                    <select name="agent_id" id="agent_text" class="form-control @error('agent_id') is-invalid @enderror" readonly>
-                                            <option value="{{ $agent_details->agent_id }}">{{ $agent_name->name }}</option>
+                                    @php
+                                        $agent_name = $agent_details->user;
+                                    @endphp
+                                    <select name="agent_id" id="agent_text"
+                                        class="form-control @error('agent_id') is-invalid @enderror" readonly>
+                                        <option value="{{ $agent_details->agent_id }}">{{ $agent_name->name }}</option>
                                     </select>
-                                    
+
                                     @error('agent_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -721,16 +643,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input @error('agree') is-invalid @enderror"
-                                            type="checkbox" name="agree" id="aggree"
+                                    <label class="form-check-label  @error('agree') text-danger @enderror">
+                                        <input class="form-check-input" type="checkbox" name="agree" id="aggree"
                                             value="I agree to all terms and conditions" required> I agree to all terms and
                                         conditions
-                                        @error('agree')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
                                     </label>
                                 </div>
                             </div>
@@ -749,56 +665,60 @@
 
     <script>
         $('document').ready(function() {
-            //     $('#job_field').hide();
-            //     $('#vocational_fields').hide();
-            //     $('#expirience_field').hide();
-            //     $('#agent_field').hide();
-            //     $('#ge_level_field').hide();
+            v_training();
+            experience();
+            ge_lang();
+            program();
 
-
-            //     $('.program-radio').change(function() {
-            //         program();
-            //     });
-
-            //     $('#vocational_check_box').change(function() {
-            //         v_training();
-            //     });
-
-            //     $('#expirience_box').change(function() {
-            //         experience();
-            //     });
-
-            //     $('.how_to_know').change(function() {
-            //         agent();
-            //     });
-
-            //     $('.Ge_lang').change(function() {
-            //         ge_lang();
-            //     });
-
-            //     $('#country').change(function() {
-            //         let country = $(this).val();
-            //         $.ajax({
-            //             url: "{{ route('country_agent') }}",
-            //             type: "POST",
-            //             data: {
-            //                 country: country,
-            //                 _token: "{{ csrf_token() }}",
-            //             },
-            //             success: function(data) {
-            //                 $('#agent_text').html(data);
-            //                 // console.log(data);
-            //             },
-            //             error: function(error) {
-            //                 console.log(error);
-            //             }
-            //         });
-            //     });
 
         });
 
+        $('.program-radio').change(function() {
+            program();
+        });
+
+        $('#vocational_check_box').change(function() {
+            v_training();
+        });
+
+        $('#expirience_box').change(function() {
+            experience();
+        });
+
+        $('.Ge_lang').change(function() {
+            ge_lang();
+        });
+
+        $('#country').change(function() {
+            let country = $(this).val();
+            $.ajax({
+                url: "{{ route('country_agent') }}",
+                type: "POST",
+                data: {
+                    country: country,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    $('#agent_text').html(data);
+                    // console.log(data);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+
+        // function check_for_hide() {
+        //     $('#job_field').hide();
+        //     $('#vocational_fields').hide();
+        //     $('#expirience_field').hide();
+        //     $('#agent_field').hide();
+        //     $('#ge_level_field').hide();
+        // };
+
         function program() {
-            let select_direct = $('input[name="program"]:checked').val();
+            let select_direct = $('input[name="course_id"]:checked').attr('course-code');
             // alert(select_direct);
 
             if (select_direct == 'Direct job') {
@@ -812,8 +732,8 @@
         };
 
         function v_training() {
-            // let select_vocational = $('#vocational_check_box').prop('checked');
-            let select_vocational = $('input[name="v_training_tick"]:checked').val();
+            let select_vocational = $('#vocational_check_box').prop('checked');
+            // let select_vocational = $('input[name="v_training_tick"]:checked').val();
             // alert(select_vocational);
 
             if (select_vocational) {
@@ -834,19 +754,6 @@
                 $('#expirience_text').focus();
             } else {
                 $('#expirience_field').slideUp();
-            }
-        };
-
-        function agent() {
-            let select_agent = $('input[name="how_to_know"]:checked').val();
-
-            if (select_agent == 'Agent/Educational Consultancy') {
-                $('#agent_field').slideDown();
-                $('#agent_text').focus();
-                $('#agent_text').attr('required', true);
-            } else {
-                $('#agent_field').slideUp();
-                $('#agent_text').attrRemove('required');
             }
         };
 

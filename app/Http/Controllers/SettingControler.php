@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\PermissionList;
 use App\Models\Smtp;
 use Illuminate\Http\Request;
@@ -174,5 +175,52 @@ class SettingControler extends Controller
         $permission = Role::find($role_id)->permissions;
 
         return response()->json($permission);
+    }
+
+    public function course_get()
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('course.view') || $user->can('course.create');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $course_details = Course::all();
+        return view('admin.settings.courses')->with(['course_details' => $course_details]);
+    }
+
+    public function course_post(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('course.create');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $request->validate([
+            'course_name' => 'required',
+            'course_code' => 'required',
+            'course_description' => 'nullable',
+        ]);
+
+        try{
+            Course::create([
+                'course_name' => request('course_name'),
+                'course_code' => request('course_code'),
+                'course_status' => 1,
+                'course_description' => request('course_name'),
+            ]);
+
+        }catch(Throwable $e){
+            return back()->with(['error' => 'Course added failed.', 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Course added successfully.']);
     }
 }

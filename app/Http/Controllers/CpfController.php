@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Agent;
 use App\Models\Candidate;
 use App\Models\Country;
+use App\Models\Course;
 use App\Models\Cpf;
 use App\Models\HigherEdu;
 use App\Models\SecondaryEdu;
@@ -20,7 +21,8 @@ class CpfController extends Controller
     public function cpf()
     {
         $country = Country::all();
-        return view('cpf.cpf')->with(['country' => $country]);
+        $course_details = Course::where('course_status', '1')->get();
+        return view('cpf.cpf')->with(['country' => $country, 'course_details' => $course_details]);
     }
 
 
@@ -28,7 +30,7 @@ class CpfController extends Controller
     {
         $request->validate([
             //cpf
-            'program' => 'required',
+            'course_id' => 'required',
 
             //candidate
             'first_name' => 'required',
@@ -57,7 +59,7 @@ class CpfController extends Controller
 
             //exp & lang
             'w_experience_tick' => 'nullable',
-            'german_language' => 'nullable',
+            'german_language' => 'required',
 
             //awaireness
             'how_to_know' => 'required',
@@ -67,7 +69,9 @@ class CpfController extends Controller
             'agree' => 'required',
         ]);
 
-        if (request('program') == 'Direct job') {
+        $course_code = Course::find(request('course_id'))->course_code;
+        
+        if ( $course_code == 'Direct job') {
             $request->validate([
                 'job_feild' => 'required',
             ]);
@@ -120,7 +124,7 @@ class CpfController extends Controller
                 'w_year' => 'required|numeric',
             ]);
         }
-
+        
         if (request('german_language') == '1') {
             $request->validate([
                 'german_level' => 'required',
@@ -150,7 +154,7 @@ class CpfController extends Controller
                 }
 
                 $cpf_info = Cpf::create([
-                    'program' => request('program'),
+                    'course_id' => request('course_id'),
                     'job_feild' => request('job_feild'),
                     'ge_lang' => request('german_language'),
                     'ge_lang_level' => request('german_level'),

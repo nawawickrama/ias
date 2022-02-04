@@ -15,7 +15,7 @@ class Cpf extends Model
 
     protected $fillable = [
         'year',
-        'program',
+        'course_id',
         'job_feild',
         'ge_lang',
         'ge_lang_level',
@@ -51,5 +51,10 @@ class Cpf extends Model
     public function candidate()
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

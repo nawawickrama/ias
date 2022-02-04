@@ -4,7 +4,11 @@
     <script>
         window.print();
     </script>
-
+    @php
+        $program = $cpf_details->course;
+        $candidate = $cpf_details->candidate;
+        // dd($program);
+    @endphp
     <div class="container">
         <div class="row mt-4">
             <div class="card col-md-12">
@@ -20,10 +24,10 @@
                         <hr>
                         <div class="form-row mt-2">
                             <div class="form-check col-md-12">
-                                <p>Selected Program : <em class="text-secondary">{{ $cpf_details->program }}</em></p>
+                                <p>Selected Program : <em class="text-secondary">{{ $program->course_code }}</em></p>
                             </div>
                         </div>
-                        @if ($cpf_details->program == 'Direct job')
+                        @if ($program->course_code == 'Direct job')
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <p>Which Field : <em class="text-secondary">{{ $cpf_details->job_feild }}</em></p>
@@ -36,16 +40,16 @@
                         <hr>
                         <div class="form-row mt-2">
                             <div class="form-group col-md-6">
-                                <p>First Name : <em class="text-secondary">{{ $cpf_details->first_name }}</em></p>
+                                <p>First Name : <em class="text-secondary">{{ $candidate->first_name }}</em></p>
                             </div>
                             <div class="form-group col-md-6">
-                                <p>Surname : <em class="text-secondary">{{ $cpf_details->sur_name }}</em></p>
+                                <p>Surname : <em class="text-secondary">{{ $candidate->sur_name }}</em></p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <p>Sex : <em class="text-secondary">@php
-                                    $sex = $cpf_details->sex;
+                                    $sex = $candidate->sex;
                                     if ($sex == 0) {
                                         echo 'Female';
                                     } else {
@@ -54,30 +58,30 @@
                                 @endphp</em></p>
                             </div>
                             <div class="form-group col-md-6">
-                                <p>Date of birth : <em class="text-secondary">@php echo date('F j, Y',strtotime($cpf_details->dob)); @endphp</em></p>
+                                <p>Date of birth : <em class="text-secondary">@php echo date('F j, Y',strtotime($candidate->dob)); @endphp</em></p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <p>Nationality / Nationalities required : <em
-                                        class="text-secondary">{{ $cpf_details->nationality }}</em></p>
+                                        class="text-secondary">{{ $candidate->nationality }}</em></p>
                             </div>
                             <div class="form-group col-md-6">
-                                <p>Country / State : <em class="text-secondary">{{ $cpf_details->country }}</em></p>
+                                <p>Country / State : <em class="text-secondary">{{ $candidate->country }}</em></p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <p>Telephone number (with ISD code) : <em
-                                        class="text-secondary">{{ $cpf_details->telephone }}</em></p>
+                                        class="text-secondary">{{ $candidate->telephone }}</em></p>
                             </div>
                             <div class="form-group col-md-6">
-                                <p>Email : <em class="text-secondary">{{ $cpf_details->email }}</em></p>
+                                <p>Email : <em class="text-secondary">{{ $candidate->email }}</em></p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <p>Address : <em class="text-secondary">{{ $cpf_details->address }}</em></p>
+                                <p>Address : <em class="text-secondary">{{ $candidate->address }}</em></p>
                             </div>
                         </div>
 

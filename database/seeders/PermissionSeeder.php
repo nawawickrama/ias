@@ -62,6 +62,18 @@ class PermissionSeeder extends Seeder
             'smtp-setting.create',
             'smtp-setting.edit',
             'smtp-setting.view',
+
+            //course
+            'course.create',
+            'course.view',
+            'course.edit',
+            'course.active/deactive',
+
+            //User - courses
+            'user-course.create',
+            'user-course.edit',
+            'user-course.view',
+            'user-course.remove',
         ];
 
         foreach($permission_info as $permission){
@@ -92,6 +104,10 @@ class PermissionSeeder extends Seeder
             'agent' => ['catagory' => 'agent', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
 
             'smtp-setting' => ['catagory' => 'smtp-setting', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
+
+            'course' => ['catagory' => 'course', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '1', 'accept' => '0'],
+            
+            'user-course' => ['catagory' => 'user-course', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0'],
             
         ];
 

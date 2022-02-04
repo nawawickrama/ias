@@ -10,6 +10,7 @@
                 $candidate = $cpf_details->candidate;
                 if(isset($cpf_details->agent_id)) $agent = App\Models\Agent::find($cpf_details->agent_id)->user;
                 $country = App\Models\Country::find($candidate->country)->nicename;
+                $program = $cpf_details->course;
             @endphp
             <form action="">
                 <div class="form-row">
@@ -18,10 +19,10 @@
                 <hr>
                 <div class="form-row mt-2">
                     <div class="form-check col-md-12">
-                        <p>Selected Program : <em class="text-secondary">{{ $cpf_details->program }}</em></p>
+                        <p>Selected Program : <em class="text-secondary">{{ $program->course_code }}</em></p>
                     </div>
                 </div>
-                @if ($cpf_details->program == 'Direct job')
+                @if ($program->course_code == 'Direct job')
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <p>Which Field : <em class="text-secondary">{{ $cpf_details->job_feild }}</em></p>
@@ -43,7 +44,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <p>Sex : <em class="text-secondary">@php
-                            $sex = $cpf_details->sex;
+                            $sex = $candidate->sex;
                             if ($sex == 0) {
                                 echo 'Female';
                             } else {

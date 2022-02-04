@@ -206,6 +206,7 @@ class ApplicationController extends Controller
 
             $cpf_details = Cpf::find($cpf_id);
             $candidate = $cpf_details->candidate;
+            $program = $cpf_details->course;
 
             try{
                 $cpf_details->update([
@@ -217,7 +218,7 @@ class ApplicationController extends Controller
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
 
-            $data['program'] = $cpf_details->program;
+            $data['program'] = $program->course_code;
             $data['name'] = $candidate->first_name.' '.$candidate->sur_name;
             $data['address'] = $candidate->address.' '.$candidate->country;
             $data['adimssion'] = $cpf_details->application_status;

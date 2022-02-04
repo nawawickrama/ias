@@ -26,10 +26,11 @@
                 <hr>
                 @php
                     $candidate_info = $cpf_details->candidate;
+                    $program = $cpf_details->course;
                 @endphp
                 <div class="row">
                     <div class="col-md-8">
-                        <p>Applying for :<em class="text-secondary"> {{ $cpf_details->program }} course</em></p>
+                        <p>Applying for :<em class="text-secondary"> {{ $program->course_code }} course</em></p>
                     </div>
                     <div class="col-md-4">
                         <p>Intake :<em class="text-secondary"> 2022</em></p>
@@ -54,9 +55,9 @@
                         <p>Adimission decision :
                             @php
                                 if ($cpf_details->application_status == 1) {
-                                    echo "Selected for the $cpf_details->program program.";
+                                    echo "Selected for the $program->course_code program.";
                                 } elseif ($cpf_details->application_status == 3) {
-                                    echo "Selected for the $cpf_details->program program with the condition.";
+                                    echo "Selected for the $program->course_code program with the condition.";
                                 } elseif ($cpf_details->application_status == 0) {
                                     echo 'Not selected.';
                                 }
@@ -90,9 +91,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <img style="height: 250px; width:270px;"
-                            src="{{ url('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png') }}"
-                            alt="">
+                        <img style="height: 250px; width:270px;" src="{{ url('assets/images/txt.png') }}" alt="">
                     </div>
                 </div>
                 <div class="row">

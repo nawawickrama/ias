@@ -35,11 +35,13 @@
                                     $agent = App\Models\Agent::find($cpf->agent_id)->user;
                                 }
                                 $country = App\Models\Country::find($candidate->country)->nicename;
+
+                                $program = $cpf->course;
                                 
                             @endphp
                             <tr>
                                 <td scope="row">{{ $cpf->cpf_id }}</td>
-                                <td>{{ $cpf->program }} @if ($cpf->program == 'Direct job') ({{ $cpf->job_feild }}) @endif</td>
+                                <td>{{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf->job_feild }}) @endif</td>
                                 <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                                 <td>{{ $candidate->email }}</td>
                                 <td>@if(isset($cpf->agent_id)) {{ $agent->name}} @else {{ 'N/A' }} @endif</td>

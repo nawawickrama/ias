@@ -17,7 +17,11 @@ class CreateCpfsTable extends Migration
             $table->id('cpf_id');
             
             $table->integer('year')->nullable();
-            $table->string('program');
+            // $table->string('program');
+
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('course_id')->on('courses');
+
             $table->string('job_feild')->nullable(); //if program is direct job
             
             $table->boolean('ge_lang'); //1->yes , 0-> no
