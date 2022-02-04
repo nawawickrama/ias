@@ -36,6 +36,7 @@ $user = Auth::user();
 
             @if ($user->can('pending-request.view') || $user->can('selected-request.view') || $user->can('selected-under-condition-request.view') || $user->can('rejected-request.view'))
 
+<<<<<<< Updated upstream
                 <li class="nav-item nav-category">Student Management</li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#leads" role="button" aria-expanded="false"
@@ -85,6 +86,51 @@ $user = Auth::user();
                     </a>
                     <div class="collapse" id="emails">
                         <ul class="nav sub-menu">
+=======
+            <li class="nav-item nav-category">Student Management</li>
+            {{--<li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="emails" id="req-ex">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">Leads</span> &nbsp;
+                    <div class="spinner-grow spinner-grow-sm text-white invisible pending-header-req" role="status">
+                        <span class="badge badge-light badge-pill bg-warning text-black text-header-indicater"></span>
+                    </div>
+                    <i class="link-arrow" data-feather="chevron-down" id="toggle-indicater"></i>
+                </a>
+                 <div class="collapse" id="leads">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('pending-leads') }}" class="nav-link">Pending Leads
+                                &nbsp;
+                                <div class="spinner-grow spinner-grow-sm text-white invisible pending-sub-req" role="status">
+                                    <span class="badge badge-light badge-pill bg-danger text-white text-sub-indicater"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('approved-requests') }}" class="nav-link">My Leads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('waiting-requests') }}" class="nav-link">Potential Leads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('waiting-requests') }}" class="nav-link">All Leads</a>
+                        </li>
+                    </ul>
+                </div> 
+            </li>--}}
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails" id="req-ex">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">CPF Requests</span> &nbsp;
+                    <div class="spinner-grow spinner-grow-sm text-white invisible pending-header-req" role="status">
+                        <span class="badge badge-light badge-pill bg-warning text-black text-header-indicater"></span>
+                    </div>
+                    <i class="link-arrow" data-feather="chevron-down" id="toggle-indicater"></i>
+                </a>
+                <div class="collapse" id="emails">
+                    <ul class="nav sub-menu">
+>>>>>>> Stashed changes
 
                             @can('pending-request.view')
                                 <li class="nav-item">
@@ -168,6 +214,7 @@ $user = Auth::user();
             @endif
 
             @if ($user->can('smtp-setting.create') || $user->can('smtp-setting.view'))
+<<<<<<< Updated upstream
                 <li class="nav-item nav-category">Web Settings</li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#settings" role="button"
@@ -191,6 +238,28 @@ $user = Auth::user();
                         </ul>
                     </div>
                 </li>
+=======
+            <li class="nav-item nav-category">Web Settings</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#settings" role="button" aria-expanded="false" aria-controls="emails">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">Settings</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="settings">
+                    <ul class="nav sub-menu">
+                        @if ($user->can('smtp-setting.create') || $user->can('smtp-setting.view'))
+                        <li class="nav-item">
+                            <a href="{{ route('smtp') }}" class="nav-link">SMTP Settings</a>
+                        </li>
+                       {{-- <li class="nav-item">
+                            <a href="{{ route('courses') }}" class="nav-link">Course Settings</a>
+                        </li> --}}
+                        @endif
+                    </ul>
+                </div>
+            </li>
+>>>>>>> Stashed changes
             @endif
         </ul>
     </div>
