@@ -263,6 +263,8 @@ class CpfController extends Controller
         }
 
         $country = Country::all();
-        return view('cpf.cpf')->with(['reference_no' => $reference_no, 'country' => $country, 'agent_details' => $agent_details]);
+        $course_details = Course::where('course_status', '1')->get();
+
+        return view('cpf.cpf')->with(['course_details' => $course_details, 'reference_no' => $reference_no, 'country' => $country, 'agent_details' => $agent_details]);
     }
 }
