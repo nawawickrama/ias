@@ -10,7 +10,7 @@
                 <form action="{{ route('add_agents') }}" method="post">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             @php
                                 $user = Auth::user();
                                 $agent = $user->hasRole('Agent');
@@ -34,7 +34,7 @@
                                 </select>
                             @endif
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="">Email :</label>
                             <input type="email" name="email" id="agent_emal"
                                 class="form-control @error('email') is-invalid @enderror" @if ($agent) value="{{ Auth::user()->email }}" @else  @if (old('email') != null) value="{{ old('email') }}" @endif @endif readonly>
@@ -43,6 +43,10 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Company :</label>
+                            <input type="text" name="" class="form-control" id="">
                         </div>
                     </div>
                     <div class="form-row">
