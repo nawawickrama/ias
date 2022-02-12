@@ -30,7 +30,8 @@
                 @endphp
                 <div class="row">
                     <div class="col-md-8">
-                        <p>Applying for :<em class="text-secondary"> {{ $program->course_code }} course</em></p>
+                        <p>Applying for :<em class="text-secondary"> {{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_feild }}) @endif
+                                course</em></p>
                     </div>
                     <div class="col-md-4">
                         <p>Intake :<em class="text-secondary"> 2022</em></p>
@@ -76,18 +77,21 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>Comments :</p>
+                @if ($cpf_details->comment_institute)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Comments :</p>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <textarea name="" class="form-control" id="" cols="30" rows="5"
-                            readonly>{{ $cpf_details->comment_institute }}</textarea>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea name="" class="form-control" id="" cols="30" rows="5"
+                                readonly>{{ $cpf_details->comment_institute }}</textarea>
+                        </div>
                     </div>
-                </div>
-                <hr>
+                    <hr>
+                @endif
+
 
                 <div class="row">
                     <div class="col-md-12">

@@ -1,9 +1,13 @@
 V1.2.3 Changes 
 ====================
-Assesment form should show the previous details.
-Company name should be added to the agent details form.
-In CPF agent compnay should show instead of agent name.
-Download assement form to the all CPFs
-Assesment and CPF pdf names chould be change as <firstname+lastname-assesment.pdf>
-Notification item should not be blinked
+Assesment form should show the previous details.--->DONE
+Company name should be added to the agent details form.-->DONE
+In CPF agent compnay should show instead of agent name.--->DONE
+Download assement form to the all CPFs--->DONE
+Assesment and CPF pdf names chould be change as <firstname+lastname-assesment.pdf>--->DONE
+Notification item should not be blinked ---->DONE
 Notification should show to agent once PCF approved/ pending or rejected.
+
+profile
+foget-password
+coz action buttion

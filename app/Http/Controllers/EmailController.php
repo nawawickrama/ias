@@ -18,6 +18,7 @@ class EmailController extends Controller
         return $this->middleware(['auth', 'actived', 'agent']);
     }
     
+    //normal email
     public function send_email_get(Request $request)
     {
         /** @var App\Models\User $user */
@@ -34,6 +35,7 @@ class EmailController extends Controller
         }
     }
 
+    //normal email
     public function send_email_post(Request $request)
     {
         /** @var App\Models\User $user */
@@ -62,6 +64,7 @@ class EmailController extends Controller
         }
     }
 
+    //normal email
     public function email_button(Request $request)
     {
         /** @var App\Models\User $user */

@@ -10,12 +10,12 @@
                 <form action="{{ route('add_agents') }}" method="post">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             @php
                                 $user = Auth::user();
                                 $agent = $user->hasRole('Agent');
                             @endphp
-                            <label for="">Name :</label>
+                            <label for="">Company Name :</label>
                             @if ($agent)
                                 <input type="text" name="name" id="" class="form-control @error('name') is-invalid @enderror"
                                     @if (old('name') != null) value="{{ old('name') }}" @else value="{{ Auth::user()->name }}" @endif readonly>
@@ -26,7 +26,7 @@
                                 @enderror
                             @else
                                 <select name="name" id="agent">
-                                    <option value="null" selected disabled>Select Agent...</option>
+                                    <option value="null" selected disabled>Select Agent</option>
                                     @foreach ($user_agents as $user)
                                         <option value="{{ $user->id }}" @if (old('name') != null && old('name') == $user->id) {{ 'selected' }} @endif>{{ $user->name }}
                                         </option>
@@ -34,7 +34,7 @@
                                 </select>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="">Email :</label>
                             <input type="email" name="email" id="agent_emal"
                                 class="form-control @error('email') is-invalid @enderror" @if ($agent) value="{{ Auth::user()->email }}" @else  @if (old('email') != null) value="{{ old('email') }}" @endif @endif readonly>
@@ -44,50 +44,8 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="">Company :</label>
-                            <input type="text" name="" class="form-control" id="">
-                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Contact Number :</label>
-                            <input type="number" name="tp" id="" class="form-control @error('tp') is-invalid @enderror"
-                                value="{{ old('tp') }}">
-                            @error('tp')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="">Contact Number(Optional) :</label>
-                            <input type="number" name="tp_2" id="" class="form-control @error('tp_2') is-invalid @enderror"
-                                value="{{ old('tp_2') }}">
-                            @error('tp_2')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Country :</label>
-                            <select name="country" id=""
-                                class="js-example-basic-single w-100 form-control @error('country') is-invalid @enderror">
-                                <option selected disabled>Select Country</option>
-                                @foreach ($country as $cou)
-                                    <option value="{{ $cou->id }}" @if (old('country') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('country')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                         <div class="form-group col-md-6">
                             <label for="">Contact Person Name :</label>
                             <input type="text" name="person_name" id=""
@@ -99,8 +57,28 @@
                                 </span>
                             @enderror
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Contact Number :</label>
+                            <input type="number" name="tp" id="" class="form-control @error('tp') is-invalid @enderror"
+                                value="{{ old('tp') }}">
+                            @error('tp')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Contact Number(Optional) :</label>
+                            <input type="number" name="tp_2" id="" class="form-control @error('tp_2') is-invalid @enderror"
+                                value="{{ old('tp_2') }}">
+                            @error('tp_2')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <div class="form-group col-md-6">
                             <label for="">Whatsapp Number :</label>
                             <input type="number" name="whatsapp_no" id=""
@@ -112,11 +90,29 @@
                                 </span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Website :</label>
                             <input type="text" name="web_site" id=""
                                 class="form-control @error('web_site') is-invalid @enderror" value="{{ old('web_site') }}">
                             @error('web_site')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Country :</label>
+                            <select name="country" id=""
+                                class="js-example-basic-single w-100 form-control @error('country') is-invalid @enderror">
+                                <option selected disabled>Select Country</option>
+                                @foreach ($country as $cou)
+                                    <option value="{{ $cou->id }}" @if (old('country') == $cou->id) {{ 'selected' }} @endif>{{ $cou->nicename }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('country')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
