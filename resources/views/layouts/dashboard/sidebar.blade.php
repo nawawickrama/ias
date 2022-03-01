@@ -46,13 +46,13 @@ $user = Auth::user();
                     <div class="collapse" id="leads">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a href="{{ route('pending-leads') }}" class="nav-link">Pending Leads</a>
+                                <a href="{{ route('pending-leads') }}" class="nav-link">Assign Leads</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('approved-requests') }}" class="nav-link">My Leads</a>
+                                <a href="{{ route('my-leads') }}" class="nav-link">Pending Leads</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('waiting-requests') }}" class="nav-link">Potential Leads</a>
+                                <a href="{{ route('potential-leads') }}" class="nav-link">Potential Leads</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('waiting-requests') }}" class="nav-link">All Leads</a>

@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <p>Pending Leads</p>
+                <p>Potential Leads</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -36,19 +36,19 @@
                                 <td>Facebook Ad</td>
                                 <td>No comment</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Assign to agent" data-id="#">
-                                        <i data-feather="user-plus"></i>
+                                    <button type="button" class="btn btn-success btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Send CPF link" data-id="#">
+                                        <i data-feather="link"></i>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Assign myself" data-id="#">
-                                        <i data-feather="clipboard"></i>
+                                    <button type="button" class="btn btn-primary btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Send Email" data-id="#">
+                                        <i data-feather="mail"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Delete lead" data-id="#">
-                                        <i data-feather="trash"></i>
+                                    <button type="button" class="btn btn-dark btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="View lead info & recent activities" data-id="#">
+                                        <i data-feather="eye"></i>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">2</th>
                                 <td>Ayesh Nawawickrama</td>
                                 <td>nawawickrama@gmail.com</td>
                                 <td>STEP</td>
@@ -58,14 +58,14 @@
                                 <td>Facebook Ad</td>
                                 <td>No comment</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Assign to agent" data-id="#">
-                                        <i data-feather="user-plus"></i>
+                                    <button type="button" class="btn btn-success btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Send CPF link" data-id="#">
+                                        <i data-feather="link"></i>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Assign myself" data-id="#">
-                                        <i data-feather="clipboard"></i>
+                                    <button type="button" class="btn btn-primary btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Send Email" data-id="#">
+                                        <i data-feather="mail"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="Delete lead" data-id="#">
-                                        <i data-feather="trash"></i>
+                                    <button type="button" class="btn btn-dark btn-icon resend-email" data-toggle="tooltip" data-placement="top" title="View lead info & recent activities" data-id="#">
+                                        <i data-feather="eye"></i>
                                     </button>
                                 </td>
                             </tr>

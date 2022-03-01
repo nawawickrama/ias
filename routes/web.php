@@ -116,3 +116,5 @@ Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permiss
 //========================AYESH ADDED UI===========================
 //Admin - leads
 Route::view('/admin/pending-leads','admin.leads.pending-leads')->name('pending-leads');
+Route::view('/admin/my-leads','admin.leads.my-leads')->name('my-leads');
+Route::view('/admin/potential-leads','admin.leads.potential-leads')->name('potential-leads');
