@@ -5,6 +5,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CpfController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,22 @@ Route::post('/role-management', [SettingControler::class, 'role_post'])->name('r
 Route::get('/permission-management', [SettingControler::class, 'permission_role_get'])->name('permission_role_get');
 Route::post('/permission-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');
 
+
+//leads
+Route::get('/pending-leads', [LeadController::class, 'lead_pending'])->name('pending_lead');
+Route::post('/assign-leads', [LeadController::class, 'assgn_leads_to_agent'])->name('assgn_leads_to_agent');
+Route::post('/delete-leads', [LeadController::class, 'leade_delete'])->name('leade_delete');
+Route::get('/my-leads', [LeadController::class, 'my_leads'])->name('my_leads');
+Route::get('/all-leads', [LeadController::class, 'all_leads'])->name('all_leads');
+
+
+Route::post('/make-lead-as-potential', [LeadController::class, 'lead_convert_to_potential'])->name('lead_convert_to_potential');
+Route::get('/admin/potential-leads', [LeadController::class, 'potential_lead'])->name('potential_lead');
+
+//lead CPF
+Route::post('/potential-lead-cpf-send', [EmailController::class, 'send_potential_liad_cpf'])->name('send_potential_liad_cpf');
+Route::get('/lead-cpf-form/{lead_random_number}', [CpfController::class, 'lead_cpf_form'])->name('lead_cpf_form');
+
 //ajax==========================
 //Pending indicator
 Route::post('/ajax/pending', [CpfController::class, 'check_pending_cpf'])->name('check_pending_cpf');
@@ -111,10 +128,3 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 
 //permission fill
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
-
-
-//========================AYESH ADDED UI===========================
-//Admin - leads
-Route::view('/admin/pending-leads','admin.leads.pending-leads')->name('pending-leads');
-Route::view('/admin/my-leads','admin.leads.my-leads')->name('my-leads');
-Route::view('/admin/potential-leads','admin.leads.potential-leads')->name('potential-leads');

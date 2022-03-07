@@ -31,4 +31,14 @@ class Agent extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'agent_country' , 'id');
+    }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'agent_id');
+    }
 }

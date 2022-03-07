@@ -24,4 +24,9 @@ class Course extends Model
     {
         return $this->hasMany(Cpf::class, 'course_id');
     }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'lead_couse_id', 'course_id');
+    }
 }

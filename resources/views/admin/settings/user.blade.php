@@ -11,7 +11,7 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="">Name :</label>
+                            <label for="">Name/ Agent Company :</label>
                             <input type="text" name="name" id="" value="{{ old('name') }}"
                                 class="form-control @error('name') is-invalid @enderror">
                             @error('name')

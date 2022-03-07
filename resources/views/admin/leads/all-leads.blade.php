@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <p>My Leads</p>
+                    <p>All Leads</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -20,6 +20,7 @@
                                     <th scope="col">Country</th>
                                     <th scope="col">Source</th>
                                     <th scope="col">Comment</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -38,6 +39,15 @@
                                         <td>{{ $country_name }}</td>
                                         <td>{{ $lead->lead_source }}</td>
                                         <td>{{ $lead->lead_comment ?? 'N/A' }}</td>
+                                        <td>
+                                            @if ($lead->status == 1)
+                                                <span class="badge badge-success badge-sm">POTENTIAL</span>
+                                            @elseif ($lead->status == 2)
+                                                <span class="badge badge-warning badge-sm">PENDING</span>
+                                            @elseif ($lead->status == 3)
+                                                <span class="badge badge-primary badge-sm">ASSIGNED TO AGENT</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <form action="" id="send-form" method="POST">
                                                 @csrf
@@ -73,8 +83,7 @@
                                                     @can('lead-potential.create')
                                                         <button type="button" class="btn btn-danger btn-icon btn-potential"
                                                             data-toggle="tooltip" data-placement="top"
-                                                            title="Move to Potential lead" lead-id="{{ $lead->lead_id }}"
-                                                            @if ($lead->status == 1) {{ 'disabled' }} @endif>
+                                                            title="Move to Potential lead" lead-id="{{ $lead->lead_id }}">
                                                             <i data-feather="key"></i>
                                                         </button>
                                                     @endcan
@@ -85,7 +94,6 @@
                                                     <i data-feather="edit"></i>
                                                 </button>
                                             </form>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Course;
 use App\Models\Cpf;
 use App\Models\HigherEdu;
+use App\Models\Lead;
 use App\Models\SecondaryEdu;
 use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
@@ -266,5 +267,14 @@ class CpfController extends Controller
         $course_details = Course::where('course_status', '1')->get();
 
         return view('cpf.cpf')->with(['course_details' => $course_details, 'reference_no' => $reference_no, 'country' => $country, 'agent_details' => $agent_details]);
+    }
+
+    public function lead_cpf_form($lead_random_num)
+    {
+        $lead_details = Lead::where('lead_random_number', $lead_random_num)->first();
+        $country = Country::all();
+        $course_details = Course::where('course_status', '1')->get();
+
+        return view('cpf.cpf')->with(['lead_details' => $lead_details, 'country' => $country, 'course_details' => $course_details]);
     }
 }
