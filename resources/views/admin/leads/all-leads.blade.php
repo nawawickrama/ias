@@ -19,6 +19,7 @@
                                     <th scope="col">City</th>
                                     <th scope="col">Country</th>
                                     <th scope="col">Source</th>
+                                    <th scope="col">Agent</th>
                                     <th scope="col">Comment</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -29,6 +30,7 @@
                                     @php
                                         $course_name = $lead->course->course_name;
                                         $country_name = $lead->country->nicename;
+                                        $agent = $lead->agent;
                                     @endphp
                                     <tr @if ($lead->status == 1) class="table-success" @endif>
                                         <td>{{ $lead->lead_first_name }} {{ $lead->lead_sur_name }}</td>
@@ -38,6 +40,7 @@
                                         <td>{{ $lead->lead_city }}</td>
                                         <td>{{ $country_name }}</td>
                                         <td>{{ $lead->lead_source }}</td>
+                                        <td>{{ $agent->user->name ?? 'N/A' }}</td>
                                         <td>{{ $lead->lead_comment ?? 'N/A' }}</td>
                                         <td>
                                             @if ($lead->status == 1)
