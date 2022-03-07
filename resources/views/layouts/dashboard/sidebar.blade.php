@@ -52,7 +52,7 @@ $user = Auth::user();
                                 <a href="{{ route('pending_lead') }}" class="nav-link">Pending Leads</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('potential_lead') }}" class="nav-link">Potential Leads</a>
+                                <a href="{{ route('potential_lead') }}" class="nav-link">Priority Leads</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('all_leads') }}" class="nav-link">All Leads</a>
