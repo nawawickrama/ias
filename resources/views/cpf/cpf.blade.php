@@ -21,7 +21,7 @@
                                     <label class="form-check-label  @error('course_id') text-danger @enderror">
                                         <input type="radio" class="form-check-input program-radio" name="course_id" id=""
                                             course-code="{{ $course->course_code }}" value="{{ $course->course_id }}"
-                                            @if (old('course_id') ?? $lead_details->lead_couse_id == $course->course_id) {{ 'checked' }} @endif>
+                                            @if (old('course_id') ?? $lead_details->lead_couse_id ?? '' == $course->course_id) {{ 'checked' }} @endif>
                                         {{ $course->course_code }} - {{ $course->course_description }}
                                     </label>
                                 </div>
@@ -47,7 +47,7 @@
                             <div class="form-group col-md-6">
                                 <label>First Name :</label>
                                 <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                    name="first_name" id="" aria-describedby="helpId" value="{{ old('first_name') ?? $lead_details->lead_first_name }}">
+                                    name="first_name" id="" aria-describedby="helpId" value="{{ old('first_name') ?? $lead_details->lead_first_name ?? '' }}">
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                                 <label>Surname : </label>
                                 <input type="text" class="form-control @error('sur_name') is-invalid @enderror"
                                     name="sur_name" id="" aria-describedby="helpId" placeholder=""
-                                    value="{{ old('sur_name') ?? $lead_details->lead_sur_name }}">
+                                    value="{{ old('sur_name') ?? $lead_details->lead_sur_name ?? ''}}">
                                 @error('sur_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -110,7 +110,7 @@
                                 <label>Telephone number (with ISD code) :</label>
                                 <input type="number" class="form-control @error('telephone') is-invalid @enderror"
                                     name="telephone" id="" aria-describedby="helpId" placeholder="Country Code & number"
-                                    value="{{ old('telephone') ?? $lead_details->lead_contact}}">
+                                    value="{{ old('telephone') ?? $lead_details->lead_contact ?? ''}}">
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -120,7 +120,7 @@
                             <div class="form-group col-md-6">
                                 <label>Email :</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('email') ?? $lead_details->lead_email}}">
+                                    id="" aria-describedby="helpId" placeholder="" value="{{ old('email') ?? $lead_details->lead_email ?? ''}}">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -144,7 +144,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <input type="text" class="form-control @error('city') is-invalid @enderror" name="city"
-                                    id="" aria-describedby="helpId" placeholder="City" value="{{ old('city') ?? $lead_details->lead_city}}">
+                                    id="" aria-describedby="helpId" placeholder="City" value="{{ old('city') ?? $lead_details->lead_city ?? ''}}">
                                 @error('city')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -177,7 +177,7 @@
                                     class="js-example-basic-single w-100 @error('country') is-invalid @enderror">
                                     <option selected disabled>Select Country</option>
                                     @foreach ($country as $cou)
-                                        <option value="{{ $cou->id }}" @if (old('country') ?? $lead_details->lead_country_id == $cou->id) {{ 'selected' }} @endif>
+                                        <option value="{{ $cou->id }}" @if (old('country') ?? $lead_details->lead_country_id ?? '' == $cou->id) {{ 'selected' }} @endif>
                                             {{ $cou->nicename }}</option>
                                     @endforeach
                                 </select>

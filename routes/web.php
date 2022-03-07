@@ -108,6 +108,7 @@ Route::post('/delete-leads', [LeadController::class, 'leade_delete'])->name('lea
 Route::get('/my-leads', [LeadController::class, 'my_leads'])->name('my_leads');
 Route::get('/all-leads', [LeadController::class, 'all_leads'])->name('all_leads');
 
+Route::post('/leads-create', [LeadController::class, 'create'])->name('lead_create');
 
 Route::post('/make-lead-as-potential', [LeadController::class, 'lead_convert_to_potential'])->name('lead_convert_to_potential');
 Route::get('/admin/potential-leads', [LeadController::class, 'potential_lead'])->name('potential_lead');
