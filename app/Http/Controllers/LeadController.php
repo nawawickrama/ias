@@ -63,6 +63,51 @@ class LeadController extends Controller
         return back()->with(['success' => 'Lead inserted.']);
     }
 
+    public function edit_lead()
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('lead.edit');
+        
+        if(!$permission){
+            Auth::logout();
+            abort(403);
+        }
+
+        $sur_name = request('sur_name');
+        $first_name = request('first_name');
+        $whatsapp_no = request('whatsapp_no');
+        $contact_no = request('contact_no');
+        $course_id = request('course_id');
+        $intake_year = request('intake_year');
+        $country_id = request('country_id');
+        $city_id = request('city_id');
+        $email = request('email');
+        $source = request('source');
+        $comment = request('comment');
+
+        try{
+            Lead::find(request('lead_id'))->update([
+                'lead_first_name' => $first_name,
+                'lead_sur_name' => $sur_name,
+                'lead_email' => $email,
+                'lead_couse_id' => $course_id,
+                'lead_intake_year' => $intake_year,
+                'lead_city' => $city_id,
+                'lead_country_id' => $country_id,
+                'lead_source' => $source,
+                'lead_comment' => $comment,
+                'lead_contact' => $contact_no,
+                'lead_whatsapp' => $whatsapp_no,
+            ]);
+        }catch(Throwable $e){
+            dd($e);
+            return back()->with(['error' => 'Lead insert fail', 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Lead inserted.']);
+    }
+
     public function lead_pending()
     {
         /** @var App\Models\User $user */
@@ -75,9 +120,11 @@ class LeadController extends Controller
         }
 
         $lead_details = Lead::where('status', '2');
-        $agent_details = Agent::where('agent_status', 1)->get();
+
         $couses = Course::where('course_status', '1')->get();
         $countries = Country::all();
+        $agent_details = Agent::where('agent_status', 1)->get();
+
 
         if($user->hasRole('Agent')){
             $my_agent_id = User::find($user->id)->agent->agent_id;
@@ -166,7 +213,11 @@ class LeadController extends Controller
         }
 
         $lead_details = $lead_details->get();
-        return view('admin.leads.my-leads')->with(['lead_details' => $lead_details]);
+
+        $couses = Course::where('course_status', '1')->get();
+        $countries = Country::all();
+
+        return view('admin.leads.my-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
 
     }
 
@@ -187,8 +238,10 @@ class LeadController extends Controller
         }else{
             $lead_details = Lead::all();
         }
+        $couses = Course::where('course_status', '1')->get();
+        $countries = Country::all();
 
-        return view('admin.leads.all-leads')->with(['lead_details' => $lead_details]);
+        return view('admin.leads.all-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
 
     }
 
@@ -245,7 +298,10 @@ class LeadController extends Controller
         }
 
         $lead_details = $lead_details->get();
-        return view('admin.leads.potential-leads')->with(['lead_details' => $lead_details]);
+
+        $couses = Course::where('course_status', '1')->get();
+        $countries = Country::all();
+        return view('admin.leads.potential-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
 
     }
 }
