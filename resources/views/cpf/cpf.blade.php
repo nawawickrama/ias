@@ -21,7 +21,7 @@
                                     <label class="form-check-label  @error('course_id') text-danger @enderror">
                                         <input type="radio" class="form-check-input program-radio" name="course_id" id=""
                                             course-code="{{ $course->course_code }}" value="{{ $course->course_id }}"
-                                            @if (old('course_id') ?? $lead_details->lead_couse_id ?? '' == $course->course_id) {{ 'checked' }} @endif>
+                                            @if (old('course_id') ?? $lead_details->lead_course_id ?? '' == $course->course_id) {{ 'checked' }} @endif>
                                         {{ $course->course_code }} - {{ $course->course_description }}
                                     </label>
                                 </div>

@@ -27,6 +27,6 @@ class Course extends Model
 
     public function leads()
     {
-        return $this->hasMany(Lead::class, 'lead_couse_id', 'course_id');
+        return $this->hasMany(Lead::class, 'lead_course_id', 'course_id');
     }
 }

@@ -22,8 +22,8 @@ class CreateLeadsTable extends Migration
             $table->string('lead_sur_name');
             $table->string('lead_email');
 
-            $table->unsignedBigInteger('lead_couse_id');
-            $table->foreign('lead_couse_id')->references('course_id')->on('courses');
+            $table->unsignedBigInteger('lead_course_id');
+            $table->foreign('lead_course_id')->references('course_id')->on('courses');
 
             $table->string('lead_intake_year');
             $table->string('lead_city');
@@ -38,13 +38,13 @@ class CreateLeadsTable extends Migration
             $table->text('lead_comment')->nullable();
             $table->integer('status')->default(2); //2-> pending,     0->reject,     1->potential,   3->assigned lead,   4->deleted
 
-            $table->unsignedBigInteger('agent_id')->nullable();
+            $table->unsignedBigInteger('handle_by')->nullable(); //user_id
 
             $table->unsignedBigInteger('assign_by')->nullable(); //user id
             $table->dateTime('assign_at')->nullable();
 
             $table->string('delete_reason')->nullable();
-            
+
             $table->unsignedBigInteger('deleted_by')->nullable(); //user id
             $table->dateTime('deleted_at')->nullable();
 

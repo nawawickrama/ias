@@ -39,64 +39,78 @@
                 <div class="navbar-content">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown nav-notifications">
+                            @php
+                                $notify_count = count(Auth::user()->unreadNotifications);
+                            @endphp
+                            @if($notify_count)
+                                <span class="badge badge-primary" style="border-radius: 30px;">{{$notify_count}}</span>
+                            @endif
+
                             <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i data-feather="bell"></i>
-                                <div class="indicator">
-                                    <div class="circle"></div>
-                                </div>
+                                @if( $notify_count)
+                                    <div class="indicator">
+                                        <div class="circle"></div>
+                                    </div>
+                                @endif
                             </a>
+
+
                             <div class="dropdown-menu" aria-labelledby="notificationDropdown">
                                 <div class="dropdown-header d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 font-weight-medium">6 New Notifications</p>
+                                    <p class="mb-0 font-weight-medium">{{$notify_count}} New Notifications</p>
                                     <a href="javascript:;" class="text-muted">Clear all</a>
                                 </div>
                                 <div class="dropdown-body">
-                                    <a href="javascript:;" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="user-plus"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>New customer registered</p>
-                                            <p class="sub-text text-muted">2 sec ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:;" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="gift"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>New Order Recieved</p>
-                                            <p class="sub-text text-muted">30 min ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:;" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="alert-circle"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>Server Limit Reached!</p>
-                                            <p class="sub-text text-muted">1 hrs ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:;" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="layers"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>Apps are ready for update</p>
-                                            <p class="sub-text text-muted">5 hrs ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:;" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="download"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>Download completed</p>
-                                            <p class="sub-text text-muted">6 hrs ago</p>
-                                        </div>
-                                    </a>
+                                    @foreach(Auth::user()->unreadNotifications as $notify)
+                                        <a href="{{route('mark_as_read_notification',$notify)}}" class="dropdown-item">
+                                            <div class="icon">
+                                                <i data-feather="layers"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>{{$notify->data['info']}}</p>
+                                                <p class="sub-text text-muted">{{$notify->data['time']}}</p>
+                                            </div>
+                                        </a>
+                                    @endforeach
+{{--
+{{--                                    <a href="javascript:;" class="dropdown-item">--}}
+{{--                                        <div class="icon">--}}
+{{--                                            <i data-feather="gift"></i>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="content">--}}
+{{--                                            <p>New Order Recieved</p>--}}
+{{--                                            <p class="sub-text text-muted">30 min ago</p>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                    <a href="javascript:;" class="dropdown-item">--}}
+{{--                                        <div class="icon">--}}
+{{--                                            <i data-feather="alert-circle"></i>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="content">--}}
+{{--                                            <p>Server Limit Reached!</p>--}}
+{{--                                            <p class="sub-text text-muted">1 hrs ago</p>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                    <a href="javascript:;" class="dropdown-item">--}}
+{{--                                        <div class="icon">--}}
+{{--                                            <i data-feather="layers"></i>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="content">--}}
+{{--                                            <p>Apps are ready for update</p>--}}
+{{--                                            <p class="sub-text text-muted">5 hrs ago</p>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                    <a href="javascript:;" class="dropdown-item">--}}
+{{--                                        <div class="icon">--}}
+{{--                                            <i data-feather="download"></i>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="content">--}}
+{{--                                            <p>Download completed</p>--}}
+{{--                                            <p class="sub-text text-muted">6 hrs ago</p>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
                                 </div>
                                 <div class="dropdown-footer d-flex align-items-center justify-content-center">
                                     <a href="javascript:;">View all</a>

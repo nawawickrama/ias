@@ -18,7 +18,7 @@ class Lead extends Model
         'lead_first_name',
         'lead_sur_name',
         'lead_email',
-        'lead_couse_id',
+        'lead_course_id',
         'lead_intake_year',
         'lead_city',
         'lead_country_id',
@@ -27,7 +27,7 @@ class Lead extends Model
         'lead_contact',
         'lead_whatsapp',
         'status',//2-> pending,     0->reject,     1->potential,   3->assigned lead,   4->deleted
-        'agent_id',
+        'handle_by', //user_id
         'assign_by',
         'assign_at',
         'deleted_at',
@@ -42,7 +42,7 @@ class Lead extends Model
 
     public function course()
     {
-        return $this->belongsTo(Course::class, 'lead_couse_id', 'course_id');
+        return $this->belongsTo(Course::class, 'lead_course_id', 'course_id');
     }
 
     public function country()

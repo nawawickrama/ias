@@ -61,7 +61,7 @@
                                                 <td><input type="checkbox" name="{{ $permission->name }}[]" id="{{ $permission->name }}_rollback" value="rollback" class="permission_check"
                                                         @if (!$permission->rollback) {{ 'disabled' }} @endif></td>
                                                 <td><input type="checkbox" name="{{ $permission->name }}[]"
-                                                        value="active/deactive" @if (!$permission->active_deactive) {{ 'disabled' }} @endif></td>
+                                                        value="active/deactivate" @if (!$permission->active_deactivate) {{ 'disabled' }} @endif></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -97,7 +97,7 @@
                         },
                         success: function(data) {
                             // console.log(data);
-                            $.each(data, function (i, value) { 
+                            $.each(data, function (i, value) {
                                 // console.log(value.name);
                                 let name = value.name;
                                 let permission = name.split(".")[0];

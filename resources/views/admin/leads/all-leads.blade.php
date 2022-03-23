@@ -9,6 +9,8 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <small><i>Yellow color indicates your leads.</i></small>
+                        <small><i>Green color indicates potential leads.</i></small>
                         <table class="table table-bordered" id="datatable-basic">
                             <thead>
                                 <tr>
@@ -19,7 +21,7 @@
                                     <th scope="col">City</th>
                                     <th scope="col">Country</th>
                                     <th scope="col">Source</th>
-                                    <th scope="col">Agent</th>
+                                    <th scope="col">Handle By</th>
                                     <th scope="col">Comment</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -30,9 +32,9 @@
                                     @php
                                         $course_name = $lead->course->course_name;
                                         $country_name = $lead->country->nicename;
-                                        $agent = $lead->agent;
+                                        $user_name = $lead->user;
                                     @endphp
-                                    <tr @if ($lead->status == 1) class="table-success" @endif>
+                                    <tr @if ($lead->status == 1) class="table-success" @endif @if($lead->handle_by == Auth::user()->id) class="table-warning" @endif>
                                         <td>{{ $lead->lead_first_name }} {{ $lead->lead_sur_name }}</td>
                                         <td>{{ $lead->lead_email }}</td>
                                         <td>{{ $course_name }}</td>
@@ -40,7 +42,7 @@
                                         <td>{{ $lead->lead_city }}</td>
                                         <td>{{ $country_name }}</td>
                                         <td>{{ $lead->lead_source }}</td>
-                                        <td>{{ $agent->user->name ?? 'N/A' }}</td>
+                                        <td>{{ $user_name->name ?? 'N/A' }}</td>
                                         <td>{{ $lead->lead_comment ?? 'N/A' }}</td>
                                         <td>
                                             @if ($lead->status == 1)
@@ -95,11 +97,11 @@
                                                 @can('lead.edit')
                                                     <button type="button" class="btn btn-info btn-icon btn-lead-edit"
                                                         data-toggle="tooltip" data-placement="top"
-                                                        lead_id="{{ $lead->lead_id }}" 
+                                                        lead_id="{{ $lead->lead_id }}"
                                                         lead_sur_name = "{{ $lead->lead_sur_name }}"
                                                         lead_first_name = "{{ $lead->lead_first_name }}"
                                                         lead_email = "{{ $lead->lead_email }}"
-                                                        lead_course_id = "{{ $lead->lead_couse_id }}"
+                                                        lead_course_id = "{{ $lead->lead_course_id }}"
                                                         lead_city = "{{ $lead->lead_city }}"
                                                         lead_intake_year = "{{ $lead->lead_intake_year }}"
                                                         lead_country_id = "{{ $lead->lead_country_id }}"
@@ -107,7 +109,7 @@
                                                         lead_comment = "{{ $lead->lead_comment }}"
                                                         lead_whtasapp = "{{ $lead->lead_whatsapp }}"
                                                         lead_contact = "{{ $lead->lead_contact }}"
-                                                        
+
                                                         title="Edit Leads">
                                                         <i data-feather="edit"></i>
                                                     </button>

@@ -5,17 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\Country;
 use App\Models\Course;
+use App\Models\DelayNotification;
 use App\Models\Lead;
 use App\Models\User;
+use App\Notifications\PendingLeadNotify;
+use App\Notifications\SetReminderNotify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 class LeadController extends Controller
 {
     public function __construct()
     {
-         $this->middleware(['auth', 'actived', 'agent']);
+        $this->middleware(['auth', 'actived', 'agent']);
     }
 
     public function create()
@@ -23,8 +28,8 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead.create');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
@@ -41,12 +46,12 @@ class LeadController extends Controller
         $source = request('source');
         $comment = request('comment');
 
-        try{
-            Lead::create([
+        try {
+            $leadInfo = Lead::create([
                 'lead_first_name' => $first_name,
                 'lead_sur_name' => $sur_name,
                 'lead_email' => $email,
-                'lead_couse_id' => $course_id,
+                'lead_course_id' => $course_id,
                 'lead_intake_year' => $intake_year,
                 'lead_city' => $city_id,
                 'lead_country_id' => $country_id,
@@ -55,11 +60,13 @@ class LeadController extends Controller
                 'lead_contact' => $contact_no,
                 'lead_whatsapp' => $whatsapp_no,
             ]);
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             // dd($e);
             return back()->with(['error' => 'Lead insert fail', 'error_type' => 'error']);
         }
 
+        $users = User::role('Super Admin')->get();
+        Notification::sendNow($users, new PendingLeadNotify($leadInfo));
         return back()->with(['success' => 'Lead inserted.']);
     }
 
@@ -68,8 +75,8 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead.edit');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
@@ -86,12 +93,12 @@ class LeadController extends Controller
         $source = request('source');
         $comment = request('comment');
 
-        try{
+        try {
             Lead::find(request('lead_id'))->update([
                 'lead_first_name' => $first_name,
                 'lead_sur_name' => $sur_name,
                 'lead_email' => $email,
-                'lead_couse_id' => $course_id,
+                'lead_course_id' => $course_id,
                 'lead_intake_year' => $intake_year,
                 'lead_city' => $city_id,
                 'lead_country_id' => $country_id,
@@ -100,7 +107,7 @@ class LeadController extends Controller
                 'lead_contact' => $contact_no,
                 'lead_whatsapp' => $whatsapp_no,
             ]);
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             dd($e);
             return back()->with(['error' => 'Lead insert fail', 'error_type' => 'error']);
         }
@@ -113,8 +120,8 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-pending.view');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
@@ -126,7 +133,7 @@ class LeadController extends Controller
         $agent_details = Agent::where('agent_status', 1)->get();
 
 
-        if($user->hasRole('Agent')){
+        if ($user->hasRole('Agent')) {
             $my_agent_id = User::find($user->id)->agent->agent_id;
             $lead_details = $lead_details->where('agent_id', $my_agent_id);
         }
@@ -141,28 +148,55 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-pending.assign');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
 
         $lead_id = request('lead_id');
-        $agent_id = request('agent_id');
+        $agent_user_id = request('agent_id');
 
-        try{
-            $lead_details  = Lead::find($lead_id)->update([
+        try {
+            Lead::find($lead_id)->update([
                 'status' => '3',
-                'agent_id' => $agent_id,
+                'handle_by' => $agent_user_id,
                 'assign_by' => $user->id,
                 'assign_at' => date('Y-m-d H:i:s'),
             ]);
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
-       
+
         return back()->with(['success' => 'Lead assigned']);
 
+    }
+
+    public function assign_my_self()
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('lead-pending.assign-my-self');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $lead_id = request('lead_id');
+
+        try {
+            Lead::find($lead_id)->update([
+                'status' => '3',
+                'handle_by' => $user->id,
+                'assign_by' => $user->id,
+                'assign_at' => date('Y-m-d H:i:s'),
+            ]);
+        } catch (Throwable $e) {
+            return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Lead assigned yor self']);
     }
 
     public function leade_delete()
@@ -170,8 +204,8 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-pending.assign');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
@@ -179,17 +213,17 @@ class LeadController extends Controller
         $lead_id = request('lead_id');
         $reason = request('delete_reason');
 
-        try{
-            $lead_details  = Lead::find($lead_id)->update([
+        try {
+            $lead_details = Lead::find($lead_id)->update([
                 'status' => '4',
                 'delete_reason' => $reason,
                 'deleted_by' => $user->id,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
-       
+
         return back()->with(['success' => 'Lead assigned']);
 
     }
@@ -199,20 +233,13 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-my-lead.view');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
 
-        $lead_details = Lead::whereIn('status', ['1', '3']);
-
-        if($user->hasRole('Agent')){
-            $my_agent_id = User::find($user->id)->agent->agent_id;
-            $lead_details = $lead_details->where('agent_id', $my_agent_id);
-        }
-
-        $lead_details = $lead_details->get();
+        $lead_details = Lead::whereIn('status', ['1', '3'])->where('handle_by', $user->id)->get();
 
         $couses = Course::where('course_status', '1')->get();
         $countries = Country::all();
@@ -226,16 +253,16 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-pending.view');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
 
-        if($user->hasRole('Agent')){
+        if ($user->hasRole('Agent')) {
             $my_agent_id = User::find($user->id)->agent->agent_id;
             $lead_details = Lead::where('agent_id', $my_agent_id)->get();
-        }else{
+        } else {
             $lead_details = Lead::all();
         }
         $couses = Course::where('course_status', '1')->get();
@@ -250,8 +277,8 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-potential.create');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
@@ -259,23 +286,23 @@ class LeadController extends Controller
         $lead_id = request('lead_id');
 
         //genarate reference for agent
-        do{
+        do {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            $random_no = substr(str_shuffle($chars),0,10);
+            $random_no = substr(str_shuffle($chars), 0, 10);
 
             //check uniqueness
             $lead_random_number = Lead::where('lead_random_number', $random_no)->count();
-        }while($lead_random_number != 0);
+        } while ($lead_random_number != 0);
 
-        try{
+        try {
             Lead::find($lead_id)->update([
                 'status' => '1',
                 'lead_random_number' => $random_no,
             ]);
-        }catch(Throwable $e){
+        } catch (Throwable $e) {
             return back()->with(['error' => 'Oparation faild.', 'error_type' => 'error']);
         }
-        
+
         return back()->with(['success' => 'Lead make as potential']);
     }
 
@@ -284,15 +311,15 @@ class LeadController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('lead-potential.view');
-        
-        if(!$permission){
+
+        if (!$permission) {
             Auth::logout();
             abort(403);
         }
 
         $lead_details = Lead::where('status', '1');
 
-        if($user->hasRole('Agent')){
+        if ($user->hasRole('Agent')) {
             $my_agent_id = User::find($user->id)->agent->agent_id;
             $lead_details = $lead_details->where('agent_id', $my_agent_id);
         }
@@ -304,4 +331,20 @@ class LeadController extends Controller
         return view('admin.leads.potential-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
 
     }
+
+    public function setReminder(){
+        $leadId = \request('lead_id');
+        $dateTime =\request('reminderTime');
+        $note = \request('note');
+
+        DelayNotification::create([
+            'cron_time' => $dateTime,
+            'user_id' => Auth::user()->id,
+            'lead_id' => $leadId,
+            'note' => $note,
+        ]);
+
+        return back()->with(['success' => 'Lead Reminder Added']);
+    }
+
 }

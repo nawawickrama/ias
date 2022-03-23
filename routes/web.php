@@ -27,13 +27,16 @@ Auth::routes([
     'register' => false,
 ]);
 
+//notification
+Route::get('mark_as_read/{notification}', [\App\Http\Controllers\NotificationController::class, 'mark_as_read_notification'])->name('mark_as_read_notification');
+
 //Logout
 Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 //Dashboard
 Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Application 
+//Application
 Route::get('/pending-requests', [ApplicationController::class, 'pending_cpf'])->name('pending-requests');
 Route::get('/application/view/{candyId}', [ApplicationController::class, 'cpf_view'])->name('view-application');
 Route::get('/application/download/{cpfId}', [ApplicationController::class, 'cpf_download'])->name('download-application');
@@ -45,7 +48,7 @@ Route::get('/rejected-requests', [ApplicationController::class, 'rejected_cpf'])
 Route::post('/covert-pending', [ApplicationController::class, 'cpf_rollback'])->name('convert_pending');
 
 
-//Assesment Form 
+//Assesment Form
 Route::get('/assessment-form/{cpfId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
 Route::post('/assessment-email/', [ApplicationController::class, 'email_assestment_form'])->name('email_assessment_form');
 Route::post('/assessment-email-button/', [ApplicationController::class, 'email_assestment_form_by_button'])->name('email_assestment_form_by_button');
@@ -90,7 +93,7 @@ Route::get('/reg_cpf/{reference_no}', [CpfController::class, 'agent_cpf'])->name
 Route::get('/agents', [AgentController::class, 'agent_page'])->name('agents');
 Route::post('/agents', [AgentController::class, 'add_agents'])->name('add_agents');
 Route::post('/agents-update', [AgentController::class, 'edit_agents'])->name('edit_agents');
-Route::post('/agents-active_deactive', [AgentController::class, 'act_dea_agents'])->name('act_dea_agents');
+Route::post('/agents-active_deactivate', [AgentController::class, 'act_dea_agents'])->name('act_dea_agents');
 
 //user management
 Route::get('/role-management', [SettingControler::class, 'role_get'])->name('role_get');
@@ -108,6 +111,9 @@ Route::post('/delete-leads', [LeadController::class, 'leade_delete'])->name('lea
 Route::get('/my-leads', [LeadController::class, 'my_leads'])->name('my_leads');
 Route::get('/all-leads', [LeadController::class, 'all_leads'])->name('all_leads');
 
+//assign myself
+Route::post('/lead-assign-my-self', [LeadController::class, 'assign_my_self'])->name('assign_my_self');
+
 Route::post('/leads-create', [LeadController::class, 'create'])->name('lead_create');
 Route::post('/leads-edit', [LeadController::class, 'edit_lead'])->name('edit_lead');
 
@@ -117,6 +123,7 @@ Route::get('/admin/potential-leads', [LeadController::class, 'potential_lead'])-
 //lead CPF
 Route::post('/potential-lead-cpf-send', [EmailController::class, 'send_potential_liad_cpf'])->name('send_potential_liad_cpf');
 Route::get('/lead-cpf-form/{lead_random_number}', [CpfController::class, 'lead_cpf_form'])->name('lead_cpf_form');
+Route::post('/set-reminder', [LeadController::class, 'setReminder'])->name('setReminder');
 
 //ajax==========================
 //Pending indicator

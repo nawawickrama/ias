@@ -52,8 +52,8 @@
                                                 lead-id="{{ $lead->lead_id }}">
                                                 <i data-feather="user-plus"></i>
                                             </button>
-                                            <button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip"
-                                                data-placement="top" title="Assign myself">
+                                            <button type="button" class="btn btn-primary btn-icon btn-assign-myself" data-toggle="tooltip"
+                                                data-placement="top" title="Assign myself" lead-id="{{ $lead->lead_id }}">
                                                 <i data-feather="clipboard"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-icon btn-delete"
@@ -93,9 +93,10 @@
                             @foreach ($agent_details as $agent)
                                 @php
                                     $agent_name = $agent->user->name;
+                                    $agent_user_id = $agent->user->id;
                                     $agent_country = $agent->country->nicename;
                                 @endphp
-                                <option value="{{ $agent->agent_id }}">{{ $agent_name }} -
+                                <option value="{{ $agent_user_id }}">{{ $agent_name }} -
                                     {{ $agent->agent_web_site }} - {{ $agent_country }}
                                 </option>
                             @endforeach
@@ -113,7 +114,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ route('leade_delete') }}" method="post">
                 @csrf
@@ -127,7 +128,7 @@
                     <div class="modal-body">
                         Please confirm delete action with reason ?<br>
                         <input type="text" name="delete_reason" id="" value="" placeholder="Enter reason"
-                            class="form-control">
+                               class="form-control">
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="lead_id" id="lead_id_delete" value="">
@@ -138,6 +139,33 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="leadAssignMySelf" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="{{ route('assign_my_self') }}" method="post">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Assign yourself confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to handle this lead by yourself?
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="lead_id" id="lead_id_assign_myself" value="">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade bd-example-modal-lg" id="newLeadModel" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -247,6 +275,12 @@
             lead_id = $(this).attr('lead-id');
             $('#lead_id_delete').val(lead_id);
             $('#deleteModel').modal('show');
+        });
+
+        $('.btn-assign-myself').click(function() {
+            lead_id = $(this).attr('lead-id');
+            $('#lead_id_assign_myself').val(lead_id);
+            $('#leadAssignMySelf').modal('show');
         });
     </script>
 @endsection

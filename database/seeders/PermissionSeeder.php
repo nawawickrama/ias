@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $permission_info = [
 
             //request
@@ -35,7 +35,7 @@ class PermissionSeeder extends Seeder
             //assestment form
             'assestment-form.download',
             'assestment-form.email',
-    
+
             //email-send
             'email-send.create',
 
@@ -83,37 +83,37 @@ class PermissionSeeder extends Seeder
 
         $permission_list = [
             'pending-request' => ['catagory' => 'pending-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '1', 'email' => '0'],
-            
+
             'selected-request' => ['catagory' => 'selected-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'rejected-request' => ['catagory' => 'rejected-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '1', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'selected-under-condition-request' => ['catagory' => 'selected-under-condition-request', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '1', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
 
             'cpf' => ['catagory' => 'cpf', 'view' => '1', 'download' => '1', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'assestment-form' => ['catagory' => 'assestment-form', 'view' => '0', 'download' => '1', 'edit' => '0', 'create' => '0',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'email-send' => ['catagory' => 'email-send', 'view' => '0', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'role' => ['catagory' => 'role', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'user' => ['catagory' => 'user', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '1', 'accept' => '0', 'email' => '0'],
-            
+
             'permission' => ['catagory' => 'permission', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
             'agent' => ['catagory' => 'agent', 'view' => '1', 'download' => '0', 'edit' => '0', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
 
             'smtp-setting' => ['catagory' => 'smtp-setting', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
 
             'course' => ['catagory' => 'course', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '0', 'rollback' => '0', 'active/deactive' => '1', 'accept' => '0', 'email' => '0'],
-            
+
             'user-course' => ['catagory' => 'user-course', 'view' => '1', 'download' => '0', 'edit' => '1', 'create' => '1',  'remove' => '1', 'rollback' => '0', 'active/deactive' => '0', 'accept' => '0', 'email' => '0'],
-            
+
         ];
 
         foreach($permission_list as $permission){
-            
+
                 PermissionList::create([
                     'name' => $permission['catagory'],
                     'view' => $permission['view'],
@@ -123,10 +123,10 @@ class PermissionSeeder extends Seeder
                     'rollback' => $permission['rollback'],
                     'download' => $permission['download'],
                     'create' => $permission['create'],
-                    'active_deactive' => $permission['active/deactive'],
+                    'active_deactivate' => $permission['active/deactivate'],
                     'email' => $permission['email'],
                 ]);
-            
+
         }
 
         //permission
@@ -140,7 +140,7 @@ class PermissionSeeder extends Seeder
 
         foreach($permissions as $per){
             $role = Role::where('name', $per['role'])->first();
-            $role->givePermissionTo($per['permission']); 
+            $role->givePermissionTo($per['permission']);
         }
     }
 }
