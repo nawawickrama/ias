@@ -124,6 +124,7 @@ Route::get('/admin/potential-leads', [LeadController::class, 'potential_lead'])-
 Route::post('/potential-lead-cpf-send', [EmailController::class, 'send_potential_liad_cpf'])->name('send_potential_liad_cpf');
 Route::get('/lead-cpf-form/{lead_random_number}', [CpfController::class, 'lead_cpf_form'])->name('lead_cpf_form');
 Route::post('/set-reminder', [LeadController::class, 'setReminder'])->name('setReminder');
+Route::post('/view-lead-activity-log', [LeadController::class, 'viewLeadActivity'])->name('viewLeadActivity');
 
 //ajax==========================
 //Pending indicator

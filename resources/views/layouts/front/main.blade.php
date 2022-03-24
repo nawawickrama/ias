@@ -68,6 +68,7 @@
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </body>
 
 </html>

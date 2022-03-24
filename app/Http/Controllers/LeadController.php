@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\activityLog;
+use App\Models\ActivityLog as ModelsActivityLog;
 use App\Models\Agent;
 use App\Models\Country;
 use App\Models\Course;
@@ -61,6 +62,10 @@ class LeadController extends Controller
                 'lead_contact' => $contact_no,
                 'lead_whatsapp' => $whatsapp_no,
             ]);
+
+            $activity = Auth::user()->name . ' create new lead.';
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'create-lead', $leadInfo->lead_id);
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
             // dd($e);
             return back()->with(['error' => 'Lead insert fail', 'error_type' => 'error']);
@@ -108,8 +113,12 @@ class LeadController extends Controller
                 'lead_contact' => $contact_no,
                 'lead_whatsapp' => $whatsapp_no,
             ]);
+
+            $activity = Auth::user()->name . ' edit lead.';
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'create-lead', request('lead_id'));
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
-            dd($e);
+            // dd($e);
             return back()->with(['error' => 'Lead insert fail', 'error_type' => 'error']);
         }
 
@@ -141,7 +150,6 @@ class LeadController extends Controller
 
         $lead_details = $lead_details->get();
         return view('admin.leads.pending-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details, 'agent_details' => $agent_details]);
-
     }
 
     public function assgn_leads_to_agent()
@@ -165,12 +173,16 @@ class LeadController extends Controller
                 'assign_by' => $user->id,
                 'assign_at' => date('Y-m-d H:i:s'),
             ]);
+
+            $agent_info = User::find($agent_user_id)->name;
+            $activity = Auth::user()->name . ' assign lead to ' . $agent_info;
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'assign-to-agent', $lead_id);
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
 
         return back()->with(['success' => 'Lead assigned']);
-
     }
 
     public function assign_my_self()
@@ -193,11 +205,12 @@ class LeadController extends Controller
                 'assign_by' => $user->id,
                 'assign_at' => date('Y-m-d H:i:s'),
             ]);
-            $activity =
-            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'assign my self');
-            $assignMyLead->addLog();
 
+            $activity = Auth::user()->name . ' assign self lead.';
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'assign-my-self', $lead_id);
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
+            // dd($e);
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
 
@@ -225,12 +238,15 @@ class LeadController extends Controller
                 'deleted_by' => $user->id,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
+
+            $activity = Auth::user()->name . ' delete lead.';
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'delete-lead', $lead_id);
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
 
         return back()->with(['success' => 'Lead assigned']);
-
     }
 
     public function my_leads()
@@ -250,7 +266,6 @@ class LeadController extends Controller
         $countries = Country::all();
 
         return view('admin.leads.my-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
-
     }
 
     public function all_leads()
@@ -274,7 +289,6 @@ class LeadController extends Controller
         $countries = Country::all();
 
         return view('admin.leads.all-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
-
     }
 
     public function lead_convert_to_potential()
@@ -304,6 +318,10 @@ class LeadController extends Controller
                 'status' => '1',
                 'lead_random_number' => $random_no,
             ]);
+
+            $activity = Auth::user()->name . ' make as potential lead.';
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'make-potential-lead', $lead_id);
+            $assignMyLead->addLog();
         } catch (Throwable $e) {
             return back()->with(['error' => 'Oparation faild.', 'error_type' => 'error']);
         }
@@ -334,12 +352,12 @@ class LeadController extends Controller
         $couses = Course::where('course_status', '1')->get();
         $countries = Country::all();
         return view('admin.leads.potential-leads')->with(['countries' => $countries, 'couses' => $couses, 'lead_details' => $lead_details]);
-
     }
 
-    public function setReminder(){
+    public function setReminder()
+    {
         $leadId = \request('lead_id');
-        $dateTime =\request('reminderTime');
+        $dateTime = \request('reminderTime');
         $note = \request('note');
 
         DelayNotification::create([
@@ -349,7 +367,29 @@ class LeadController extends Controller
             'note' => $note,
         ]);
 
+        $activity = Auth::user()->name . ' set reminder to ' . $dateTime;
+        $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'set-reminder', $leadId);
+        $assignMyLead->addLog();
+
         return back()->with(['success' => 'Lead Reminder Added']);
     }
 
+    public function viewLeadActivity(Request $request)
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('lead-activitylog.view');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $lead_id = request('lead_id');
+        $activity_log = ModelsActivityLog::where([['model', 'App\Models\Laed'], ['property_id', $lead_id]])->get();
+
+        foreach($activity_log as $activity){
+            echo $activity->event.' - '.$activity->info.' ---> '.$activity->created_at.'<br>';
+        }
+    }
 }

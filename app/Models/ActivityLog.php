@@ -18,5 +18,6 @@ class ActivityLog extends Model
         'info',
         'event',
         'user_id',
+        'property_id'
     ];
 }

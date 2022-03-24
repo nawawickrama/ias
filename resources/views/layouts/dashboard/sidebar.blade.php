@@ -188,7 +188,7 @@ $user = Auth::user();
 
         setInterval(() => {
             indicator();
-        }, 2000);
+        }, 10000);
 
     });
 
@@ -206,9 +206,9 @@ $user = Auth::user();
                     $('.pending-header-req').removeClass('invisible');
                 } else {
                     $('.text-header-indicater').text('');
-                    $('.pending-header-req').class('invisible');
+                    $('.pending-header-req').addClass('invisible');
                 }
-            };
+            }
 
         });
     };
@@ -244,5 +244,5 @@ $user = Auth::user();
     //         }
     //     });
 
-    };
+    // };
 </script>
