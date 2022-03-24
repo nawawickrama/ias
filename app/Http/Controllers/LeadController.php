@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\activityLog;
 use App\Models\Agent;
 use App\Models\Country;
 use App\Models\Course;
@@ -192,6 +193,10 @@ class LeadController extends Controller
                 'assign_by' => $user->id,
                 'assign_at' => date('Y-m-d H:i:s'),
             ]);
+            $activity =
+            $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'assign my self');
+            $assignMyLead->addLog();
+
         } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }
