@@ -59,6 +59,7 @@
     <script src="{{url('assets/vendors/sweetalert2/sweetalert2.min.js')}}"></script>
     <script src="{{url('assets/vendors/promise-polyfill/polyfill.min.js')}}"></script>
     <script src="{{url('assets/js/sweet-alert.js')}}"></script>
+    <script src="{{url('assets/vendors/jquery-steps/jquery.steps.min.js')}}"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>

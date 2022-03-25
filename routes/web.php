@@ -138,3 +138,8 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 
 //permission fill
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
+
+//==========================STUDENT =================================
+
+//Student Wizard
+Route::view('student/wizard','student.wizard.wizard')->name('student-wizard');
