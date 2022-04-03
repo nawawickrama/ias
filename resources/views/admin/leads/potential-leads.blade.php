@@ -40,10 +40,11 @@
                                         <td>{{ $lead->lead_source }}</td>
                                         <td>{{ $lead->lead_comment ?? 'N/A' }}</td>
                                         <td>
-                                            <form action="" id="send-form" method="POST">
+                                            <form action="" class="send-form" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="email" value="" id="email_form">
-                                                <input type="hidden" name="cpf_no" value="" id="random_cpf_no">
+                                                <input type="hidden" name="email" value="" class="email_form">
+                                                <input type="hidden" name="lead_id" value="" class="lead_id_form">
+                                                <input type="hidden" name="cpf_no" value="" class="random_cpf_no">
 
                                                 @can('lead-potential-send-cpf.create')
                                                 <button type="button" class="btn btn-success btn-icon btn-cpf"
@@ -60,9 +61,10 @@
                                                     </button>
                                                 @endcan
 
-                                                <button type="button" class="btn btn-dark btn-icon resend-email"
-                                                    data-toggle="tooltip" data-placement="top"
-                                                    title="View lead info & recent activities" data-id="#">
+                                                <button type="button" class="btn btn-dark btn-icon btn-activity-log"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="View lead info & recent activities"
+                                                        lead-id="{{ $lead->lead_id }}">
                                                     <i data-feather="eye"></i>
                                                 </button>
                                             </form>
@@ -76,28 +78,12 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         $('document').ready(function() {
-            $('.btn-email').click(function() {
-                let email = $(this).attr('data-email');
-                $('#email_form').val(email);
-                $('#send-form').attr('action', "{{ route('email_button') }}");
-                $('#send-form').submit();
-            });
-
-            $('.btn-cpf').click(function(){
-                let random_cpf_no = $(this).attr('random-no');
-                $('#random_cpf_no').val(random_cpf_no);
-                $('#send-form').attr('action', "{{ route('send_potential_liad_cpf') }}");
-                $('#send-form').submit();
-                
-                // let base_url = $(this).attr('base-url');
-                // var url = base_url+"/lead-cpf-form/"+random_cpf_no;
-                // window.open(url, '_blanck');
 
 
-            });
+
         });
     </script>
 @endsection

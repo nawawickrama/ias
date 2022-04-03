@@ -19,7 +19,7 @@ class EmailController extends Controller
     {
         return $this->middleware(['auth', 'actived', 'agent']);
     }
-    
+
     //normal email
     public function send_email_get(Request $request)
     {
@@ -28,9 +28,9 @@ class EmailController extends Controller
         $permission = $user->can('email-send.view');
 
         if($permission){
-            
+
             return view('admin.mail.send-mail');
-        
+
         }else{
             Auth::logout();
             abort(403);
@@ -45,7 +45,7 @@ class EmailController extends Controller
         $permission = $user->can('email-send.create');
 
         if($permission){
-            
+
             $subject = request('subject');
             $data = request('body');
             $email = request('email');
@@ -56,10 +56,10 @@ class EmailController extends Controller
             }catch(Throwable){
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
             }
-            
+
             Session::put('success', '1');
             return Redirect::route('send-mail');
-        
+
         }else{
             Auth::logout();
             abort(403);
@@ -74,10 +74,10 @@ class EmailController extends Controller
         $permission = $user->can('email-send.create');
 
         if($permission){
-        
+
             $email_add = request('email');
             return view('admin.mail.send-mail')->with(['email_add' => $email_add]);
-        
+
         }else{
             Auth::logout();
             abort(403);
@@ -93,7 +93,7 @@ class EmailController extends Controller
         $permission = $user->can('lead-potential-send-cpf.create');
 
         if($permission){
-            
+
             $random_no = request('cpf_no');
             $lead_info = Lead::where('lead_random_number', $random_no)->first();
             $subject = 'Candidate Profile Form - IAS College';
@@ -106,10 +106,10 @@ class EmailController extends Controller
                 dd($e);
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
             }
-            
+
             Session::put('success', '1');
             return Redirect::route('potential_lead');
-        
+
         }else{
             Auth::logout();
             abort(403);
