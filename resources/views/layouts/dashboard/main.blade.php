@@ -14,24 +14,30 @@
     <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ url('assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/demo_1/style.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/jquery-steps/jquery.steps.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-    <script src="{{ url('assets/vendors/core/core.js') }}"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="{{ url('assets/vendors/core/core.js') }}"></script>
+
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}"/>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 <body>
 <div class="main-wrapper">
-    @extends('layouts.dashboard.sidebar')
+    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Student'))
+        @include('layouts.dashboard.student_sidebar')
+    @else
+        @include('layouts.dashboard.sidebar')
+    @endif
     <div class="page-wrapper">
         <nav class="navbar">
             <a href="#" class="sidebar-toggler">
@@ -75,43 +81,6 @@
                                         </div>
                                     </a>
                                 @endforeach
-                                {{--
-                                {{--                                    <a href="javascript:;" class="dropdown-item">--}}
-                                {{--                                        <div class="icon">--}}
-                                {{--                                            <i data-feather="gift"></i>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="content">--}}
-                                {{--                                            <p>New Order Recieved</p>--}}
-                                {{--                                            <p class="sub-text text-muted">30 min ago</p>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                    <a href="javascript:;" class="dropdown-item">--}}
-                                {{--                                        <div class="icon">--}}
-                                {{--                                            <i data-feather="alert-circle"></i>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="content">--}}
-                                {{--                                            <p>Server Limit Reached!</p>--}}
-                                {{--                                            <p class="sub-text text-muted">1 hrs ago</p>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                    <a href="javascript:;" class="dropdown-item">--}}
-                                {{--                                        <div class="icon">--}}
-                                {{--                                            <i data-feather="layers"></i>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="content">--}}
-                                {{--                                            <p>Apps are ready for update</p>--}}
-                                {{--                                            <p class="sub-text text-muted">5 hrs ago</p>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                    <a href="javascript:;" class="dropdown-item">--}}
-                                {{--                                        <div class="icon">--}}
-                                {{--                                            <i data-feather="download"></i>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="content">--}}
-                                {{--                                            <p>Download completed</p>--}}
-                                {{--                                            <p class="sub-text text-muted">6 hrs ago</p>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
                             </div>
                             <div class="dropdown-footer d-flex align-items-center justify-content-center">
                                 <a href="javascript:;">View all</a>
@@ -327,7 +296,6 @@
 
 <script src="{{ url('assets/js/select2.js') }}"></script>
 <script src="{{ url('assets/vendors/select2/select2.min.js') }}"></script>
-<script src="{{ url('assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ url('assets/vendors/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
 <script src="{{ url('assets/vendors/inputmask/jquery.inputmask.min.js') }}"></script>
 <script src="{{ url('assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
@@ -354,6 +322,8 @@
 <script src="{{ url('assets/vendors/promise-polyfill/polyfill.min.js') }}"></script>
 <script src="{{ url('assets/js/sweet-alert.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url('assets/js/wizard.js') }}"></script>
+<script src="{{ url('assets/vendors/jquery-steps/jquery.steps.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
@@ -363,7 +333,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+<script src="{{ url('assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
+
 <script src="{{url('js/leads.js')}}"></script>
+
 <script>
     $(document).ready(function () {
 

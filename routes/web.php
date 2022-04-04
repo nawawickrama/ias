@@ -48,7 +48,7 @@ Route::get('/rejected-requests', [ApplicationController::class, 'rejected_cpf'])
 Route::post('/covert-pending', [ApplicationController::class, 'cpf_rollback'])->name('convert_pending');
 
 
-//Assesment Form
+//Assessment Form
 Route::get('/assessment-form/{cpfId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
 Route::post('/assessment-email/', [ApplicationController::class, 'email_assestment_form'])->name('email_assessment_form');
 Route::post('/assessment-email-button/', [ApplicationController::class, 'email_assestment_form_by_button'])->name('email_assestment_form_by_button');
@@ -65,7 +65,7 @@ Route::get('/courses-view', [SettingControler::class, 'course_get'])->name('cour
 Route::post('/courses-view', [SettingControler::class, 'course_post'])->name('course_add');
 
 
-//User Accoutn
+//User Account
 Route::get('/user-settings', [ProfileController::class, 'user'])->name('user-settings');
 Route::post('/user-settings', [ProfileController::class, 'add_user'])->name('add-user');
 Route::post('/user-status', [ProfileController::class, 'active_inactive'])->name('active_inactive');
@@ -139,7 +139,8 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 //permission fill
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
 
-//==========================STUDENT =================================
 
+//==========================STUDENT =================================
 //Student Wizard
-Route::view('student/wizard','student.wizard.wizard')->name('student-wizard');
+Route::get('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
+Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
