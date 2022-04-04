@@ -24,10 +24,10 @@
                 <div class="collapse" id="patient">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{route('add-new-patient')}}" class="nav-link">Student Wizard</a>
+                            <a href="{{route('studentWizard')}}" class="nav-link">Student Wizard</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('view-patients')}}" class="nav-link">Student Wizard</a>
+                            <a href="" class="nav-link">Student Wizard</a>
                         </li>
                     </ul>
                 </div>
