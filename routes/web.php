@@ -144,3 +144,7 @@ Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permiss
 //Student Wizard
 Route::get('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
 Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
+
+
+//AYESH 
+Route::view('potential-students','admin.potential.potential-students')->name('potential-students');
