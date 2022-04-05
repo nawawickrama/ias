@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Login as a student</button>
+                <button type="button" class="btn btn-primary">Login as a student</button>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Yes</button>
+                <button type="button" class="btn btn-primary">Yes</button>
             </div>
         </div>
     </div>
