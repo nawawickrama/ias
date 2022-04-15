@@ -71,7 +71,7 @@ class CpfController extends Controller
         ]);
 
         $course_code = Course::find(request('course_id'))->course_code;
-        
+
         if ( $course_code == 'Direct job') {
             $request->validate([
                 'job_feild' => 'required',
@@ -103,16 +103,18 @@ class CpfController extends Controller
             ]);
         }
 
-        if (request('b_uni') != NULL) {
+        if (request('bachelors_tick')) {
             $request->validate([
+                'b_uni' => 'required',
                 'b_major_sub' => 'required',
                 'b_year' => 'required|numeric',
                 'b_result' => 'required|numeric',
             ]);
         }
 
-        if (request('m_uni') != NULL) {
+        if (request('masters_tick')) {
             $request->validate([
+                'm_uni' => 'required',
                 'm_major_sub' => 'required',
                 'm_year' => 'required|numeric',
                 'm_result' => 'required|numeric',
@@ -125,7 +127,7 @@ class CpfController extends Controller
                 'w_year' => 'required|numeric',
             ]);
         }
-        
+
         if (request('german_language') == '1') {
             $request->validate([
                 'german_level' => 'required',

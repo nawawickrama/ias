@@ -223,4 +223,29 @@ class SettingControler extends Controller
 
         return back()->with(['success' => 'Course added successfully.']);
     }
+
+    public function statusChange(){
+
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('course.active_deactivate');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $status = \request('status');
+        $course_id = \request('course_id');
+
+        try{
+            Course::find($course_id)->update([
+                'course_status' => $status
+            ]);
+        }catch (Throwable $e){
+            return back()->with(['error' => 'Status change failed', 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Status change successfully']);
+    }
 }

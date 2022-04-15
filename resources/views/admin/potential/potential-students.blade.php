@@ -10,7 +10,6 @@
             <table class="table table-bordered" id="datatable-basic">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Program</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -20,26 +19,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($student_details as $student)
                     <tr>
                         <th scope="row">1</th>
-                        <td>MEP</td>
-                        <td>Ayesh Nawawickrama</td>
-                        <td>nawawickrama@gmail.com</td>
-                        <td>Sajana Karunarathne</td>
-                        <td>Sri lanka</td>
-                        <td>
-                        <span data-toggle="tooltip" data-placement="top" title="Send Student Login">
-                                <button type="button" class="btn btn-success btn-icon" data-toggle="modal" data-target="#sendstd">
-                                    <i data-feather="send"></i>
-                                </button>
-                            </span>
-                            <span data-toggle="tooltip" data-placement="top" title="Login As Student">
-                                <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" data-target="#loginasstd">
-                                    <i data-feather="user"></i>
-                                </button>
-                            </span>
-                        </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

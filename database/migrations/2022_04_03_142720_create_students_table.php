@@ -27,6 +27,7 @@ class CreateStudentsTable extends Migration
             $table->string('passport_no');
             $table->string('skip_id');
             $table->string('whatsapp_no');
+            $table->enum('status', ['Potential', 'Rejected', 'Registered']);
             $table->timestamps();
         });
     }

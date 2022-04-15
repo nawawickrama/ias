@@ -63,6 +63,7 @@ Route::post('/smtp-settings', [SettingControler::class, 'set_smtp'])->name('set_
 //Course Settings
 Route::get('/courses-view', [SettingControler::class, 'course_get'])->name('course_get');
 Route::post('/courses-view', [SettingControler::class, 'course_post'])->name('course_add');
+Route::post('/courses-status-change', [SettingControler::class, 'statusChange'])->name('statusChange');
 
 
 //User Account
@@ -146,5 +147,5 @@ Route::get('student/wizard',[\App\Http\Controllers\StudentController::class, 'st
 Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
 
 
-//AYESH 
-Route::view('potential-students','admin.potential.potential-students')->name('potential-students');
+//AYESH
+Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
