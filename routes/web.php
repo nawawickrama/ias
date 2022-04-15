@@ -147,5 +147,5 @@ Route::get('student/wizard',[\App\Http\Controllers\StudentController::class, 'st
 Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
 
 
-//AYESH
-Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
+//potential student
+//Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
