@@ -214,36 +214,4 @@ $user = Auth::user();
         });
     };
 
-    // function auto() {
-
-    //     $.ajax({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         url: "{{ route('check_pending_cpf') }}",
-    //         type: 'POST',
-    //         dataType: "json",
-    //         success: function(data) {
-    //             if (data > 0) {
-    //                 let ss = $('#req-ex').attr('aria-expanded');
-
-    //                 if (ss == 'false') {
-    //                     // alert(1);
-    //                     $('.text-header-indicater').text(data);
-    //                     $('.pending-header-req').removeClass('invisible');
-
-    //                     $('.text-sub-indicater').text('');
-    //                     $('.pending-sub-req').class('invisible');
-    //                 } else {
-    //                     $('.text-sub-indicater').text(data);
-    //                     $('.pending-sub-req').removeClass('invisible');
-
-    //                     $('.text-header-indicater').text('');
-    //                     $('.pending-header-req').class('invisible');
-    //                 }
-    //             }
-    //         }
-    //     });
-
-    // };
 </script>

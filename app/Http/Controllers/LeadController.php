@@ -73,6 +73,7 @@ class LeadController extends Controller
 
         $users = User::role('Super Admin')->get();
         Notification::sendNow($users, new PendingLeadNotify($leadInfo));
+
         return back()->with(['success' => 'Lead inserted.']);
     }
 
@@ -178,6 +179,7 @@ class LeadController extends Controller
             $activity = Auth::user()->name . ' assign lead to ' . $agent_info;
             $assignMyLead = new activityLog($activity, 'App\Models\Laed', 'assign-to-agent', $lead_id);
             $assignMyLead->addLog();
+
         } catch (Throwable $e) {
             return back()->with(['error' => 'Lead assigned fail', 'error_type' => 'error']);
         }

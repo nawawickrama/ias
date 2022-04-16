@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Notifications\cpfRequestNotify;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Models\Agent;
 use App\Models\Candidate;
@@ -136,9 +139,9 @@ class CpfController extends Controller
 
         //check candidate
         $candidate_details = Candidate::where('email', request('email'));
-
+        $cpf_info = '';
         try {
-            DB::transaction(function () use ($candidate_details) {
+            DB::transaction(function () use ($candidate_details, &$cpf_info) {
 
                 if ($candidate_details->count() > 0) {
                     $candidate_info = $candidate_details->first();
@@ -231,16 +234,29 @@ class CpfController extends Controller
                 }
             });
         } catch (Throwable $e) {
-            dd($e);
+            //dd($e);
             return back()->with(['error' => 'Application submision failed.', 'error_type' => 'error']);
         }
 
-        return back()->with(['success' => 'Application submision successful.']);
+        //notification
+
+        if(!empty(\request('agent_id'))){
+
+            $user_id = Agent::find(\request('agent_id'))->user_id;
+            $user = \App\Models\User::role('Agent')->where('id', $user_id)->get();
+            \Illuminate\Support\Facades\Notification::sendnow($user, new cpfRequestNotify($cpf_info));
+        }
+
+        //super admin notification
+        $user = \App\Models\User::role('Super Admin')->get();
+        \Illuminate\Support\Facades\Notification::sendnow($user, new cpfRequestNotify($cpf_info));
+
+        return back()->with(['success' => 'Application submission successful.']);
     }
 
     public function check_pending_cpf()
     {
-        /** @var User $user */
+        /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('pending-request.view');
 

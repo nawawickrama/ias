@@ -2,25 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Models\Lead;
+use App\Models\Cpf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PendingLeadNotify extends Notification
+class cpfRequestNotify extends Notification
 {
     use Queueable;
 
-    public $lead;
+    private $cpf;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Lead $lead)
+    public function __construct(Cpf $cfp)
     {
-        $this->lead = $lead;
+        $this->cpf = $cfp;
     }
 
     /**
@@ -57,8 +58,8 @@ class PendingLeadNotify extends Notification
     public function toArray($notifiable)
     {
         return [
-            'info' => 'Pending Lead.',
-            'lead_id' => $this->lead->lead_id,
+            'info' => 'Pending CPF Request.',
+            'cpf_id' => $this->cpf->cpf_id,
             'time' => date('Y-m-d H:i:s'),
         ];
     }

@@ -16,8 +16,12 @@ class NotificationController extends Controller
         $notify = json_decode($notification->data);
 
 
-        if($notify->info == 'New Pending Lead.'){
+        if($notify->info == 'Pending Lead.'){
             return redirect()->route('pending_lead');
+        }
+
+        if($notify->info == 'Pending CPF Request.'){
+            return redirect()->route('pending-requests');
         }
 
         return redirect()->back();
