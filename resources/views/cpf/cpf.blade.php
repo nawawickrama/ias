@@ -671,7 +671,7 @@
                                     @endphp
                                     <select name="agent_id" id="agent_text"
                                             class="form-control @error('agent_id') is-invalid @enderror" readonly>
-                                        <option value="{{ $agent_details->agent_id }}">{{ $agent_name->name }}</option>
+                                        <option value="{{ $agent_details->agent_id }}" selected>{{ $agent_name->name }}</option>
                                     </select>
 
                                     @error('agent_id')
@@ -789,25 +789,6 @@
             masters();
         });
 
-
-        $('#country').change(function () {
-            let country = $(this).val();
-            $.ajax({
-                url: "{{ route('country_agent') }}",
-                type: "POST",
-                data: {
-                    country: country,
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function (data) {
-                    $('#agent_text').html(data);
-                    // console.log(data);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
 
         function program() {
             let select_direct = $('input[name="course_id"]:checked').attr('course-code');

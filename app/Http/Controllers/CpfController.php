@@ -235,7 +235,7 @@ class CpfController extends Controller
             });
         } catch (Throwable $e) {
             //dd($e);
-            return back()->with(['error' => 'Application submision failed.', 'error_type' => 'error']);
+            return back()->with(['error' => 'Application submission failed.', 'error_type' => 'error']);
         }
 
         //notification

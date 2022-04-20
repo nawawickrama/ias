@@ -30,13 +30,13 @@
                         @foreach ($cpf_details as $cpf)
                             @php
                                 $candidate = $cpf->candidate;
-                                if (isset($cpf->agent_id)) {
+                                if (!empty($cpf->agent_id)) {
                                     $agent = App\Models\Agent::find($cpf->agent_id)->user;
                                 }
                                 $country = App\Models\Country::find($candidate->country)->nicename;
 
                                 $program = $cpf->course;
-                                
+
                             @endphp
                             <tr>
                                 <td scope="row">{{ $cpf->cpf_id }}</td>

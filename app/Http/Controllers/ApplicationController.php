@@ -25,9 +25,9 @@ class ApplicationController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('pending-request.view');
-       
+
         if($permission){
-            
+
             $cpf_details = Cpf::where('application_status', 2);
 
             if($user->hasRole('Agent')){
@@ -49,7 +49,7 @@ class ApplicationController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('selected-request.view');
-       
+
         if($permission){
             $cpf_details = Cpf::where('application_status', 1);
 
@@ -72,11 +72,11 @@ class ApplicationController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('selected-under-condition-request.view');
-       
+
         if($permission){
-            
+
             $cpf_details = Cpf::where('application_status', 3);
-            
+
             if($user->hasRole('Agent')){
                 $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
                 $cpf_details = $cpf_details->where('agent_id', $agent_id);
@@ -96,7 +96,7 @@ class ApplicationController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('rejected-request.view');
-       
+
         if($permission){
             $cpf_details = Cpf::where('application_status', 0);
 
@@ -122,7 +122,7 @@ class ApplicationController extends Controller
 
         if($permission){
             $cpf_details = Cpf::where('cpf_id', $cpf_id);
-            
+
             if($user->hasRole('Agent')){
                 $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
                 $cpf_details = $cpf_details->where('agent_id', $agent_id);
@@ -136,7 +136,7 @@ class ApplicationController extends Controller
             abort(403);
 
         }
-        
+
     }
 
     public function cpf_download($cpfId)
@@ -147,7 +147,7 @@ class ApplicationController extends Controller
 
         if($permission){
             $cpf_details = Cpf::where('cpf_id', $cpfId);
-        
+
             if($user->hasRole('Agent')){
                 $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
                 $cpf_details = $cpf_details->where('agent_id', $agent_id);
@@ -173,7 +173,7 @@ class ApplicationController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('assestment-form.download');
-        
+
         if($permission){
             $cpf_details = Cpf::where('cpf_id', $cpfId);
 
@@ -198,7 +198,7 @@ class ApplicationController extends Controller
         $permission = $user->can('assestment-form.download');
 
         if($permission){
-            
+
             $cpf_id = request('appli_id');
             $comments = request('comments');
             $addmission = request('addmission');
@@ -244,7 +244,7 @@ class ApplicationController extends Controller
                 }else{
                     back()->with(['error' => 'No agent found!' , 'error_type' => 'warning']);
                 }
-               
+
             }elseif($email_method == 3){
                 if($cpf_details->agent_id != null){
                     $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
@@ -268,7 +268,7 @@ class ApplicationController extends Controller
                     return Redirect::route('pending-requests');
                 }
             }
-            
+
             Session::put('success', 'Send Successful');
             return Redirect::route('pending-requests');
 
@@ -322,7 +322,7 @@ class ApplicationController extends Controller
             }else{
                 back()->with(['error' => 'No agent found!' , 'error_type' => 'warning']);
             }
-           
+
         }elseif($email_method == 3){
             if($cpf_details->agent_id != null){
                 $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
@@ -346,7 +346,7 @@ class ApplicationController extends Controller
                 return back();
             }
         }
-        
+
         Session::put('success', 'Send Successful');
         return back();
     }
@@ -358,7 +358,7 @@ class ApplicationController extends Controller
         $permission = $user->can('assestment-form.download');
 
         if($permission){
-            
+
             $cpf_id = request('appli_id');
             $comments = request('comments');
             $addmission = request('addmission');
@@ -374,7 +374,7 @@ class ApplicationController extends Controller
             }catch(Throwable $e){
                 return back()->with(['error' => 'Selection Failed', 'error_type' => 'error']);
             }
-            
+
             return view('admin.assessment.pdf')->with(['cpf_details' => $cpf_details]);
         }else{
             Auth::logout();
@@ -389,7 +389,7 @@ class ApplicationController extends Controller
         $permission = $user->can('assestment-form.download');
 
         if($permission){
-            
+
             $cpf_id = request('appli_id');
 
             $cpf_details = Cpf::find($cpf_id);
@@ -413,7 +413,7 @@ class ApplicationController extends Controller
 
             $cpf_id = request('appli_id');
             $cpf_details = cpf::find($cpf_id);
-            
+
             try{
                 $cpf_details->update([
                     'application_status' => '2'
@@ -430,5 +430,5 @@ class ApplicationController extends Controller
             abort(403);
         }
     }
-    
+
 }
