@@ -49,7 +49,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <button type="submit" class="btn btn-primary btn-block">Add course</button>
+                                <button type="submit" class="btn btn-success btn-block">Add course</button>
                             </div>
                         </div>
                     </form>

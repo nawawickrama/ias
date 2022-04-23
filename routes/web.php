@@ -149,3 +149,7 @@ Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 's
 
 //potential student
 //Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
+
+//AYESH ADDED
+ Route::view('student/pending-verification','student.wizard.pending-verification')->name('pending-verification');
+ Route::view('document-settings','admin.settings.document-settings')->name('document-settings');
