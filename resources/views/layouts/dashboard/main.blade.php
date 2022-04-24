@@ -67,7 +67,7 @@
                         <div class="dropdown-menu" aria-labelledby="notificationDropdown">
                             <div class="dropdown-header d-flex align-items-center justify-content-between">
                                 <p class="mb-0 font-weight-medium">{{$notify_count}} New Notifications</p>
-                                <a href="javascript:;" class="text-muted">Clear all</a>
+                                <a href="{{route('mark_as_read_notification', 'all')}}" class="text-muted">Clear all</a>
                             </div>
                             <div class="dropdown-body" id="notificationPanel">
                                 @foreach(Auth::user()->unreadNotifications as $notify)

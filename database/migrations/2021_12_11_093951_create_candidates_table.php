@@ -20,11 +20,11 @@ class CreateCandidatesTable extends Migration
             $table->boolean('sex'); //1->male,  0->female
             $table->date('dob');
             $table->string('nationality');
-            $table->string('telephone')->unique();
-            $table->string('email')->unique();
+            $table->string('telephone');
+            $table->string('email');
             $table->string('address');
             $table->unsignedBigInteger('country'); // relation with countries table
-            
+
             $table->timestamps();
         });
     }
