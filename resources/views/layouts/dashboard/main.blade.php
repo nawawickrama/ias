@@ -312,6 +312,7 @@
 <script src="{{ url('assets/js/bootstrap-maxlength.js') }}"></script>
 <script src="{{ url('assets/js/inputmask.js') }}"></script>
 <script src="{{ url('assets/js/typeahead.js') }}"></script>
+<script src="{{ url('assets/js/file-upload.js') }}"></script>
 <script src="{{ url('assets/js/tags-input.js') }}"></script>
 <script src="{{ url('assets/js/dropzone.js') }}"></script>
 <script src="{{ url('assets/js/dropify.js') }}"></script>

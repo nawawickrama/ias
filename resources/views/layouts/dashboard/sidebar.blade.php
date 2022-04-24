@@ -175,6 +175,9 @@ $user = Auth::user();
                             <a href="{{ route('course_get') }}" class="nav-link">Course Settings</a>
                         </li>
                         @endif
+                        <li class="nav-item">
+                            <a href="{{ route('document-settings') }}" class="nav-link">Document Settings</a>
+                        </li>
                     </ul>
                 </div>
             </li>
