@@ -143,13 +143,14 @@ Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permiss
 
 //==========================STUDENT =================================
 //Student Wizard
-Route::get('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
-Route::post('student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
+Route::get('/student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
+Route::post('/student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
 
 
 //potential student
-//Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
+Route::get('/potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
 
 //AYESH ADDED
- Route::view('student/pending-verification','student.wizard.pending-verification')->name('pending-verification');
- Route::view('document-settings','admin.settings.document-settings')->name('document-settings');
+ Route::view('/student/pending-verification','student.wizard.pending-verification')->name('pending-verification');
+ Route::view('/document-settings','admin.settings.document-settings')->name('document-settings');
+ Route::view('/document-verification','admin.documents.document-verification')->name('document-verification');
