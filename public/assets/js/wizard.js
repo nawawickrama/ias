@@ -11,26 +11,25 @@ $(function () {
         debug: false,
         rules: {
             //step 1
-            st_name: 'required',
+            first_name: 'required',
+            sur_name: 'required',
             st_phone_no: {
                 required: true,
-                digits: true
             },
             st_dob: {
                 required: true,
                 date: true
             },
             sex: 'required',
-            st_blood_group: 'required',
+            addressLine: 'required',
             city: 'required',
+            state: 'required',
+            zip: 'required',
             country: 'required',
             nationality: 'required',
-            birth_place: 'required',
             passport_no: 'required',
-            skype_id: 'required',
             whatsapp_no: {
                 required: true,
-                digits: true
             },
 
             //step 2
@@ -40,34 +39,14 @@ $(function () {
             guardian_email : 'required',
             guardian_phoneNo : {
                 required: true,
-                digits: true
             },
             guardian_mobileNo : {
                 required: true,
-                digits: true
             },
             relationship : 'required',
-            income : {
-                required: true,
-                digits: true
-            },
-            qualification : 'required',
             occupation : 'required',
             homeAddress : 'required',
-            officeAddress : 'required',
 
-            //step 3
-            currentAddress: 'required',
-            currentCountry: 'required',
-            currentState: 'required',
-            currentCity: 'required',
-            CurrentPincode: 'required',
-
-            permanentAddress: 'required',
-            permanentCountry: 'required',
-            permanentState: 'required',
-            permanentCity: 'required',
-            permanentPincode: 'required',
         }
     });
     form.children("div").steps({

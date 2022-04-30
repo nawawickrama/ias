@@ -34,6 +34,9 @@ class CreateCandidatesTable extends Migration
             $table->string('whatsapp_no')->nullable();
             $table->string('passport_no')->nullable();
 
+            $table->unsignedBigInteger('user_id')->nullable();
+
+
             $table->timestamps();
         });
     }

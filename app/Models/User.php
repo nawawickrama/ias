@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Agent::class, 'user_id', 'id');
     }
+
+    public function candidate(){
+        return $this->hasOne(Candidate::class, 'user_id');
+    }
 }

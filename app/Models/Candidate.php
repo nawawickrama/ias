@@ -23,6 +23,12 @@ class Candidate extends Model
         'email',
         'address',
         'country',
+
+        'state',
+        'zipcode',
+        'whatsapp_no',
+        'passport_no',
+        'user_id'
     ];
 
     public function cpf()
@@ -32,5 +38,9 @@ class Candidate extends Model
 
     public function potential(){
         return $this->hasOne(Potential::class, 'candidate_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

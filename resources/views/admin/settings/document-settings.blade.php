@@ -37,7 +37,6 @@
             <table class="table table-bordered" id="datatable-basic">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Document Name</th>
                         <th scope="col">Course</th>
                         <th scope="col">Status</th>
@@ -45,24 +44,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Passport Validation</td>
-                        <td>STEP - Study Eligibility Program</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                        <td>
+                    @foreach($documentDetails as $doc)
+                        @php
+                            $courseDetails = $doc->
+                        @endphp
+                        <tr>
+                            <td>{{ $doc->doc_name }}</td>
+                            <td>STEP - Study Eligibility Program</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>
                             <span data-toggle="tooltip" data-placement="top" title="Deactivate Document">
                                 <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" data-target="#modeldeact">
                                     <i data-feather="shield-off"></i>
                                 </button>
                             </span>
-                            <span data-toggle="tooltip" data-placement="top" title="Activate Document">
+                                <span data-toggle="tooltip" data-placement="top" title="Activate Document">
                                 <button type="button" class="btn btn-success btn-icon" data-toggle="modal" data-target="#modelact">
                                     <i data-feather="shield"></i>
                                 </button>
                             </span>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

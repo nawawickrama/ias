@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\DocumentSetting;
 use App\Models\PermissionList;
 use App\Models\Smtp;
 use Illuminate\Http\Request;
@@ -247,5 +248,21 @@ class SettingControler extends Controller
         }
 
         return back()->with(['success' => 'Status change successfully']);
+    }
+
+    public function document(){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('document.initialize');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $documentDetails = DocumentSetting::all();
+        return view('admin.settings.document-settings')->with(['documentDetails' => $documentDetails]);
+
+
     }
 }

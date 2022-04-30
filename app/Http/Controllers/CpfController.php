@@ -311,10 +311,6 @@ class CpfController extends Controller
 
 
         DB::transaction( function () use($candidateId, $cpfID, $password, $candidateDetails) {
-            $candidateDetails->update([
-                'status' => 'Potential',
-            ]);
-
             Cpf::where('candidate_id', $candidateId)->update([
                 'application_status' => 5,
                 'status_date' => date('Y-m-d H:i:s'),
@@ -331,6 +327,11 @@ class CpfController extends Controller
                 'email' => $candidateDetails->email,
                 'password' => Hash::make($password),
                 'status' => 1
+            ]);
+
+            $candidateDetails->update([
+                'status' => 'Potential',
+                'user_id' => $user->id
             ]);
 
             $user->assignRole('Student');

@@ -22,39 +22,42 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="">Name :<span class="text-danger">*</span></label>
-                            <input type="text" name="st_name" id="" class="form-control" required>
+                            <label for="">First Name :<span class="text-danger">*</span></label>
+                            <input type="text" name="first_name" id="" class="form-control"  value="{{ $candidateDetails->first_name }}" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="">Sur Name :<span class="text-danger">*</span></label>
+                            <input type="text" name="sur_name" id="" class="form-control"  value="{{ $candidateDetails->sur_name }}" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Mobile Number :<span class="text-danger">*</span></label>
-                            <input type="text" name="st_phone_no" id="" class="form-control">
+                            <input type="text" name="st_phone_no" id="" class="form-control" value="{{ $candidateDetails->telephone }}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Date of Birth :<span class="text-danger">*</span></label>
-                            <input type="date" name="st_dob" id="" class="form-control">
+                            <input type="date" name="st_dob" id="" class="form-control" value="{{ $candidateDetails->dob }}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Sex :<span class="text-danger">*</span></label>
                             <select name="sex" id="sex">
                                 <option value="" selected disabled>Select...</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                                <option value="1" @if($candidateDetails->sex === 1) {{'selected'}} @endif>Male</option>
+                                <option value="0" @if($candidateDetails->sex === 0) {{'selected'}} @endif>Female</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="">Address Line :<span class="text-danger">*</span></label>
-                            <input type="text" name="addressline" id="" class="form-control">
+                            <input type="text" name="addressLine" id="" class="form-control" value="{{ $candidateDetails->address }}">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">City :<span class="text-danger">*</span></label>
-                            <input type="text" name="city" id="" class="form-control">
+                            <input type="text" name="city" id="" class="form-control" value="{{ $candidateDetails->city }}">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">State / Province / Region :<span class="text-danger">*</span></label>
-                            <input type="text" name="spr" id="" class="form-control">
+                            <input type="text" name="state" id="" class="form-control" value="">
                         </div>
                     </div>
                     <div class="form-row">
@@ -160,30 +163,6 @@
                                     <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                                 </span>
                             </div>
-                        </div>
-                        <div class="form-check col-md-12">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="document" id="" value="checkedValue" checked>
-                                Passport
-                            </label>
-                        </div>
-                        <div class="form-check col-md-12">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="document" id="" value="checkedValue" checked>
-                                Birth Certificate
-                            </label>
-                        </div>
-                        <div class="form-check col-md-12">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="document" id="" value="checkedValue" checked>
-                                APF
-                            </label>
-                        </div>
-                        <div class="form-check col-md-12">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="document" id="" value="checkedValue" checked>
-                                Passport
-                            </label>
                         </div>
                     </div>
                 </section>
