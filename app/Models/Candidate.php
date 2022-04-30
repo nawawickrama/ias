@@ -27,6 +27,10 @@ class Candidate extends Model
 
     public function cpf()
     {
-        return $this->hasMany(Cpf::class, 'candidate_id');
+        return $this->hasOne(Cpf::class, 'candidate_id');
+    }
+
+    public function potential(){
+        return $this->hasOne(Potential::class, 'candidate_id');
     }
 }

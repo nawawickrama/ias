@@ -114,12 +114,14 @@ $user = Auth::user();
                     <span class="link-title">Potential Students</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="{{ route('document-verification') }}" class="nav-link">
                     <i class="link-icon text-success" data-feather="check-square"></i>
                     <span class="link-title">Document Verification</span>
                 </a>
             </li>
+
             @if ($user->can('user.create') || $user->can('user.view') || $user->can('role.create') || $user->can('role.view') || $user->can('permission.view') || $user->can('permission.create') || $user->can('agent.view') || $user->can('agent.create'))
             <li class="nav-item nav-category">User Management</li>
             <li class="nav-item">
@@ -192,6 +194,8 @@ $user = Auth::user();
 </nav>
 
 <script>
+    indicator();
+
     $('document').ready(function() {
         // auto();
 

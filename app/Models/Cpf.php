@@ -47,7 +47,7 @@ class Cpf extends Model
     {
         return $this->hasMany(WorkExperience::class, 'cpf_id', 'cpf_id');
     }
-    
+
     public function candidate()
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
@@ -56,5 +56,13 @@ class Cpf extends Model
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function potential(){
+        return $this->hasOne(Potential::class, 'cpf_id');
+    }
+
+    public function agent(){
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 }

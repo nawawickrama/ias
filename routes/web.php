@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -141,11 +142,10 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
 
 
-//==========================STUDENT =================================
+//student=======================
 //Student Wizard
 Route::get('/student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
 Route::post('/student/wizard',[\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
-
 
 //potential student
 Route::get('/potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
@@ -154,3 +154,12 @@ Route::get('/potential-students',[\App\Http\Controllers\StudentController::class
  Route::view('/student/pending-verification','student.wizard.pending-verification')->name('pending-verification');
  Route::view('/document-settings','admin.settings.document-settings')->name('document-settings');
  Route::view('/document-verification','admin.documents.document-verification')->name('document-verification');
+
+Route::get('potential-students',[\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
+Route::post('potential-students',[CpfController::class, 'makePotentialStudent'])->name('make-potential');
+
+//AYESH ADDED
+ Route::view('student/pending-verification','student.wizard.pending-verification')->name('pending-verification');
+ Route::view('document-settings','admin.settings.document-settings')->name('document-settings');
+
+

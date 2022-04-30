@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Password;
+
 
 class HomeController extends Controller
 {

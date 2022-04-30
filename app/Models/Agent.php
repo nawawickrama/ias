@@ -41,4 +41,8 @@ class Agent extends Model
     {
         return $this->hasMany(Lead::class, 'agent_id');
     }
+
+    public function cpfs(){
+        return $this->hasMany(Cpf::class, 'agent_id');
+    }
 }

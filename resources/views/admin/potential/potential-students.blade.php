@@ -19,9 +19,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($student_details as $student)
+                    @foreach($potentialDetails as $unit)
+                        @php
+                            $candidateDetails = $unit->candidate;
+                            $cpfDetails = $unit->cpf;
+                            $agentDetails = $cpfDetails->agent;
+                        @endphp
                     <tr>
-                        <th scope="row">1</th>
+                        <td>{{$unit->potential_id}}</td>
+                        <td>{{$candidateDetails->first_name.' '.$candidateDetails->sur_name}}</td>
+                        <td>{{$candidateDetails->email}}</td>
+                        <td>{{$agentDetails->agent_name ?? 'N/A'}}</td>
+                        <td>{{$candidateDetails->country}}</td>
+                        <td>
+                            <span data-toggle="tooltip" data-placement="top" title="Send Student Login">
+                                <button type="button" class="btn btn-success btn-icon" data-toggle="modal" data-target="#sendstd">
+                                    <i data-feather="send"></i>
+                                </button>
+                            </span>
+                            <span data-toggle="tooltip" data-placement="top" title="Login As Student">
+                                <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" data-target="#loginasstd">
+                                    <i data-feather="user"></i>
+                                </button>
+                            </span>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

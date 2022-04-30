@@ -19,11 +19,20 @@ class CreateCandidatesTable extends Migration
             $table->string('sur_name');
             $table->boolean('sex'); //1->male,  0->female
             $table->date('dob');
-            $table->string('nationality');
             $table->string('telephone');
             $table->string('email');
+
             $table->string('address');
-            $table->unsignedBigInteger('country'); // relation with countries table
+            $table->string('nationality');
+
+            // relation with countries table
+            $table->unsignedBigInteger('country');
+
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('whatsapp_no')->nullable();
+            $table->string('passport_no')->nullable();
 
             $table->timestamps();
         });

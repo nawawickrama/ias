@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Potential;
 use App\Notifications\cpfRequestNotify;
+use App\Notifications\LoginNotify;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Models\Agent;
@@ -18,6 +20,8 @@ use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Throwable;
 
 class CpfController extends Controller
@@ -294,5 +298,45 @@ class CpfController extends Controller
         $course_details = Course::where('course_status', '1')->get();
 
         return view('cpf.cpf')->with(['lead_details' => $lead_details, 'country' => $country, 'course_details' => $course_details]);
+    }
+
+    public function makePotentialStudent(){
+        $candidateId = \request('candidateID');
+        $cpfID = \request('cpfID');
+
+        $candidateDetails = Candidate::find($candidateId);
+
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&_-=+?";
+        $password = substr( str_shuffle( $chars ), 0, 8 );
+
+
+        DB::transaction( function () use($candidateId, $cpfID, $password, $candidateDetails) {
+            $candidateDetails->update([
+                'status' => 'Potential',
+            ]);
+
+            Cpf::where('candidate_id', $candidateId)->update([
+                'application_status' => 5,
+                'status_date' => date('Y-m-d H:i:s'),
+            ]);
+
+            Potential::create([
+                'cpf_id' => $cpfID,
+                'candidate_id' => $candidateId,
+                'potential_status' => 1
+            ]);
+
+            $user = \App\Models\User::create([
+                'name' => $candidateDetails->first_name.' '.$candidateDetails->sur_name,
+                'email' => $candidateDetails->email,
+                'password' => Hash::make($password),
+                'status' => 1
+            ]);
+
+            $user->assignRole('Student');
+
+            $user->notify(new LoginNotify($password));
+        });
+
     }
 }

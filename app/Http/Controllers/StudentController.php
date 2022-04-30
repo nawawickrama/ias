@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidate;
 use App\Models\Country;
+use App\Models\Potential;
 use App\Models\Student;
 use App\Models\StudentAddress;
 use App\Models\StudentGuardian;
@@ -26,12 +28,7 @@ class StudentController extends Controller
     public function studentWizardPost(Request $request)
     {
         //student Details
-        DB::transaction(function () use ($request) {
-            $student_info = Student::create($request->all());
-            $request['student_id'] = $student_info->student_id;
-            StudentGuardian::create($request->all());
-            StudentAddress::create($request->all());
-        });
+
     }
 
     public function potential_student()
@@ -45,8 +42,8 @@ class StudentController extends Controller
             abort(403);
         }
 
-        $student_details = Student::where('status', 'Potential')->get();
-        return view('admin.potential.potential-students')->with(['student_details' => $student_details]);
+        $potentialDetails = Potential::where('potential_status', '1')->get();
+        return view('admin.potential.potential-students')->with(['potentialDetails' => $potentialDetails]);
 
     }
 
