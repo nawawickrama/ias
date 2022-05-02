@@ -162,6 +162,7 @@ Route::get('/document-settings', [SettingControler::class, 'documentSetting'])->
 Route::post('/document-settings', [SettingControler::class, 'documentCourseLink'])->name('document-course-link');
 Route::post('/document-settings-status', [SettingControler::class, 'documentCourseStatus'])->name('document-course-status');
 Route::view('/student/pending-verification', 'student.wizard.pending-verification')->middleware('auth')->name('pending-verification');
+Route::post('/document-add-new', [SettingControler::class, 'addNewDocument'])->name('add-new-document');
 
 Route::get('/document-complete', [\App\Http\Controllers\DocumentController::class, 'pendingDocument'])->name('document-verification');
 Route::post('/document-status-change', [\App\Http\Controllers\DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');

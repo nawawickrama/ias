@@ -338,4 +338,27 @@ class SettingControler extends Controller
 
         return back()->with(['success' => 'Status changed']);
     }
+
+    public function addNewDocument(Request $request){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('document.create');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $documentName = \request('doc_name');
+
+        try{
+            Document::create([
+                'doc_name' => $documentName
+            ]);
+        }catch (Throwable $e){
+            return back()->with(['error' => 'New document submission failed', 'error_type' => 'error']);
+        }
+        return back()->with(['success' => 'New document created']);
+
+    }
 }
