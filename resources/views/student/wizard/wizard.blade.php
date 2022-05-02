@@ -32,21 +32,21 @@
                                        value="{{ $candidateDetails->first_name }}" required>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="">Sur Name :<span class="text-danger">*</span></label>
+                                <label for="">Surname :<span class="text-danger">*</span></label>
                                 <input type="text" name="sur_name" id="" class="form-control"
                                        value="{{ $candidateDetails->sur_name }}" required>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="">Mobile Number :<span class="text-danger">*</span></label>
                                 <input type="text" name="mobile_no" id="" class="form-control"
                                        value="{{ $candidateDetails->telephone }}">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="">Date of Birth :<span class="text-danger">*</span></label>
                                 <input type="date" name="dob" id="" class="form-control"
                                        value="{{ $candidateDetails->dob }}">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="">Sex :<span class="text-danger">*</span></label>
                                 <select name="gender" id="sex">
                                     <option value="" selected disabled>Select...</option>
@@ -193,6 +193,7 @@
                             </div>
                         </div>
                     </section>
+                    <br>
                 </div>
             </form>
         </div>
