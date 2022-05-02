@@ -46,7 +46,7 @@ class DocumentController extends Controller
             $doc_info = $doc->document;
             $reject = "<button type='button' class='btn btn-danger btn-icon btn-reject' data-toggle='modal' data-target='#reject' data-id='$doc->candidate_document_id'><i data-feather='shield-off'></i></button>";
             $approve = "<button type='button' class='btn btn-success btn-icon btn-approve' data-toggle='modal' data-target='#approve' data-id='$doc->candidate_document_id'><i data-feather='shield'></i></button>";
-
+            $view = "<a class='btn btn-warning btn-icon' target='_blanck' href='storage/$doc->file_path'><i data-feather='eye'></i></a>";
 
             if ($doc->status == 'Pending') {
                 $button = "<span class='badge badge-warning'>Pending</span>";
@@ -65,7 +65,7 @@ class DocumentController extends Controller
                 <tr>
                     <td>$doc_info->doc_name</td>
                     <td>$button</td>
-                    <td>$action</td>
+                    <td>$action $view</td>
                 </tr>
             ";
         }

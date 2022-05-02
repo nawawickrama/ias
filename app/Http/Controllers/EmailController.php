@@ -53,7 +53,7 @@ class EmailController extends Controller
             try{
                 Mail::to($email)->send( new sendEmail($data, $subject));
 
-            }catch(Throwable){
+            }catch(Throwable $e){
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
             }
 
