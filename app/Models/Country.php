@@ -18,4 +18,8 @@ class Country extends Model
     {
         return $this->hasMany(Lead::class, 'lead_country_id', 'id');
     }
+
+    public function users(){
+        return $this->hasMany(User::class, 'country', 'id');
+    }
 }

@@ -13,6 +13,11 @@
 
 
 <script>
+    /**
+     *
+     * @param icon
+     * @param msg
+     */
     function notify(icon, msg){
        const Toast = Swal.mixin({
             toast: true,

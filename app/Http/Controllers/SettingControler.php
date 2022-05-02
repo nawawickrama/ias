@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Document;
+use App\Models\DocumentCourse;
 use App\Models\DocumentSetting;
 use App\Models\PermissionList;
 use App\Models\Smtp;
@@ -250,19 +252,90 @@ class SettingControler extends Controller
         return back()->with(['success' => 'Status change successfully']);
     }
 
-    public function document(){
+    public function documentSetting(){
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('document.initialize');
+        $permission = $user->can('setting.document');
 
         if (!$permission) {
             Auth::logout();
             abort(403);
         }
 
-        $documentDetails = DocumentSetting::all();
-        return view('admin.settings.document-settings')->with(['documentDetails' => $documentDetails]);
+        $coursesDetails = Course::where('course_status', '1')->get();
+        $documents = Document::all();
+        $documentDetails = DocumentCourse::all();
+        return view('admin.settings.document-settings')->with(['coursesDetails' => $coursesDetails, 'documentDetails' => $documentDetails , 'documents' => $documents]);
+    }
 
+    public function documentCourseLink(Request $request){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('document.create');
 
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $documentId = \request('documentId');
+        $courseId = \request('courseId');
+
+        $request->validate([
+           'documentId' => 'required',
+           'courseId' => 'required',
+           'option' => 'required',
+        ]);
+
+        try{
+            if ($courseId == 'all'){
+                $allCourses = Course::where('course_status', '1')->get();
+
+                foreach ($allCourses as $course){
+                   DocumentCourse::create([
+                       'doc_id' => $documentId,
+                       'course_id' => $course->course_id,
+                       'document_course_status' => 1,
+                       'option' => \request('option'),
+                   ]);
+                }
+
+            }else {
+                DocumentCourse::create([
+                    'doc_id' => $documentId,
+                    'course_id' => $courseId,
+                    'document_course_status' => 1,
+                    'option' => \request('option'),
+                ]);
+            }
+        }catch (Throwable $e){
+            return back()->with(['error' => $e->getMessage(), 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Document Setting created.']);
+    }
+
+    public function documentCourseStatus(){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        $permission = $user->can('document-status.change');
+
+        if (!$permission) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $status = \request('status');
+        $id = \request('documentSettingId');
+
+        try{
+            DocumentCourse::find($id)->update([
+               'document_course_status' => $status,
+            ]);
+        }catch (Throwable $e){
+            return back()->with(['error' => 'Status changed failed.', 'error_type' => 'error']);
+        }
+
+        return back()->with(['success' => 'Status changed']);
     }
 }

@@ -141,6 +141,9 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 //permission fill
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
 
+//get document details
+Route::post('/ajax/get_doc_details', [\App\Http\Controllers\DocumentController::class, 'getDocumentDetails'])->name('getDocumentDetails');
+
 
 //student=======================
 //Student Wizard
@@ -151,13 +154,15 @@ Route::post('/student/wizard', [\App\Http\Controllers\StudentController::class, 
 Route::get('/potential-students', [\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
 Route::post('/potential-students', [CpfController::class, 'makePotentialStudent'])->name('make-potential');
 
-//AYESH ADDED
-Route::view('/student/pending-verification', 'student.wizard.pending-verification')->name('pending-verification');
-Route::view('/document-settings', 'admin.settings.document-settings')->name('document-settings');
-Route::view('/document-verification', 'admin.documents.document-verification')->name('document-verification');
+//login as a ghost
+Route::post('/login-as-a-ghost', [\App\Http\Controllers\GenaralController::class, 'logAsGhost'])->name('logAsGhost');
 
-//AYESH ADDED
-Route::view('student/pending-verification', 'student.wizard.pending-verification')->name('pending-verification');
-Route::view('document-settings', 'admin.settings.document-settings')->name('document-settings');
+//Document Setting
+Route::get('/document-settings', [SettingControler::class, 'documentSetting'])->name('document-settings');
+Route::post('/document-settings', [SettingControler::class, 'documentCourseLink'])->name('document-course-link');
+Route::post('/document-settings-status', [SettingControler::class, 'documentCourseStatus'])->name('document-course-status');
+Route::view('/student/pending-verification', 'student.wizard.pending-verification')->middleware('auth')->name('pending-verification');
 
+Route::get('/document-complete', [\App\Http\Controllers\DocumentController::class, 'pendingDocument'])->name('document-verification');
+Route::post('/document-status-change', [\App\Http\Controllers\DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
 

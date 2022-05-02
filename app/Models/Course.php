@@ -29,4 +29,8 @@ class Course extends Model
     {
         return $this->hasMany(Lead::class, 'lead_course_id', 'course_id');
     }
+
+    public function documents(){
+        return $this->hasMany(DocumentCourse::class, 'course_id');
+    }
 }

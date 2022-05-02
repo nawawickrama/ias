@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
 
             $table->string('course_name');
             $table->string('course_code');
-            $table->boolean('course_status')->default(0);
+            $table->boolean('course_status')->default(0); //1-> activate 0-> deactivate
             $table->text('course_description')->nullable();
 
             $table->timestamps();

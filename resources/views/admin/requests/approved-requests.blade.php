@@ -193,6 +193,7 @@
             });
 
             $('.btn-make-potential').click(function () {
+                let element = $(this);
                 let candidate_id = $(this).attr('candidate-id');
                 let cpf_id = $(this).attr('cpf-id');
                 $(this).html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
@@ -206,10 +207,10 @@
                         cpfID: cpf_id,
                     },
                     beforeSend:function (){
-                        $(this).html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+                        element.html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
                     },
                     success: function (response) {
-                        $(this).html("<i data-feather=\"star\"></i>");
+                        element.html("<i data-feather=\"star\"></i>");
 
                         notify('success', 'Student added to potential category.');
                         setTimeout(function () {
@@ -217,7 +218,7 @@
                         }, 3000);
 
                     }, error: function (error) {
-                        $(this).html("<i data-feather=\"alert-octagon\"></i>");
+                        element.html("<i data-feather=\"alert-octagon\"></i>");
                         notify('error', error.responseJSON.message);
 
                     }

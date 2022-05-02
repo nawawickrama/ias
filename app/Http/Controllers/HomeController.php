@@ -32,8 +32,8 @@ class HomeController extends Controller
         /** @var App\Models\User $user */
         $user = Auth::user();
 
-        // $role = Role::where('name', 'Agent')->first();
-        // $role->givePermissionTo('pending-request.view');
+        //make permission
+
         return view('admin.home');
     }
 }

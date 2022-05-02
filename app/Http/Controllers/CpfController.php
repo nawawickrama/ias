@@ -33,7 +33,6 @@ class CpfController extends Controller
         return view('cpf.cpf')->with(['country' => $country, 'course_details' => $course_details]);
     }
 
-
     public function cpf_post(Request $request)
     {
         $request->validate([

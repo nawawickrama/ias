@@ -14,23 +14,13 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
+            <li class="nav-item nav-category">Registration</li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#patient" role="button" aria-expanded="false" aria-controls="emails">
-                    <i class="link-icon" data-feather="mail"></i>
-                    <span class="link-title">Student Registration</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
+                <a class="nav-link"  href="{{route('studentWizard')}}" role="button" aria-expanded="false" aria-controls="emails">
+                    <i class="link-icon" data-feather="file-plus"></i>
+                    <span class="link-title">Profile Complete</span>
                 </a>
-                <div class="collapse" id="patient">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{route('studentWizard')}}" class="nav-link">Student Wizard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">Student Wizard</a>
-                        </li>
-                    </ul>
-                </div>
+
             </li>
         </ul>
     </div>

@@ -24,6 +24,7 @@ class Candidate extends Model
         'address',
         'country',
 
+        'city',
         'state',
         'zipcode',
         'whatsapp_no',
@@ -42,5 +43,13 @@ class Candidate extends Model
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function documents(){
+        return $this->hasMany(CandidateDocument::class, 'candidate_id');
+    }
+
+    public function countryInfo(){
+        return $this->belongsTo(Country::class, 'country', 'id');
     }
 }
