@@ -14,7 +14,10 @@
                         $action_permission = $user->can('cpf.view') || $user->can('cpf.download') || $user->can('pending-request.accept') || $user->can('email-send.create');
                     @endphp
                     <tr>
-                        <th scope="col">Application Id</th>
+                    @if ($action_permission)
+                            <th scope="col">Action</th>
+                        @endif
+                        <th scope="col">Id</th>
                         <th scope="col">Program</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -22,9 +25,6 @@
                         <th scope="col">Contact No</th>
                         <th scope="col">Country</th>
                         <th scope="col">Comment</th>
-                        @if ($action_permission)
-                            <th scope="col">Action</th>
-                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -40,16 +40,7 @@
 
                         @endphp
                         <tr>
-                            <td scope="row">{{ $cpf->cpf_id }}</td>
-                            <td>{{ $program->course_code }} @if ($program->course_code == 'Direct job')
-                                    ({{ $cpf->job_feild }}) @endif</td>
-                            <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
-                            <td>{{ $candidate->email }}</td>
-                            <td>@if (isset($cpf->agent_id)) {{ $agent->name }} @else {{ 'N/A' }} @endif</td>
-                            <td>{{ $candidate->telephone }}</td>
-                            <td>{{ $country }}</td>
-                            <td>{{ $cpf->comment_institute ? $cpf->comment_institute : 'N/A' }}</td>
-                            @if ($action_permission)
+                        @if ($action_permission)
                                 <td>
                                     <form action="" id="send-form" method="POST">
                                         @csrf
@@ -114,6 +105,15 @@
                                     </form>
                                 </td>
                             @endif
+                            <td scope="row">{{ $cpf->cpf_id }}</td>
+                            <td>{{ $program->course_code }} @if ($program->course_code == 'Direct job')
+                                    ({{ $cpf->job_feild }}) @endif</td>
+                            <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
+                            <td>{{ $candidate->email }}</td>
+                            <td>@if (isset($cpf->agent_id)) {{ $agent->name }} @else {{ 'N/A' }} @endif</td>
+                            <td>{{ $candidate->telephone }}</td>
+                            <td>{{ $country }}</td>
+                            <td>{{ $cpf->comment_institute ? $cpf->comment_institute : 'N/A' }}</td>
                         </tr>
                     @endforeach
                     </tbody>
