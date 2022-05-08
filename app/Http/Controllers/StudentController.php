@@ -143,7 +143,14 @@ class StudentController extends Controller
             abort(403);
         }
 
-        $potentialDetails = Potential::where('potential_status', '1')->get();
+        $potentialDetails = Potential::where('potential_status', '1');
+
+        if($user->hasRole('Agent')){
+            $agent_id = User::find($user->id)->agent->agent_id;
+            $potentialDetails = $potentialDetails->where('agent_id', $agent_id);
+        }
+
+        $potentialDetails = $potentialDetails->get();
         return view('admin.potential.potential-students')->with(['potentialDetails' => $potentialDetails]);
 
     }

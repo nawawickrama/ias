@@ -25,9 +25,10 @@
                             $cpfDetails = $unit->cpf;
                             $agentDetails = $cpfDetails->agent;
                             $countryDetails = $candidateDetails->countryInfo;
+                            $courseDetails = $cpfDetails->course;
                         @endphp
                         <tr>
-                            <td>{{$unit->potential_id}}</td>
+                            <td>{{$courseDetails->course_code.' - '.$courseDetails->course_name}}</td>
                             <td>{{$candidateDetails->first_name.' '.$candidateDetails->sur_name}}</td>
                             <td>{{$candidateDetails->email}}</td>
                             <td>{{$agentDetails->agent_name ?? 'N/A'}}</td>

@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url('assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url('assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/demo_1/style.css') }}">
@@ -46,41 +47,24 @@
             <div class="navbar-content">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown nav-notifications">
-                        @php
-                            $notify_count = count(Auth::user()->unreadNotifications);
-                        @endphp
-                        @if($notify_count)
-                            <span class="badge badge-primary" style="border-radius: 30px;">{{$notify_count}}</span>
-                        @endif
+                        <span class="badge badge-primary notify notify-count d-none"  style="border-radius: 30px;"></span>
 
                         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i data-feather="bell"></i>
-                            @if( $notify_count)
-                                <div class="indicator">
+                                <div class="indicator notify d-none">
                                     <div class="circle"></div>
                                 </div>
-                            @endif
                         </a>
 
 
                         <div class="dropdown-menu" aria-labelledby="notificationDropdown">
                             <div class="dropdown-header d-flex align-items-center justify-content-between">
-                                <p class="mb-0 font-weight-medium">{{$notify_count}} New Notifications</p>
+                                <p class="mb-0 font-weight-medium"><span class="notify-count"></span> New Notifications</p>
                                 <a href="{{route('mark_as_read_notification', 'all')}}" class="text-muted">Clear all</a>
                             </div>
                             <div class="dropdown-body" id="notificationPanel">
-                                @foreach(Auth::user()->unreadNotifications as $notify)
-                                    <a href="{{route('mark_as_read_notification',$notify)}}" class="dropdown-item">
-                                        <div class="icon">
-                                            <i data-feather="layers"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>{{$notify->data['info']}}</p>
-                                            <p class="sub-text text-muted">{{$notify->data['time']}}</p>
-                                        </div>
-                                    </a>
-                                @endforeach
+
                             </div>
                             <div class="dropdown-footer d-flex align-items-center justify-content-center">
                                 <a href="javascript:;">View all</a>
@@ -336,11 +320,11 @@
 <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 <script src="{{ url('assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
 
-<script src="{{url('js/leads.js')}}"></script>
+<script src="{{url('assets/js/Custom/leads.js')}}"></script>
+<script src="{{url('assets/js/Custom/notification.js')}}"></script>
 
 <script>
     $(document).ready(function () {
-
         var table = $('#datatable-basic').DataTable({
             dom: 'Bfrtip',
             buttons: [
@@ -356,6 +340,8 @@
 
         });
     });
+
+
 </script>
 </body>
 

@@ -28,9 +28,6 @@ Auth::routes([
     'register' => false,
 ]);
 
-//notification
-Route::get('mark_as_read/{notification}', [\App\Http\Controllers\NotificationController::class, 'mark_as_read_notification'])->name('mark_as_read_notification');
-
 //Logout
 Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
@@ -129,11 +126,8 @@ Route::post('/set-reminder', [LeadController::class, 'setReminder'])->name('setR
 Route::post('/view-lead-activity-log', [LeadController::class, 'viewLeadActivity'])->name('viewLeadActivity');
 
 //ajax==========================
-//Pending indicator
-Route::post('/ajax/pending', [CpfController::class, 'check_pending_cpf'])->name('check_pending_cpf');
-
 //select country and get agents
-Route::post('ajax/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
+Route::post('/ajax/country-agent', [AgentController::class, 'country_agent'])->name('country_agent');
 
 //agent name and email
 Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->name('name_email_ajax');
@@ -144,6 +138,13 @@ Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permiss
 //get document details
 Route::post('/ajax/get_doc_details', [\App\Http\Controllers\DocumentController::class, 'getDocumentDetails'])->name('getDocumentDetails');
 
+//notification
+Route::post('/ajax/notification', [\App\Http\Controllers\NotificationController::class, 'notifications'])->name('notifications');
+Route::post('/ajax/notification-count', [\App\Http\Controllers\NotificationController::class, 'notificationCount'])->name('notificationCount');
+Route::get('/ajax/notification/mark_as_read/{notification}', [\App\Http\Controllers\NotificationController::class, 'mark_as_read_notification'])->name('mark_as_read_notification');
+
+//Pending indicator
+Route::post('/ajax/pending', [\App\Http\Controllers\NotificationController::class, 'indicator'])->name('check_pending_cpf');
 
 //student=======================
 //Student Wizard

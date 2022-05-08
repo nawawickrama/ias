@@ -14,7 +14,7 @@
                         $action_permission = $user->can('cpf.view') || $user->can('cpf.download') || $user->can('pending-request.accept') || $user->can('email-send.create');
                     @endphp
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">Application Id</th>
                         <th scope="col">Program</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>

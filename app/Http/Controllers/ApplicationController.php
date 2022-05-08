@@ -222,7 +222,7 @@ class ApplicationController extends Controller
             $data['name'] = $candidate->first_name.' '.$candidate->sur_name;
             $data['address'] = $candidate->address.' '.$candidate->country;
             $data['adimssion'] = $cpf_details->application_status;
-            $data['comment_institute'] = $cpf_details->comment_institute;
+            $data['comment_institute'] = $comments;
             $data['status_date'] = $cpf_details->status_date;
 
             $pdf = PDF::loadView('admin.assessment.email', $data);

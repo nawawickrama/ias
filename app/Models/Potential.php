@@ -16,7 +16,7 @@ class Potential extends Model
     protected $fillable = [
         'cpf_id',
         'candidate_id',
-        'potential_status',
+        'potential_status', //1-> potential 2-> out of potential
     ];
 
     public function candidate(){

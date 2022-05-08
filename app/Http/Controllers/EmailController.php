@@ -103,7 +103,7 @@ class EmailController extends Controller
                 Mail::to($lead_info->lead_email)->send( new CpfLinkMail($subject, $link));
 
             }catch(Throwable $e){
-                dd($e);
+//                dd($e);
                 return back()->with(['error' => 'Email send failed', 'error_type'=> 'error']);
             }
 

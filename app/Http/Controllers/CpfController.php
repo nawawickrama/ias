@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Models\Potential;
 use App\Notifications\cpfRequestNotify;
 use App\Notifications\LoginNotify;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Models\Agent;
 use App\Models\Candidate;
@@ -18,10 +17,8 @@ use App\Models\Lead;
 use App\Models\SecondaryEdu;
 use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Throwable;
 
 class CpfController extends Controller
@@ -257,24 +254,6 @@ class CpfController extends Controller
         return back()->with(['success' => 'Application submission successful.']);
     }
 
-    public function check_pending_cpf()
-    {
-        /** @var App\Models\User $user */
-        $user = Auth::user();
-        $permission = $user->can('pending-request.view');
-
-        if ($permission) {
-            $app_count = Cpf::where('application_status', '2');
-
-            if ($user->hasRole('Agent')) {
-                $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
-                $app_count = $app_count->where('agent_id', $agent_id);
-            }
-
-            $app_count = $app_count->count();
-            return response()->json($app_count);
-        }
-    }
 
     public function agent_cpf($reference_no)
     {
@@ -304,13 +283,14 @@ class CpfController extends Controller
         $cpfID = \request('cpfID');
 
         $candidateDetails = Candidate::find($candidateId);
+        $cpfDetails = Cpf::where('candidate_id', $candidateId);
 
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&_-=+?";
         $password = substr( str_shuffle( $chars ), 0, 8 );
 
 
-        DB::transaction( function () use($candidateId, $cpfID, $password, $candidateDetails) {
-            Cpf::where('candidate_id', $candidateId)->update([
+        DB::transaction( function () use($candidateId, $cpfDetails, $cpfID, $password, $candidateDetails) {
+            $cpfDetails->update([
                 'application_status' => 5,
                 'status_date' => date('Y-m-d H:i:s'),
             ]);
@@ -318,7 +298,8 @@ class CpfController extends Controller
             Potential::create([
                 'cpf_id' => $cpfID,
                 'candidate_id' => $candidateId,
-                'potential_status' => 1
+                'potential_status' => 1,
+                'agent_id' => $cpfDetails->first()->agent_id,
             ]);
 
             $user = \App\Models\User::create([
