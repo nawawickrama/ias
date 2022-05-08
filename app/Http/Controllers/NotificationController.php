@@ -44,7 +44,7 @@ class NotificationController extends Controller
         if (Auth::check()) {
             $notifications = Auth::user()->unreadNotifications->take(5);
             foreach ($notifications as $notification) {
-                echo "<a href=\"{{route('mark_as_read_notification',$notification)}}\" class=\"dropdown-item\">
+                echo "<a href='/ajax/notification/mark_as_read/{$notification->id}' class=\"dropdown-item\">
                     <div class=\"icon\">
                         <i data-feather=\"layers\"></i>
                     </div>
