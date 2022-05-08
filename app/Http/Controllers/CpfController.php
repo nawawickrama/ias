@@ -154,8 +154,12 @@ class CpfController extends Controller
                         'nationality' => request('nationality'),
                         'telephone' => request('telephone'),
                         'email' => request('email'),
-                        'address' => request('address'),
+                        'address' => request('address').', '.request('city').', '.request('province').', '.request('zip'),
                         'country' => request('country'),
+
+                        'city' => request('city'),
+                        'state' => request('province'),
+                        'zipcode' => request('zip'),
                     ]);
                 }
 

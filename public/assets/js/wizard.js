@@ -28,7 +28,6 @@ $(function () {
             zip: 'required',
             country_id: 'required',
             nationality: 'required',
-            passport_no: 'required',
             whatsapp_no: {
                 required: true,
                 digits: true

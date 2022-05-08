@@ -58,7 +58,7 @@ function indicator() {
             let options = ['pendingCPF', 'pendingLeads', 'potentialStudent', 'pendingDocument'];
             options.forEach(function (value, index,){
 
-                if (value.length > 0) {
+                if (data[value] > 0) {
                     $('.text-header-'+value).text(data[value]);
                     $('.'+value).removeClass('invisible');
                 } else {

@@ -5,13 +5,7 @@
         <div class="card-header bg-primary text-white">
             <p>Application view</p>
         </div>
-        <di class="card-body">
-            @php
-                $candidate = $cpf_details->candidate;
-                if(isset($cpf_details->agent_id)) $agent = App\Models\Agent::find($cpf_details->agent_id)->user;
-                $country = App\Models\Country::find($candidate->country)->nicename;
-                $program = $cpf_details->course;
-            @endphp
+        <div class="card-body">
             <form action="">
                 <div class="form-row">
                     <p class="font-weight-bold">Select the program</p>
@@ -58,8 +52,8 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <p>Nationality / Nationalities required : <em
-                                class="text-secondary">{{ $candidate->nationality }}</em></p>
+                        <p>Nationality required : <em
+                                class="text-secondary">{{ $nationality }}</em></p>
                     </div>
                     <div class="form-group col-md-6">
                         <p>Country / State : <em class="text-secondary">{{ $country }}</em></p>
@@ -76,7 +70,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <p>Address : <em class="text-secondary">{{ $candidate->address }}</em></p>
+                        <p>Address : <em class="text-secondary">{{ $candidate->address }}, {{$country}}</em></p>
                     </div>
                 </div>
 
@@ -266,6 +260,6 @@
                     </div>
                 </div>
             </form>
-        </di>
+        </div>
     </div>
 @endsection

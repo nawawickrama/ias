@@ -52,4 +52,8 @@ class Candidate extends Model
     public function countryInfo(){
         return $this->belongsTo(Country::class, 'country', 'id');
     }
+
+    public function nationalityInfo(){
+        return $this->belongsTo(Country::class, 'nationality', 'id');
+    }
 }

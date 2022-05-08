@@ -23,7 +23,7 @@
                                         <input type="radio" class="form-check-input program-radio" name="course_id"
                                                id=""
                                                course-code="{{ $course->course_code }}" value="{{ $course->course_id }}"
-                                        @if (old('course_id') ?? $lead_details->lead_course_id ?? '' == $course->course_id) {{ 'checked' }} @endif>
+                                        @if (old('course_id') == $course->course_id) {{ 'checked' }} @endif>
                                         {{ $course->course_code }} - {{ $course->course_description }}
                                     </label>
                                 </div>
@@ -104,10 +104,17 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label>Nationality / Nationalities:</label>
-                                <input type="text" class="form-control @error('nationality') is-invalid @enderror"
-                                       name="nationality" id="" aria-describedby="helpId" placeholder=""
-                                       value="{{ old('nationality') }}">
+                                <label>Nationality :</label>
+                                <select name="nationality" id="" aria-describedby="helpId"
+                                        class="js-example-basic-single w-100 @error('nationality') is-invalid @enderror">
+                                    <option selected disabled>Select Nationality</option>
+                                    @foreach ($country as $cou)
+                                        <option
+                                            value="{{ $cou->id }}" @if (old('nationality') == $cou->id) {{ 'selected' }} @endif>
+                                            {{ $cou->iso3 }} - {{ $cou->nicename }}</option>
+                                    @endforeach
+                                </select>
+
                                 @error('nationality')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -195,8 +202,8 @@
                                     <option selected disabled>Select Country</option>
                                     @foreach ($country as $cou)
                                         <option
-                                            value="{{ $cou->id }}" @if (old('country') ?? $lead_details->lead_country_id ?? '' == $cou->id) {{ 'selected' }} @endif>
-                                            {{ $cou->nicename }}</option>
+                                            value="{{ $cou->id }}" @if (old('country')  == $cou->id) {{ 'selected' }} @endif>
+                                            {{ $cou->iso3 }} - {{ $cou->nicename }}</option>
                                     @endforeach
                                 </select>
                                 @error('country')

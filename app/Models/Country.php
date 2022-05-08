@@ -22,4 +22,10 @@ class Country extends Model
     public function users(){
         return $this->hasMany(User::class, 'country', 'id');
     }
+
+    public function natianalities(){
+        return $this->hasMany(Candidate::class, 'nationality', 'id');
+    }
+
+
 }

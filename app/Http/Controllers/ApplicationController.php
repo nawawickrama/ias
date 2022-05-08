@@ -129,7 +129,16 @@ class ApplicationController extends Controller
             }
 
             $cpf_details = $cpf_details->first();
-            return view('admin.requests.view-application')->with(['cpf_details' => $cpf_details]);
+
+            $candidate = $cpf_details->candidate;
+
+            $agent = Agent::find($cpf_details->agent_id)->user ?? '';
+
+            $country =$candidate->countryInfo->nicename;
+            $nationality = $candidate->nationalityInfo->nicename;
+            $program = $cpf_details->course;
+
+            return view('admin.requests.view-application')->with(['nationality' => $nationality, 'candidate' => $candidate, 'agent' => $agent, 'country' => $country, 'program' => $program, 'cpf_details' => $cpf_details]);
 
         }else{
             Auth::logout();
@@ -160,7 +169,14 @@ class ApplicationController extends Controller
             $higher_edu = $cpf_details->higher_edu;
             $work_exp = $cpf_details->work_exp;
 
-            return view('admin.requests.download-application')->with(['cpf_details' => $cpf_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
+            $program = $cpf_details->course;
+            $candidate = $cpf_details->candidate;
+            $country =$candidate->countryInfo->nicename;
+            $nationality =$candidate->nationalityInfo->nicename;
+
+
+
+            return view('admin.requests.download-application')->with(['nationality' => $nationality, 'country' => $country, 'program' => $program, 'candidate' => $candidate, 'cpf_details' => $cpf_details, 'sec_school' => $sec_school, 'vacational' => $vacational, 'higher_edu' => $higher_edu, 'work_exp' => $work_exp]);
 
         }else{
             Auth::logout();

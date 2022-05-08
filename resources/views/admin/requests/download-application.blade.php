@@ -4,11 +4,7 @@
     <script>
         window.print();
     </script>
-    @php
-        $program = $cpf_details->course;
-        $candidate = $cpf_details->candidate;
-        // dd($program);
-    @endphp
+
     <div class="container">
         <div class="row mt-4">
             <div class="card col-md-12">
@@ -63,11 +59,11 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <p>Nationality / Nationalities required : <em
-                                        class="text-secondary">{{ $candidate->nationality }}</em></p>
+                                <p>Nationality  required : <em
+                                        class="text-secondary">{{ $nationality }}</em></p>
                             </div>
                             <div class="form-group col-md-6">
-                                <p>Country / State : <em class="text-secondary">{{ $candidate->country }}</em></p>
+                                <p>Country / State : <em class="text-secondary">{{ $country }}</em></p>
                             </div>
                         </div>
                         <div class="form-row">
@@ -81,7 +77,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <p>Address : <em class="text-secondary">{{ $candidate->address }}</em></p>
+                                <p>Address : <em class="text-secondary">{{ $candidate->address }}, {{$country}}</em></p>
                             </div>
                         </div>
 

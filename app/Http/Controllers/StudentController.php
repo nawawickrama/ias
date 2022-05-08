@@ -51,7 +51,7 @@ class StudentController extends Controller
             'zip' => 'required',
             'country_id' => 'required',
             'nationality' => 'required',
-            'passport_no' => 'required',
+            'passport_no' => 'nullable',
             'whatsapp_no' => 'required|numeric',
 
             'guardian_title' => 'required',
@@ -70,9 +70,9 @@ class StudentController extends Controller
         foreach ($requireDocument as $reqDocs) {
             $docInfo = $reqDocs->document;
             if($reqDocs->option == 'Mandatory'){
-                $request->validate(["$docInfo->doc_name" => 'required|image',]);
+                $request->validate(["$docInfo->doc_name" => 'required|mimes:pdf,jpg,png,jpeg',]);
             }else{
-                $request->validate(["$docInfo->doc_name" => 'nullable|image',]);
+                $request->validate(["$docInfo->doc_name" => 'nullable|mimes:pdf,jpg,png,jpeg',]);
             }
 
         }

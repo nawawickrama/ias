@@ -70,20 +70,20 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="">State / Province / Region :<span class="text-danger">*</span></label>
-                                <input type="text" name="state" id="" class="form-control" value="">
+                                <input type="text" name="state" id="" class="form-control" value="{{$candidateDetails->state}}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="">Zip Code :<span class="text-danger">*</span></label>
-                                <input type="text" name="zip" id="" class="form-control">
+                                <input type="text" name="zip" id="" class="form-control" value="{{$candidateDetails->zipcode}}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="">Country :<span class="text-danger">*</span></label>
                                 <select name="country_id" id="country">
                                     <option value="" selected disabled>Select...</option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->id}} - {{$country->iso3}}
+                                        <option value="{{$country->id}}" @if($candidateDetails->country == $country->id) {{'selected'}} @endif>{{$country->iso3}}
                                             - {{$country->nicename}}</option>
                                     @endforeach
                                 </select>
@@ -93,7 +93,7 @@
                                 <select name="nationality" id="nationality">
                                     <option value="" selected disabled>Select...</option>
                                     @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
+                                        <option value="{{$country->id}}" @if($candidateDetails->nationality == $country->id) {{'selected'}} @endif>{{$country->iso3}} - {{$country->nicename}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -101,7 +101,7 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-6">
-                                <label for="">Passport No :<span class="text-danger">*</span></label>
+                                <label for="">Passport No :</label>
                                 <input type="text" name="passport_no" id="" class="form-control">
                             </div>
                             <div class="form-group col-md-6">

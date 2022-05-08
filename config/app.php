@@ -2,7 +2,7 @@
 
 return [
 
-    'version' => env('APP_VERSION', '2.1.1'),
+    'version' => env('APP_VERSION', '2.1.2'),
 
     /*
     |--------------------------------------------------------------------------
@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'IAS College'),
 
 
     /*
