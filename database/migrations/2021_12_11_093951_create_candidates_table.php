@@ -19,8 +19,8 @@ class CreateCandidatesTable extends Migration
             $table->string('sur_name');
             $table->boolean('sex'); //1->male,  0->female
             $table->date('dob');
-            $table->string('telephone');
-            $table->string('email');
+            $table->string('telephone')->unique();
+            $table->string('email')->unique();
 
             $table->string('address');
             $table->string('nationality');
