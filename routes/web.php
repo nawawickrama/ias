@@ -168,3 +168,7 @@ Route::post('/document-add-new', [SettingControler::class, 'addNewDocument'])->n
 Route::get('/document-complete', [\App\Http\Controllers\DocumentController::class, 'pendingDocument'])->name('document-verification');
 Route::post('/document-status-change', [\App\Http\Controllers\DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
 
+Route::view('/student/dashboard','student.general.dashboard')->name('dashboard');
+Route::view('/student/information','student.registration.information')->name('information');
+Route::view('/student/documents','student.registration.documents')->name('documents');
+Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
