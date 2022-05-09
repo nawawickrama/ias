@@ -87,7 +87,6 @@ Route::post('/direct_cpf', [CpfController::class, 'cpf_post'])->name('cpf_post')
 //Agent CPF
 Route::get('/reg_cpf/{reference_no}', [CpfController::class, 'agent_cpf'])->name('agent_cpf');
 
-
 //Agent
 Route::get('/agents', [AgentController::class, 'agent_page'])->name('agents');
 Route::post('/agents', [AgentController::class, 'add_agents'])->name('add_agents');
@@ -103,7 +102,7 @@ Route::get('/permission-management', [SettingControler::class, 'permission_role_
 Route::post('/permission-management', [SettingControler::class, 'permission_role_post'])->name('permission_role_post');
 
 
-//leads
+//leads====================
 Route::get('/pending-leads', [LeadController::class, 'lead_pending'])->name('pending_lead');
 Route::post('/assign-leads', [LeadController::class, 'assgn_leads_to_agent'])->name('assgn_leads_to_agent');
 Route::post('/delete-leads', [LeadController::class, 'leade_delete'])->name('leade_delete');

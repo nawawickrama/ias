@@ -307,7 +307,6 @@
 <script src="{{ url('assets/vendors/promise-polyfill/polyfill.min.js') }}"></script>
 <script src="{{ url('assets/js/sweet-alert.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ url('assets/js/wizard.js') }}"></script>
 <script src="{{ url('assets/vendors/jquery-steps/jquery.steps.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
@@ -322,6 +321,8 @@
 
 <script src="{{url('assets/js/Custom/leads.js')}}"></script>
 <script src="{{url('assets/js/Custom/notification.js')}}"></script>
+<script src="{{ url('assets/js/Custom/wizard.js') }}"></script>
+
 
 <script>
     $(document).ready(function () {
