@@ -29,7 +29,8 @@ class Candidate extends Model
         'zipcode',
         'whatsapp_no',
         'passport_no',
-        'user_id'
+        'user_id',
+        'isComplete'
     ];
 
     public function cpf(): \Illuminate\Database\Eloquent\Relations\HasOne

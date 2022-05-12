@@ -28,7 +28,8 @@ form1.validate({
         }
     },
     submitHandler: function() {
-        formSubmit();
+        let data = new FormData(document.getElementById('studentInformationForm'));
+        formSubmit(data);
     }
 });
 
@@ -54,25 +55,26 @@ form2.validate({
         homeAddress : 'required',
     },
     submitHandler: function() {
-        formSubmit();
+        let data = new FormData(document.getElementById('guardianInformationForm'));
+        formSubmit(data);
     }
 });
 
-function formSubmit(){
+function formSubmit(element){
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url: "/student/information",
         method: 'post',
-        data:new FormData(document.getElementById("studentInformationForm")),
+        data:element,
         processData: false,
         dataType: 'json',
         contentType: false,
 
         success:function (){
-            $('#modelb').modal('hide');
-            notify('success', 'Student registered successful');
+            $('.modalForm').modal('hide');
+            notify('success', 'Information update successful.');
             setTimeout(function() {
-                location.replace('/student/pending-verification');
+                location.reload();
             }, 3000);
 
         },

@@ -42,6 +42,7 @@ class StudentController extends Controller
         $candidate_details = User::find(Auth::user()->id)->candidate;
 
         if (\request('formNo') == 1) {
+
             $request->validate([
                 'courseId' => 'required',
                 'first_name' => 'required',
@@ -73,6 +74,7 @@ class StudentController extends Controller
                 'nationality' => \request('nationality'),
                 'passport_no' => \request('passport_no'),
                 'whatsapp_no' => \request('whatsapp_no'),
+                'isComplete' => 'Yes'
             ]);
 
         } elseif (\request('formNo') == 2) {
@@ -89,18 +91,20 @@ class StudentController extends Controller
                 'homeAddress' => 'required',
             ]);
 
-            Guardian::create([
-                'guardian_title' => \request('guardian_title'),
-                'guardian_firstName' => \request('guardian_firstName'),
-                'guardian_lastName' => \request('guardian_lastName'),
-                'guardian_email' => \request('guardian_email'),
-                'guardian_phoneNo' => \request('guardian_phoneNo'),
-                'guardian_mobileNo' => \request('guardian_mobileNo'),
-                'relationship' => \request('relationship'),
-                'occupation' => \request('occupation'),
-                'home_address' => \request('homeAddress'),
-                'candidate_id' => $candidate_details->candidate_id
-            ]);
+            $guardian = Guardian::firstOrNew(['candidate_id' => $candidate_details->candidate_id]);
+            $guardian->guardian_title = \request('guardian_title');
+            $guardian->guardian_firstName = \request('guardian_firstName');
+            $guardian->guardian_lastName = \request('guardian_lastName');
+            $guardian->guardian_email = \request('guardian_email');
+            $guardian->guardian_phoneNo = \request('guardian_phoneNo');
+            $guardian->guardian_mobileNo = \request('guardian_mobileNo');
+            $guardian->relationship = \request('relationship');
+            $guardian->occupation = \request('occupation');
+            $guardian->home_address = \request('homeAddress');
+            $guardian->isComplete = 'Yes';
+
+            $guardian->save();
+
         }
 
 
@@ -113,33 +117,27 @@ class StudentController extends Controller
             } else {
                 $request->validate(["$docInfo->doc_name" => 'nullable|mimes:pdf,jpg,png,jpeg',]);
             }
+        }
+
+        DB::transaction(function () use ($requireDocument, $candidate_details, $request) {
+
+        foreach ($requireDocument as $reqDocs) {
+            $docInfo = $reqDocs->document;
+            if (!empty($request->file($docInfo->doc_name))) {
+                $extension = $request->file($docInfo->doc_name)->getClientOriginalExtension();
+                $name = $candidate_details->candidate_id . '_' . $docInfo->doc_name . '_' . time() . '.' . $extension;
+                $fill_path = $request->file($docInfo->doc_name)->storeAs('student_document', $name, 'public');
+
+                CandidateDocument::create([
+                    'candidate_id' => $candidate_details->candidate_id,
+                    'document_id' => $docInfo->document_id,
+                    'file_path' => $fill_path
+                ]);
+            }
 
         }*/
 
-
-//        DB::transaction(function () use ($requireDocument, $candidate_details, $request) {
-
-
-//        foreach ($requireDocument as $reqDocs) {
-//            $docInfo = $reqDocs->document;
-//            if (!empty($request->file($docInfo->doc_name))) {
-//                $extension = $request->file($docInfo->doc_name)->getClientOriginalExtension();
-//                $name = $candidate_details->candidate_id . '_' . $docInfo->doc_name . '_' . time() . '.' . $extension;
-//                $fill_path = $request->file($docInfo->doc_name)->storeAs('student_document', $name, 'public');
-//
-//                CandidateDocument::create([
-//                    'candidate_id' => $candidate_details->candidate_id,
-//                    'document_id' => $docInfo->document_id,
-//                    'file_path' => $fill_path
-//                ]);
-//            }
-//
-//        }
-
-
-//        });
-
-        return response()->json($candidate_details->candidate_id)->status(200);
+        return response()->json($candidate_details->candidate_id);
 
     }
 

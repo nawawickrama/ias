@@ -23,7 +23,8 @@ class Guardian extends Model
         'relationship',
         'occupation',
         'home_address',
-        'candidate_id'
+        'candidate_id',
+        'isComplete'
     ];
 
     public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo

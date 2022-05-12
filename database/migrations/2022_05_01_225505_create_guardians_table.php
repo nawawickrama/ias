@@ -27,6 +27,7 @@ class CreateGuardiansTable extends Migration
 
             $table->unsignedBigInteger('candidate_id');
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
+            $table->enum('isComplete', ['Yes', 'No'])->default('No');
             $table->timestamps();
         });
     }

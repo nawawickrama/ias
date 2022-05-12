@@ -1,10 +1,18 @@
 @extends('layouts.dashboard.main')
 
 @section('content')
-<div class="alert alert-icon-primary" role="alert">
-    <i data-feather="alert-circle"></i>
-    <b>TIP :</b> Please complete all the required fields. Once you fill all the details, you will get a success message.
-</div>
+    @if($candidateDetails->isComplete === 'Yes' && $guardianDetails->isComplete === 'Yes')
+        <div class="alert alert-icon-success" role="alert">
+            <i data-feather="check-circle"></i>
+            <b>TIP :</b> Please complete all the required fields. Once you fill all the details, you will get a success message.
+        </div>
+    @else
+        <div class="alert alert-icon-primary" role="alert">
+            <i data-feather="alert-circle"></i>
+            <b>TIP :</b> Please complete all the required fields. Once you fill all the details, you will get a success message.
+        </div>
+    @endif
+
 <div class="card">
     <div class="card-header bg-primary">
         <div class="row">
