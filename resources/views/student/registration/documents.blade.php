@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-icon-danger" role="alert"><i data-feather="alert-circle"></i><b>WARNING :</b> Please fill all the required <a href="{{route('information')}}">student information</a> before submit the documents.</div>
+                <div class="alert alert-icon-danger" role="alert"><i data-feather="alert-circle"></i><b>WARNING :</b> Please fill all the required <a href="{{route('studentInformation')}}">student information</a> before submit the documents.</div>
                 <form action="" method="post">
                     <div class="form-row">
                         <div class="form-group col-md-12">

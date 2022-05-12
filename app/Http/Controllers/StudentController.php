@@ -25,61 +25,69 @@ class StudentController extends Controller
         $this->middleware(['auth', 'actived', 'agent']);
     }
 
-    public function studentWizard()
+    public function studentInformation()
     {
         $countries = Country::all();
         $candidateDetails = User::find(Auth::user()->id)->candidate;
         $cpfDetails = $candidateDetails->cpf;
         $coursesDetails = Course::where([['course_id', $cpfDetails->course_id], ['course_status', '1']])->first();
         $documentDetails = DocumentCourse::where([['course_id', $cpfDetails->course_id], ['document_course_status', '1']])->get();
+        $guardianDetails = $candidateDetails->guardian;
 
-        return view('student.wizard.wizard')->with(['documentDetails' => $documentDetails, 'countries' => $countries, 'coursesDetails' => $coursesDetails, 'candidateDetails' => $candidateDetails]);
+        return view('student.registration.information')->with(['guardianDetails' => $guardianDetails, 'documentDetails' => $documentDetails, 'countries' => $countries, 'coursesDetails' => $coursesDetails, 'candidateDetails' => $candidateDetails]);
     }
 
     public function studentWizardPost(Request $request)
     {
-        $request->validate([
-            'courseId' => 'required',
-            'first_name' => 'required',
-            'sur_name' => 'required',
-            'mobile_no' => 'required|numeric',
-            'dob' => 'required',
-            'gender' => 'required',
-            'addressLine' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
-            'country_id' => 'required',
-            'nationality' => 'required',
-            'passport_no' => 'nullable',
-            'whatsapp_no' => 'required|numeric',
+        if (\request('formNo') == 1) {
+            $request->validate([
+                'courseId' => 'required',
+                'first_name' => 'required',
+                'sur_name' => 'required',
+                'mobile_no' => 'required|numeric',
+                'dob' => 'required',
+                'gender' => 'required',
+                'addressLine' => 'required',
+                'city' => 'required',
+                'state' => 'required',
+                'zip' => 'required',
+                'country_id' => 'required',
+                'nationality' => 'required',
+                'passport_no' => 'nullable',
+                'whatsapp_no' => 'required|numeric',
+            ]);
 
-            'guardian_title' => 'required',
-            'guardian_firstName' => 'required',
-            'guardian_lastName' => 'required',
-            'guardian_email' => 'required',
-            'guardian_phoneNo' => 'required',
-            'guardian_mobileNo' => 'required',
-            'relationship' => 'required',
-            'occupation' => 'required',
-            'homeAddress' => 'required',
-        ]);
+        } elseif (\request('formNo') == 2) {
 
-        $requireDocument = DocumentCourse::where([['document_course_status', 1], ['course_id', \request('courseId')]])->get();
+            $request->validate([
+                'guardian_title' => 'required',
+                'guardian_firstName' => 'required',
+                'guardian_lastName' => 'required',
+                'guardian_email' => 'required',
+                'guardian_phoneNo' => 'required',
+                'guardian_mobileNo' => 'required',
+                'relationship' => 'required',
+                'occupation' => 'required',
+                'homeAddress' => 'required',
+            ]);
+        }
+
+
+        /*$requireDocument = DocumentCourse::where([['document_course_status', 1], ['course_id', \request('courseId')]])->get();
 
         foreach ($requireDocument as $reqDocs) {
             $docInfo = $reqDocs->document;
-            if($reqDocs->option == 'Mandatory'){
+            if ($reqDocs->option == 'Mandatory') {
                 $request->validate(["$docInfo->doc_name" => 'required|mimes:pdf,jpg,png,jpeg',]);
-            }else{
+            } else {
                 $request->validate(["$docInfo->doc_name" => 'nullable|mimes:pdf,jpg,png,jpeg',]);
             }
 
-        }
+        }*/
 
         $candidate_details = User::find(Auth::user()->id)->candidate;
 
-        DB::transaction(function () use($requireDocument, $candidate_details, $request){
+//        DB::transaction(function () use ($requireDocument, $candidate_details, $request) {
 
             $candidate_details->update([
                 'first_name' => \request('first_name'),
@@ -87,7 +95,7 @@ class StudentController extends Controller
                 'telephone' => \request('mobile_no'),
                 'dob' => \request('dob'),
                 'sex' => \request('gender'),
-                'address' => \request('addressLine'),
+                'address' => \request('addressLine').', '.\request('city').', '.\request('state').', '.\request('zip'),
                 'city' => \request('city'),
                 'state' => \request('state'),
                 'zipcode' => \request('zip'),
@@ -97,7 +105,7 @@ class StudentController extends Controller
                 'whatsapp_no' => \request('whatsapp_no'),
             ]);
 
-            Guardian::create([
+            /*Guardian::create([
                 'guardian_title' => \request('guardian_title'),
                 'guardian_firstName' => \request('guardian_firstName'),
                 'guardian_lastName' => \request('guardian_lastName'),
@@ -112,21 +120,21 @@ class StudentController extends Controller
 
             foreach ($requireDocument as $reqDocs) {
                 $docInfo = $reqDocs->document;
-                if(!empty($request->file($docInfo->doc_name))){
+                if (!empty($request->file($docInfo->doc_name))) {
                     $extension = $request->file($docInfo->doc_name)->getClientOriginalExtension();
-                    $name = $candidate_details->candidate_id. '_' .$docInfo->doc_name.'_' .time().'.'.$extension;
+                    $name = $candidate_details->candidate_id . '_' . $docInfo->doc_name . '_' . time() . '.' . $extension;
                     $fill_path = $request->file($docInfo->doc_name)->storeAs('student_document', $name, 'public');
 
                     CandidateDocument::create([
                         'candidate_id' => $candidate_details->candidate_id,
                         'document_id' => $docInfo->document_id,
-                        'file_path' =>$fill_path
+                        'file_path' => $fill_path
                     ]);
                 }
 
-            }
+            }*/
 
-        });
+//        });
 
         return response()->json($candidate_details->candidate_id)->status(200);
 
@@ -145,7 +153,7 @@ class StudentController extends Controller
 
         $potentialDetails = Potential::where('potential_status', '1');
 
-        if($user->hasRole('Agent')){
+        if ($user->hasRole('Agent')) {
             $agent_id = User::find($user->id)->agent->agent_id;
             $potentialDetails = $potentialDetails->where('agent_id', $agent_id);
         }

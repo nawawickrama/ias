@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'actived', 'agent', 'candidate']);
+        $this->middleware(['auth', 'actived', 'agent',]);
     }
 
     /**
@@ -34,6 +34,10 @@ class HomeController extends Controller
 
         //make permission
 
-        return view('admin.home');
+        if($user->hasRole('Student')){
+            return view('student.general.dashboard');
+        }
+
+        return view('admin.general.home');
     }
 }

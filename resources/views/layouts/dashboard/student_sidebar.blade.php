@@ -16,14 +16,14 @@
         <ul class="nav">
         <li class="nav-item nav-category">General</li>
             <li class="nav-item">
-                <a class="nav-link"  href="{{route('dashboard')}}" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link"  href="{{route('studentDashboard')}}" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon text-success" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Registration Process</li>
             <li class="nav-item">
-                <a class="nav-link"  href="{{route('information')}}" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link"  href="{{route('studentInformation')}}" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon text-primary" data-feather="user"></i>
                     <span class="link-title">Student Information</span>
                 </a>

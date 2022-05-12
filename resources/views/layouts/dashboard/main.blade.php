@@ -24,9 +24,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="{{ url('assets/vendors/core/core.js') }}"></script>
+
+    {{--jquery validator css--}}
+    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
 
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}"/>
+
+    <script src="{{ url('assets/vendors/core/core.js') }}"></script>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -321,7 +325,7 @@
 
 <script src="{{url('assets/js/Custom/leads.js')}}"></script>
 <script src="{{url('assets/js/Custom/notification.js')}}"></script>
-<script src="{{ url('assets/js/Custom/wizard.js') }}"></script>
+<script src="{{ url('assets/js/Custom/studentInformation.js') }}"></script>
 
 
 <script>

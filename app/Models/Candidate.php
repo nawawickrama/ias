@@ -32,28 +32,38 @@ class Candidate extends Model
         'user_id'
     ];
 
-    public function cpf()
+    public function cpf(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Cpf::class, 'candidate_id');
     }
 
-    public function potential(){
+    public function potential(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
         return $this->hasOne(Potential::class, 'candidate_id');
     }
 
-    public function user(){
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function documents(){
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(CandidateDocument::class, 'candidate_id');
     }
 
-    public function countryInfo(){
+    public function countryInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Country::class, 'country', 'id');
     }
 
-    public function nationalityInfo(){
+    public function nationalityInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Country::class, 'nationality', 'id');
+    }
+
+    public function guardian(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Guardian::class, 'candidate_id');
     }
 }

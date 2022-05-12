@@ -8,7 +8,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
-use Illuminate\Http\Request;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\GenaralController;
+use \App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +33,10 @@ Auth::routes([
 ]);
 
 //Logout
-Route::get('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Dashboard
-Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('home');
 
 //Application
 Route::get('/pending-requests', [ApplicationController::class, 'pending_cpf'])->name('pending-requests');
@@ -135,27 +139,29 @@ Route::post('/ajax/name-email-agent', [AgentController::class, 'name_email'])->n
 Route::post('/ajax/role_and_permission', [SettingControler::class, 'fill_permission'])->name('fill_permission');
 
 //get document details
-Route::post('/ajax/get_doc_details', [\App\Http\Controllers\DocumentController::class, 'getDocumentDetails'])->name('getDocumentDetails');
+Route::post('/ajax/get_doc_details', [DocumentController::class, 'getDocumentDetails'])->name('getDocumentDetails');
 
 //notification
-Route::post('/ajax/notification', [\App\Http\Controllers\NotificationController::class, 'notifications'])->name('notifications');
-Route::post('/ajax/notification-count', [\App\Http\Controllers\NotificationController::class, 'notificationCount'])->name('notificationCount');
-Route::get('/ajax/notification/mark_as_read/{notification}', [\App\Http\Controllers\NotificationController::class, 'mark_as_read_notification'])->name('mark_as_read_notification');
+Route::post('/ajax/notification', [NotificationController::class, 'notifications'])->name('notifications');
+Route::post('/ajax/notification-count', [NotificationController::class, 'notificationCount'])->name('notificationCount');
+Route::get('/ajax/notification/mark_as_read/{notification}', [NotificationController::class, 'mark_as_read_notification'])->name('mark_as_read_notification');
 
 //Pending indicator
-Route::post('/ajax/pending', [\App\Http\Controllers\NotificationController::class, 'indicator'])->name('check_pending_cpf');
+Route::post('/ajax/pending', [NotificationController::class, 'indicator'])->name('check_pending_cpf');
 
 //student=======================
 //Student Wizard
-Route::get('/student/wizard', [\App\Http\Controllers\StudentController::class, 'studentWizard'])->name('studentWizard');
-Route::post('/student/wizard', [\App\Http\Controllers\StudentController::class, 'studentWizardPost'])->name('studentWizardPost');
+Route::get('/student/dashboard',[HomeController::class, 'index'])->name('studentDashboard');
+Route::get('/student/information',[StudentController::class, 'studentInformation'])->name('studentInformation');
+Route::post('/student/information',[StudentController::class, 'studentWizardPost'])->name('studentInformation');
+
 
 //potential student
-Route::get('/potential-students', [\App\Http\Controllers\StudentController::class, 'potential_student'])->name('potential-students');
+Route::get('/potential-students', [StudentController::class, 'potential_student'])->name('potential-students');
 Route::post('/potential-students', [CpfController::class, 'makePotentialStudent'])->name('make-potential');
 
 //login as a ghost
-Route::post('/login-as-a-ghost', [\App\Http\Controllers\GenaralController::class, 'logAsGhost'])->name('logAsGhost');
+Route::post('/login-as-a-ghost', [GenaralController::class, 'logAsGhost'])->name('logAsGhost');
 
 //Document Setting
 Route::get('/document-settings', [SettingControler::class, 'documentSetting'])->name('document-settings');
@@ -164,10 +170,10 @@ Route::post('/document-settings-status', [SettingControler::class, 'documentCour
 Route::view('/student/pending-verification', 'student.wizard.pending-verification')->middleware('auth')->name('pending-verification');
 Route::post('/document-add-new', [SettingControler::class, 'addNewDocument'])->name('add-new-document');
 
-Route::get('/document-complete', [\App\Http\Controllers\DocumentController::class, 'pendingDocument'])->name('document-verification');
-Route::post('/document-status-change', [\App\Http\Controllers\DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
+Route::get('/document-complete', [DocumentController::class, 'pendingDocument'])->name('document-verification');
+Route::post('/document-status-change', [DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
 
-Route::view('/student/dashboard','student.general.dashboard')->name('dashboard');
-Route::view('/student/information','student.registration.information')->name('information');
+
+
 Route::view('/student/documents','student.registration.documents')->name('documents');
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');

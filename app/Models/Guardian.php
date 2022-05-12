@@ -25,4 +25,9 @@ class Guardian extends Model
         'home_address',
         'candidate_id'
     ];
+
+    public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Candidate::class, 'candidate_id');
+    }
 }

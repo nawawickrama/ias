@@ -7,6 +7,7 @@ $(function () {
      */
 
     const form = $("#formStep1");
+
     form.validate({
         debug: false,
         rules: {
@@ -71,25 +72,7 @@ $(function () {
             const _this = this;
 
 
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: "/student/wizard",
-                method: 'post',
-                data:new FormData(document.getElementById("formStep1")),
-                processData: false,
-                dataType: 'json',
-                contentType: false,
 
-                success:function (){
-                    notify('success', 'Student registered successful');
-                    setTimeout(function() {
-                        location.replace('/student/pending-verification');
-                    }, 3000);
-                },
-                error:function (response){
-                    notify('error', response.responseJSON.message);
-                }
-            })
         }
     });
 
