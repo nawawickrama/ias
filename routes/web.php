@@ -177,3 +177,5 @@ Route::post('/document-status-change', [DocumentController::class, 'documentStat
 
 Route::view('/student/documents','student.registration.documents')->name('documents');
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
+Route::view('/student/aaf','student.forms.aaf')->name('aaf');
+Route::view('/student/lgo','student.forms.lgo')->name('lgo');

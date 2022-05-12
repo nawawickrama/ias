@@ -36,13 +36,13 @@
             </li>
             <li class="nav-item nav-category">Applications</li>
             <li class="nav-item">
-                <a class="nav-link"  href="#" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link"  href="{{route('aaf')}}" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon text-warning" data-feather="book-open"></i>
                     <span class="link-title">AAF Form</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="#" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link"  href="{{route('lgo')}}" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon text-success" data-feather="book"></i>
                     <span class="link-title">LGO Form</span>
                 </a>
