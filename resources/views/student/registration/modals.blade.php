@@ -31,7 +31,7 @@
                         <div class="form-group col-md-3">
                             <label for="">First Name :<span class="text-danger">*</span></label>
                             <input type="text" name="first_name" id="" class="form-control"
-                                   value="{{ $candidateDetails->first_name }}" required>
+                                   value="{{ $candidateDetails->first_name }}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Surname :<span class="text-danger">*</span></label>
@@ -126,6 +126,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-warning">Save</button>
                 </div>
+                <input type="hidden" name="formNo" value="1">
             </form>
         </div>
     </div>
@@ -141,9 +142,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post">
-                    @csrf
+            <form action="" method="post" id="guardianInformationForm">
+                @csrf
+                <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="guardian_title">Title :<span class="text-danger">*</span></label>
@@ -194,12 +195,14 @@
                                       class="form-control"></textarea>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-warning">Save</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Save</button>
+                </div>
+                <input type="hidden" name="formNo" value="2">
+            </form>
         </div>
     </div>
 </div>

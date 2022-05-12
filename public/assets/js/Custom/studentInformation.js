@@ -1,10 +1,10 @@
-const form = $("#studentInformationForm");
+const form1 = $("#studentInformationForm");
 
-form.validate({
+form1.validate({
     debug: false,
 
     rules: {
-        formNo: 1,
+        formNo: 'required',
         first_name: 'required',
         sur_name: 'required',
         mobile_no: {
@@ -28,29 +28,63 @@ form.validate({
         }
     },
     submitHandler: function() {
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: "/student/information",
-            method: 'post',
-            data:new FormData(document.getElementById("studentInformationForm")),
-            processData: false,
-            dataType: 'json',
-            contentType: false,
-
-            success:function (){
-                $('#modelb').modal('hide');
-                notify('success', 'Student registered successful');
-                setTimeout(function() {
-                    location.replace('/student/pending-verification');
-                }, 3000);
-
-            },
-            error:function (response){
-                $('#modelb').modal('hide');
-                notify('error', response.erros.message);
-            }
-        });
-
-
+        formSubmit();
     }
 });
+
+const form2 = $("#guardianInformationForm");
+
+form2.validate({
+    debug: false,
+
+    rules: {
+        formNo: 'required',
+        guardian_title: 'required',
+        guardian_firstName : 'required',
+        guardian_lastName : 'required',
+        guardian_email : 'required',
+        guardian_phoneNo : {
+            required: true,
+        },
+        guardian_mobileNo : {
+            required: true,
+        },
+        relationship : 'required',
+        occupation : 'required',
+        homeAddress : 'required',
+    },
+    submitHandler: function() {
+        formSubmit();
+    }
+});
+
+function formSubmit(){
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: "/student/information",
+        method: 'post',
+        data:new FormData(document.getElementById("studentInformationForm")),
+        processData: false,
+        dataType: 'json',
+        contentType: false,
+
+        success:function (){
+            $('#modelb').modal('hide');
+            notify('success', 'Student registered successful');
+            setTimeout(function() {
+                location.replace('/student/pending-verification');
+            }, 3000);
+
+        },
+        error:function (response){
+            let error = '';
+            $('#modelb').modal('hide');
+
+            $.each(response.responseJSON.errors, function (index, value){
+                error += value+"<br>";
+            });
+
+            notify('error', error, false);
+        }
+    });
+}

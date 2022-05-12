@@ -39,6 +39,8 @@ class StudentController extends Controller
 
     public function studentWizardPost(Request $request)
     {
+        $candidate_details = User::find(Auth::user()->id)->candidate;
+
         if (\request('formNo') == 1) {
             $request->validate([
                 'courseId' => 'required',
@@ -57,6 +59,22 @@ class StudentController extends Controller
                 'whatsapp_no' => 'required|numeric',
             ]);
 
+            $candidate_details->update([
+                'first_name' => \request('first_name'),
+                'sur_name' => \request('sur_name'),
+                'telephone' => \request('mobile_no'),
+                'dob' => \request('dob'),
+                'sex' => \request('gender'),
+                'address' => \request('addressLine') . ', ' . \request('city') . ', ' . \request('state') . ', ' . \request('zip'),
+                'city' => \request('city'),
+                'state' => \request('state'),
+                'zipcode' => \request('zip'),
+                'country' => \request('country_id'),
+                'nationality' => \request('nationality'),
+                'passport_no' => \request('passport_no'),
+                'whatsapp_no' => \request('whatsapp_no'),
+            ]);
+
         } elseif (\request('formNo') == 2) {
 
             $request->validate([
@@ -69,6 +87,19 @@ class StudentController extends Controller
                 'relationship' => 'required',
                 'occupation' => 'required',
                 'homeAddress' => 'required',
+            ]);
+
+            Guardian::create([
+                'guardian_title' => \request('guardian_title'),
+                'guardian_firstName' => \request('guardian_firstName'),
+                'guardian_lastName' => \request('guardian_lastName'),
+                'guardian_email' => \request('guardian_email'),
+                'guardian_phoneNo' => \request('guardian_phoneNo'),
+                'guardian_mobileNo' => \request('guardian_mobileNo'),
+                'relationship' => \request('relationship'),
+                'occupation' => \request('occupation'),
+                'home_address' => \request('homeAddress'),
+                'candidate_id' => $candidate_details->candidate_id
             ]);
         }
 
@@ -85,54 +116,26 @@ class StudentController extends Controller
 
         }*/
 
-        $candidate_details = User::find(Auth::user()->id)->candidate;
 
 //        DB::transaction(function () use ($requireDocument, $candidate_details, $request) {
 
-            $candidate_details->update([
-                'first_name' => \request('first_name'),
-                'sur_name' => \request('sur_name'),
-                'telephone' => \request('mobile_no'),
-                'dob' => \request('dob'),
-                'sex' => \request('gender'),
-                'address' => \request('addressLine').', '.\request('city').', '.\request('state').', '.\request('zip'),
-                'city' => \request('city'),
-                'state' => \request('state'),
-                'zipcode' => \request('zip'),
-                'country' => \request('country_id'),
-                'nationality' => \request('nationality'),
-                'passport_no' => \request('passport_no'),
-                'whatsapp_no' => \request('whatsapp_no'),
-            ]);
 
-            /*Guardian::create([
-                'guardian_title' => \request('guardian_title'),
-                'guardian_firstName' => \request('guardian_firstName'),
-                'guardian_lastName' => \request('guardian_lastName'),
-                'guardian_email' => \request('guardian_email'),
-                'guardian_phoneNo' => \request('guardian_phoneNo'),
-                'guardian_mobileNo' => \request('guardian_mobileNo'),
-                'relationship' => \request('relationship'),
-                'occupation' => \request('occupation'),
-                'home_address' => \request('homeAddress'),
-                'candidate_id' => $candidate_details->candidate_id
-            ]);
+//        foreach ($requireDocument as $reqDocs) {
+//            $docInfo = $reqDocs->document;
+//            if (!empty($request->file($docInfo->doc_name))) {
+//                $extension = $request->file($docInfo->doc_name)->getClientOriginalExtension();
+//                $name = $candidate_details->candidate_id . '_' . $docInfo->doc_name . '_' . time() . '.' . $extension;
+//                $fill_path = $request->file($docInfo->doc_name)->storeAs('student_document', $name, 'public');
+//
+//                CandidateDocument::create([
+//                    'candidate_id' => $candidate_details->candidate_id,
+//                    'document_id' => $docInfo->document_id,
+//                    'file_path' => $fill_path
+//                ]);
+//            }
+//
+//        }
 
-            foreach ($requireDocument as $reqDocs) {
-                $docInfo = $reqDocs->document;
-                if (!empty($request->file($docInfo->doc_name))) {
-                    $extension = $request->file($docInfo->doc_name)->getClientOriginalExtension();
-                    $name = $candidate_details->candidate_id . '_' . $docInfo->doc_name . '_' . time() . '.' . $extension;
-                    $fill_path = $request->file($docInfo->doc_name)->storeAs('student_document', $name, 'public');
-
-                    CandidateDocument::create([
-                        'candidate_id' => $candidate_details->candidate_id,
-                        'document_id' => $docInfo->document_id,
-                        'file_path' => $fill_path
-                    ]);
-                }
-
-            }*/
 
 //        });
 

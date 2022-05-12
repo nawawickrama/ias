@@ -15,12 +15,14 @@
 <script>
     /**
      *
+     * @param toast
      * @param icon
      * @param msg
      */
-    function notify(icon, msg){
+    function notify(icon, msg, toast){
+
        const Toast = Swal.mixin({
-            toast: true,
+            toast: toast ?? true,
             position: 'top',
             showConfirmButton: false,
             timer: 3000,
@@ -33,7 +35,7 @@
 
         Toast.fire({
             icon: icon,
-            title: msg
+            title: msg,
         })
     }
 </script>
