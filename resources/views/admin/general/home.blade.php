@@ -21,7 +21,7 @@
                     <input type="text" class="form-control" id="ref_link" placeholder="Agent Link" value="{{ config('app.url') }}/reg_cpf/{{ $user->reference_no }}" readonly>
 
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="button" id="copy_btn">Copy Link</button>
+                        <button class="btn btn-outline-primary" type="button" id="copy_btn">Copy Linkddd</button>
                     </div>
                 </div>
                 @else
