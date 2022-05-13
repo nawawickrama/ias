@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <p>CPF LINK</p>
+                <p>CPF LINKd</p>
             </div>
             <div class="card-body">
                 @php
