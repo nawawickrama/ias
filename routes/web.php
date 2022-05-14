@@ -179,3 +179,6 @@ Route::view('/student/documents','student.registration.documents')->name('docume
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
 Route::view('/student/aaf','student.forms.aaf')->name('aaf');
 Route::view('/student/lgo','student.forms.lgo')->name('lgo');
+
+Route::view('/selected-students','admin.selected.selected-students')->name('selected-students');
+Route::view('/verify-lgo-aaf','admin.selected.verify-lgo-aaf')->name('verify-lgo-aaf');
