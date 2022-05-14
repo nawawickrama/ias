@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             CountrySeeder::class,
             CourseSeeder::class,
+            RequiremtnListSeeder::class,
         ]);
     }
 }

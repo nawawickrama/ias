@@ -45,12 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function agent()
+    public function agent(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Agent::class, 'user_id', 'id');
     }
 
-    public function candidate(){
+    public function candidate(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
         return $this->hasOne(Candidate::class, 'user_id');
     }
 }

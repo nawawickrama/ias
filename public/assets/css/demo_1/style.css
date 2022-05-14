@@ -10212,7 +10212,7 @@ input[type="button"].btn-block {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center; }
-  
+
   .btn-group-vertical > .btn,
   .fc .btn-group-vertical > .fc-button,
   .swal2-modal .swal2-actions .btn-group-vertical > button,
@@ -25190,7 +25190,7 @@ div.tagsinput {
   height: 22px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -25253,4 +25253,11 @@ input:checked + .slider:before {
 }
 .date-font{
   font-size: 10px;
+}
+
+
+/*validation errors on jquery validator*/
+.error {
+    color: red;
+    font-style: italic;
 }

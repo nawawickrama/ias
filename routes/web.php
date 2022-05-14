@@ -150,10 +150,13 @@ Route::get('/ajax/notification/mark_as_read/{notification}', [NotificationContro
 Route::post('/ajax/pending', [NotificationController::class, 'indicator'])->name('check_pending_cpf');
 
 //student=======================
-//Student Wizard
 Route::get('/student/dashboard',[HomeController::class, 'index'])->name('studentDashboard');
 Route::get('/student/information',[StudentController::class, 'studentInformation'])->name('studentInformation');
-Route::post('/student/information',[StudentController::class, 'studentWizardPost'])->name('studentInformation');
+Route::post('/student/information',[StudentController::class, 'studentInformationPost'])->name('studentInformation');
+
+Route::get('/student/documents',[DocumentController::class, 'candidate_document'])->name('candidateDocument');
+Route::post('/student/documents/resubmit',[StudentController::class, 'reUploadDocument'])->name('reUploadDocument');
+
 
 
 //potential student
@@ -175,7 +178,6 @@ Route::post('/document-status-change', [DocumentController::class, 'documentStat
 
 
 
-Route::view('/student/documents','student.registration.documents')->name('documents');
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
 Route::view('/student/aaf','student.forms.aaf')->name('aaf');
 Route::view('/student/lgo','student.forms.lgo')->name('lgo');

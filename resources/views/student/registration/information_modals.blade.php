@@ -1,10 +1,3 @@
-<style>
-    .error {
-        color: red;
-
-    }
-</style>
-
 <!-- Modal basic -->
 <div class="modal fade modalForm" id="modelb" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -150,49 +143,49 @@
                             <label for="guardian_title">Title :<span class="text-danger">*</span></label>
                             <select name="guardian_title" id="guardian_title">
                                 <option value="" selected disabled>Select...</option>
-                                <option value="Mr" @if($guardianDetails->guardian_title === 'Mr') {{'selected'}} @endif>Mr</option>
-                                <option value="Ms" @if($guardianDetails->guardian_title === 'Ms') {{'selected'}} @endif>Ms</option>
-                                <option value="Mrs" @if($guardianDetails->guardian_title === 'Mrs') {{'selected'}} @endif>Mrs</option>
-                                <option value="Dr" @if($guardianDetails->guardian_title === 'Dr') {{'selected'}} @endif>Dr</option>
-                                <option value="Prof" @if($guardianDetails->guardian_title === 'Prof') {{'selected'}} @endif>Prof</option>
+                                <option value="Mr" @if(isset($guardianDetails->guardian_title) && $guardianDetails->guardian_title === 'Mr') {{'selected'}} @endif>Mr</option>
+                                <option value="Ms" @if(isset($guardianDetails->guardian_title) && $guardianDetails->guardian_title === 'Ms') {{'selected'}} @endif>Ms</option>
+                                <option value="Mrs" @if(isset($guardianDetails->guardian_title) && $guardianDetails->guardian_title === 'Mrs') {{'selected'}} @endif>Mrs</option>
+                                <option value="Dr" @if(isset($guardianDetails->guardian_title) && $guardianDetails->guardian_title === 'Dr') {{'selected'}} @endif>Dr</option>
+                                <option value="Prof" @if(isset($guardianDetails->guardian_title) && $guardianDetails->guardian_title === 'Prof') {{'selected'}} @endif>Prof</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="guardian_firstName">First Name :<span class="text-danger">*</span></label>
-                            <input type="text" name="guardian_firstName" id="" class="form-control" value="{{$guardianDetails->guardian_firstName}}">
+                            <input type="text" name="guardian_firstName" id="" class="form-control" value="{{$guardianDetails->guardian_firstName ?? ''}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="guardian_lastName">Last Name :<span class="text-danger">*</span></label>
-                            <input type="text" name="guardian_lastName" id="" class="form-control" value="{{$guardianDetails->guardian_lastName}}">
+                            <input type="text" name="guardian_lastName" id="" class="form-control" value="{{$guardianDetails->guardian_lastName ?? ''}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="guardian_email">Email Address :<span class="text-danger">*</span></label>
-                            <input type="email" name="guardian_email" id="" class="form-control" value="{{$guardianDetails->guardian_email}}">
+                            <input type="email" name="guardian_email" id="" class="form-control" value="{{$guardianDetails->guardian_email ?? ''}}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="guardian_phoneNo">Phone Number :<span class="text-danger">*</span></label>
-                            <input type="text" name="guardian_phoneNo" id="" class="form-control" value="{{$guardianDetails->guardian_phoneNo}}">
+                            <input type="text" name="guardian_phoneNo" id="" class="form-control" value="{{$guardianDetails->guardian_phoneNo ?? ''}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="guardian_mobileNo">Mobile Number :<span class="text-danger">*</span></label>
-                            <input type="text" name="guardian_mobileNo" id="" class="form-control" value="{{$guardianDetails->guardian_mobileNo}}">
+                            <input type="text" name="guardian_mobileNo" id="" class="form-control" value="{{$guardianDetails->guardian_mobileNo ?? ''}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="relationship">Relationship :<span class="text-danger">*</span></label>
-                            <input type="text" name="relationship" id="" class="form-control" value="{{$guardianDetails->relationship}}">
+                            <input type="text" name="relationship" id="" class="form-control" value="{{$guardianDetails->relationship ?? ''}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="occupation">Occupation :<span class="text-danger">*</span></label>
-                            <input type="text" name="occupation" id="" class="form-control" value="{{$guardianDetails->occupation}}">
+                            <input type="text" name="occupation" id="" class="form-control" value="{{$guardianDetails->occupation ?? ''}}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="homeAddress">Home Address :<span class="text-danger">*</span></label>
                             <textarea name="homeAddress" id="homeAddress" cols="30" rows="5"
-                                      class="form-control">{{$guardianDetails->home_address}}</textarea>
+                                      class="form-control">{{$guardianDetails->home_address ?? ''}}</textarea>
                         </div>
                     </div>
 

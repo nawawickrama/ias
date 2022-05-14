@@ -61,7 +61,7 @@
                                 @endcan
 
                                 @can('pending-request.accept')
-                                <a href="{{ route('send_assessment_form', $cpf->cpf_id) }}"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
+                                <a href="{{ route('send_assessment_form', $cpf->cpf_id) }}" target="_blank"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
                                         <i data-feather="flag"></i>
                                     </button>
                                 </a>

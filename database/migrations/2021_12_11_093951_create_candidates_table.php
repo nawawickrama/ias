@@ -34,10 +34,9 @@ class CreateCandidatesTable extends Migration
             $table->string('whatsapp_no')->nullable();
             $table->string('passport_no')->nullable();
 
-            $table->enum('isComplete', ['Yes', 'No'])->default('No');
-
             $table->unsignedBigInteger('user_id')->nullable();
 
+            $table->enum('isComplete', ['Yes','No'])->default('No');
 
             $table->timestamps();
         });

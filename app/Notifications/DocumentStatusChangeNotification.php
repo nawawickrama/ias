@@ -2,24 +2,32 @@
 
 namespace App\Notifications;
 
-use App\Models\DelayNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SetReminderNotify extends Notification
+class DocumentStatusChangeNotification extends Notification
 {
     use Queueable;
-    protected $notification;
+    private $email;
+    private $documentInfo;
+    private $status;
+
     /**
      * Create a new notification instance.
      *
      * @return void
+     * @param $email
+     * @param $documentInfo
+     * @param $status
      */
-    public function __construct(DelayNotification $notification)
+
+    public function __construct($email, $documentInfo, $status)
     {
-        $this->notification = $notification;
+        $this->email = $email;
+        $this->documentInfo= $documentInfo;
+        $this->status = $status;
     }
 
     /**
@@ -55,10 +63,16 @@ class SetReminderNotify extends Notification
      */
     public function toArray($notifiable)
     {
+       if($this->status == 1) {
+           $status = 'Approved';
+       }else {
+           $status = 'Rejected';
+       }
+
         return [
-            'info' => 'Lead Reminder'.' - '.$this->notification->note,
-            'lead_id' => $this->notification->lead_id,
-            'time' => date('Y-h-m H:i:s'),
+            'info' => 'Your '.$this->documentInfo->doc_name." $status",
+            'identifier' => $this->documentInfo->candidate_document_id,
+            'time' => date('Y-m-d H:i:s'),
         ];
     }
 }
