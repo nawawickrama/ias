@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\DocumentCourse;
+use App\Models\User;
+use App\Notifications\DocumentStatusChangeNotification;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Request;
 
 class DocumentController extends Controller
@@ -15,6 +22,10 @@ class DocumentController extends Controller
         $this->middleware(['auth', 'actived', 'agent']);
     }
 
+    /**
+     * @return Application|Factory|View
+     * admin dashboard pending document section
+     */
     public function pendingDocument()
     {
         /** @var App\Models\User $user */
@@ -37,7 +48,12 @@ class DocumentController extends Controller
 
     }
 
-    public function getDocumentDetails(Request $request)
+    /**
+     * @param Request $request
+     * @return void
+     * admin dashboard doc approval model
+     */
+    public function getDocumentDetails(Request $request): void
     {
         $candidate_id = \request('CandidateID');
         $documentDetails = CandidateDocument::where('candidate_id', $candidate_id)->get();
@@ -73,7 +89,12 @@ class DocumentController extends Controller
 //        return response()->json($documentDetails);
     }
 
-    public function documentStatusChange(Request $request){
+    /**
+     * @param Request $request
+     * admin dashboard change doc status
+     */
+    public function documentStatusChange(Request $request)
+    {
 
         /** @var App\Models\User $user */
         $user = Auth::user();
@@ -87,23 +108,51 @@ class DocumentController extends Controller
         $docCanId = \request('docCanID');
         $status = \request('status');
 
-        try{
+        $fileInfo = CandidateDocument::find($docCanId);
+        $user = $fileInfo->candidate->user;
 
+        try{
             if($status == 1){
-                CandidateDocument::find($docCanId)->update([
+                $fileInfo->update([
                     'status' => 'Approved'
                 ]);
             }elseif($status == 0){
-                CandidateDocument::find($docCanId)->update([
-                    'reject_reason' => \request('rejectReason'),
+                $fileInfo->update([
+                    'reject_reason' => ucfirst(\request('rejectReason')),
                     'status' => 'Rejected'
                 ]);
             }
+
+            //notification for student
+            Notification::sendNow($user, new DocumentStatusChangeNotification($user->email, $fileInfo->document, $status));
+
 
         }catch(\Throwable $e){
             return back()->with(['error' => 'Status Change Failed.', 'error_type' => 'error']);
         }
         return back()->with('success', 'Status Changed.');
+
+    }
+
+    /**
+     * @return Application|Factory|View
+     * student panel document page
+     */
+    public function candidate_document(){
+
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+
+        if(!$user->hasRole('Student')){
+            Auth::logout();
+            abort(403);
+        }
+
+        $candidateDetails = User::find($user->id)->candidate;
+        $cpfDetails = $candidateDetails->cpf;
+        $documentDetails = DocumentCourse::where([['course_id', $cpfDetails->course_id], ['document_course_status', '1']])->get();
+
+        return view('student.registration.documents')->with(['candidateDetails' => $candidateDetails, 'documentDetails' => $documentDetails]);
 
     }
 }

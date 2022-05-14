@@ -1,10 +1,10 @@
 @extends('layouts.dashboard.main')
 
 @section('content')
-    @if($candidateDetails->isComplete === 'Yes' && $guardianDetails->isComplete === 'Yes')
+    @if($candidateDetails->isComplete === 'Yes' && (isset($guardianDetails->isComplete) && $guardianDetails->isComplete === 'Yes'))
         <div class="alert alert-icon-success" role="alert">
             <i data-feather="check-circle"></i>
-            <b>TIP :</b> Please complete all the required fields. Once you fill all the details, you will get a success message.
+            <b>All good.. </b> You have update all your informations.
         </div>
     @else
         <div class="alert alert-icon-primary" role="alert">
@@ -117,6 +117,6 @@
     </div>
 </div>
 
-@include('student.registration.modals')
+@include('student.registration.information_modals')
 
 @endsection

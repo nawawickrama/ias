@@ -60,6 +60,20 @@ form2.validate({
     }
 });
 
+const form3 = $("#documentForm");
+
+form3.validate({
+    debug: false,
+
+    rules: {
+        formNo: 'required',
+    },
+    submitHandler: function() {
+        let data = new FormData(document.getElementById('documentForm'));
+        formSubmit(data);
+    }
+});
+
 function formSubmit(element){
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -90,3 +104,39 @@ function formSubmit(element){
         }
     });
 }
+
+/**
+ * re-upload document
+ * @type {*|jQuery|HTMLElement}
+ */
+let fileID;
+let docName;
+
+const reUploadForm = $("#reUploadDocumentForm");
+
+reUploadForm.validate({
+    debug: false,
+
+    rules: {
+        resubmitDoc: 'required',
+    },
+    submitHandler: function() {
+        $('#reUploadDocumentForm').html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>  Loading...").attr('disabled', 'true').trigger('submit');
+    }
+});
+
+/**
+ * Student Document section
+ * Re-upload button click
+ */
+$('.btn-re-upload-doc').click(function (){
+
+    fileID = $(this).attr('candidate-doc-id');
+    docName = $(this).attr('doc-name');
+
+    $('input[name="fileID"]').val(fileID);
+    $('input[name="docName"]').val(docName);
+
+    $('#reUploadInputField').attr('placeholder', docName +' Mandatory');
+    $('#reUploadModal').modal('show');
+});

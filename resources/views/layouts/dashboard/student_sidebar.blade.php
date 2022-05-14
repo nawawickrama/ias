@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="{{route('documents')}}" role="button" aria-expanded="false" aria-controls="emails">
+                <a class="nav-link"  href="{{route('candidateDocument')}}" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="link-icon text-danger" data-feather="file-plus"></i>
                     <span class="link-title">Documents</span>
                 </a>
