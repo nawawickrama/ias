@@ -59,7 +59,7 @@
                             $approved = 0;
                             $rejected = 0;
                             foreach ($documentDetails as $doc){
-                                $submitted_at = $doc->created_at;
+                                $submitted_at = $doc->submit_date;
                                 if($doc->status == 'Pending'){
                                     $pending = 1;
                                 }elseif ($doc->status == 'Rejected'){

@@ -31,7 +31,7 @@ class CpfController extends Controller
         return view('cpf.cpf')->with(['country' => $country, 'course_details' => $course_details]);
     }
 
-    public function cpf_post(Request $request)
+    public function cpf_post(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             //cpf
@@ -258,7 +258,6 @@ class CpfController extends Controller
 
         return back()->with(['success' => 'Application submission successful.']);
     }
-
 
     public function agent_cpf($reference_no)
     {

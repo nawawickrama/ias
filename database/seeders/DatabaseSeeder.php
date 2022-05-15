@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             CourseSeeder::class,
             RequiremtnListSeeder::class,
+            FormSeeder::class,
         ]);
     }
 }

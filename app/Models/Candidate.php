@@ -72,4 +72,9 @@ class Candidate extends Model
     {
         return $this->hasMany(CandidateRequirementList::class, 'candidate_id');
     }
+
+    public function forms(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CandidateForm::class, 'candidate_id');
+    }
 }

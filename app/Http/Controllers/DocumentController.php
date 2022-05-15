@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidate;
 use App\Models\CandidateDocument;
 use App\Models\CandidateRequirementList;
 use App\Models\DocumentCourse;
 use App\Models\User;
 use App\Notifications\DocumentStatusChangeNotification;
+use App\Notifications\FormSendNotification;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -216,9 +218,15 @@ class DocumentController extends Controller
                 $LGOForm->dead_line = $deadLine;
                 $LGOForm->save();
             }
+
+            //send notification to candidate.
+            $user = Candidate::find($candidate_id)->user;
+            Notification::sendNow($user, new FormSendNotification($formType, $candidate_id));
+
         }catch (\Throwable $e){
             return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
         return back()->with(['success' => 'Form Send Successful.']);
     }
+
 }

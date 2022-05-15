@@ -4,6 +4,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CpfController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ProfileController;
@@ -179,10 +180,14 @@ Route::post('/document-status-change', [DocumentController::class, 'documentStat
 //send AAF or LGO from admin to candidate
 Route::post('/send-forms-to-candidate', [DocumentController::class, 'sendFormToCandidate'])->name('sendFormToCandidate');
 
+Route::get('/student/aaf',[StudentController::class, 'aaFormPage'])->name('aaf');
+Route::post('/student/aaf',[FormController::class, 'submitForm'])->name('submitAAForm');
+
+//approve AAF and LOG from admin
+Route::get('/verify-lgo-aaf',[FormController::class, 'formStatusPage'])->name('verify-lgo-aaf');
+Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name('verify-lgo-aaf');
 
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
-Route::view('/student/aaf','student.forms.aaf')->name('aaf');
 Route::view('/student/lgo','student.forms.lgo')->name('lgo');
 
 Route::view('/selected-students','admin.selected.selected-students')->name('selected-students');
-Route::view('/verify-lgo-aaf','admin.selected.verify-lgo-aaf')->name('verify-lgo-aaf');

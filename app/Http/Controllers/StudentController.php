@@ -259,4 +259,22 @@ class StudentController extends Controller
 
         return back()->with(['success' => 'File re-uploaded successful.']);
     }
+
+    public function aaFormPage(){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+
+        if(!$user->hasRole('Student')){
+            Auth::logout();
+            abort(403);
+        }
+
+        $aafDetails = $user->candidate->candidateRequirementList->where('requirement_list_id', '3')->first();
+        if(!isset($aafDetails)){
+            abort(403);
+        }
+
+        $isSubmit = $user->candidate->forms->where('form_id', '1')->count();
+        return \view('student.forms.aaf')->with(['aafDetails' => $aafDetails, 'isSubmit' => $isSubmit]);
+    }
 }

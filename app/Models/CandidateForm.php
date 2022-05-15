@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CandidateDocument extends Model
+class CandidateForm extends Model
 {
     use HasFactory;
 
-    protected $table = 'candidate_documents';
+    protected $table = 'candidate_forms';
 
-    protected $primaryKey = 'candidate_document_id';
+    protected $primaryKey = 'candidate_form_id';
 
     protected $fillable = [
         'candidate_id',
-        'document_id',
+        'form_id',
         'file_path',
         'status',
         'reject_reason',
@@ -27,8 +27,8 @@ class CandidateDocument extends Model
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
 
-    public function document(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function form(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Document::class, 'document_id');
+        return $this->belongsTo(Form::class, 'form_id');
     }
 }
