@@ -210,22 +210,13 @@ class DocumentController extends Controller
                 $AAForm->dead_line = $deadLine;
                 $AAForm->save();
 
-//                CandidateRequirementList::create([
-//                    'requirement_list_id' => '3',
-//                    'candidate_id' => $candidate_id,
-//                    'reference_no' => $reference_no,
-//                    'dead_line' => $deadLine
-//                ]);
             } elseif ($formType == 'LGO') {
-                CandidateRequirementList::create([
-                    'requirement_list_id' => '4',
-                    'candidate_id' => $candidate_id,
-                    'reference_no' => $reference_no,
-                    'dead_line' => $deadLine
-                ]);
+                $LGOForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 4]);
+                $LGOForm->reference_no = $reference_no;
+                $LGOForm->dead_line = $deadLine;
+                $LGOForm->save();
             }
         }catch (\Throwable $e){
-            dd($e);
             return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
         return back()->with(['success' => 'Form Send Successful.']);
