@@ -176,6 +176,8 @@ Route::post('/document-add-new', [SettingControler::class, 'addNewDocument'])->n
 Route::get('/document-complete', [DocumentController::class, 'pendingDocument'])->name('document-verification');
 Route::post('/document-status-change', [DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
 
+//send AAF or LGO from admin to candidate
+Route::post('/send-forms-to-candidate', [DocumentController::class, 'sendFormToCandidate'])->name('sendFormToCandidate');
 
 
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');

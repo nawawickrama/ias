@@ -132,12 +132,12 @@ $user = Auth::user();
                     </div>
                 </a>
             </li>
-            <li class="nav-item">
+           {{-- <li class="nav-item">
                 <a href="{{ route('selected-students') }}" class="nav-link">
                     <i class="link-icon text-primary" data-feather="flag"></i>
                     <span class="link-title">Selected Students</span>
                 </a>
-            </li>
+            </li>--}}
             <li class="nav-item">
                 <a href="{{ route('verify-lgo-aaf') }}" class="nav-link">
                     <i class="link-icon text-warning" data-feather="edit-3"></i>

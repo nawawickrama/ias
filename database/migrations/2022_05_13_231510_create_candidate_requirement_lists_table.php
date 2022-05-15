@@ -19,9 +19,13 @@ class CreateCandidateRequirementListsTable extends Migration
             $table->unsignedBigInteger('requirement_list_id');
             $table->foreign('requirement_list_id')->references('requirement_list_id')->on('requirement_lists');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('candidate_id');
+            $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             $table->enum('isComplete', ['Yes', 'No'])->default('No');
+
+            $table->string('reference_no')->nullable()->unique();
+            $table->date('dead_line')->nullable();
+
             $table->timestamps();
         });
     }

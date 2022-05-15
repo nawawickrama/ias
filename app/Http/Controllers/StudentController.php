@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateRequirementList;
 use App\Models\Country;
 use App\Models\Course;
 use App\Models\DocumentCourse;
@@ -40,7 +41,7 @@ class StudentController extends Controller
         /**@var App\Models\User $user */
         $user = Auth::user();
 
-        if(!$user->hasRole('Student')){
+        if (!$user->hasRole('Student')) {
             Auth::logout();
             abort(403);
         }
@@ -83,22 +84,32 @@ class StudentController extends Controller
                 'whatsapp_no' => 'required|numeric',
             ]);
 
-            $candidate_details->update([
-                'first_name' => ucfirst(\request('first_name')),
-                'sur_name' => ucfirst(\request('sur_name')),
-                'telephone' => \request('mobile_no'),
-                'dob' => \request('dob'),
-                'sex' => \request('gender'),
-                'address' => ucfirst(\request('addressLine') . ', ' . \request('city') . ', ' . \request('state') . ', ' . \request('zip')),
-                'city' => ucfirst(\request('city')),
-                'state' => ucfirst(\request('state')),
-                'zipcode' => \request('zip'),
-                'country' => \request('country_id'),
-                'nationality' => \request('nationality'),
-                'passport_no' => \request('passport_no'),
-                'whatsapp_no' => \request('whatsapp_no'),
-                'isComplete' => 'Yes'
-            ]);
+            DB::transaction(function () use ($candidate_details) {
+
+                $candidate_details->update([
+                    'first_name' => ucfirst(\request('first_name')),
+                    'sur_name' => ucfirst(\request('sur_name')),
+                    'telephone' => \request('mobile_no'),
+                    'dob' => \request('dob'),
+                    'sex' => \request('gender'),
+                    'address' => ucfirst(\request('addressLine') . ', ' . \request('city') . ', ' . \request('state') . ', ' . \request('zip')),
+                    'city' => ucfirst(\request('city')),
+                    'state' => ucfirst(\request('state')),
+                    'zipcode' => \request('zip'),
+                    'country' => \request('country_id'),
+                    'nationality' => \request('nationality'),
+                    'passport_no' => \request('passport_no'),
+                    'whatsapp_no' => \request('whatsapp_no'),
+                    'isComplete' => 'Yes'
+                ]);
+
+                //check for complete status (guardian details check)
+                if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes') {
+                    $candidate_details->candidateRequirementList->where('requirement_list_id', '1')->first()->update([
+                        'isComplete' => 'Yes'
+                    ]);
+                }
+            });
 
         } elseif (\request('formNo') == 2) {
 
@@ -114,19 +125,31 @@ class StudentController extends Controller
                 'homeAddress' => 'required',
             ]);
 
-            $guardian = Guardian::firstOrNew(['candidate_id' => $candidate_details->candidate_id]);
-            $guardian->guardian_title = \request('guardian_title');
-            $guardian->guardian_firstName = ucfirst(\request('guardian_firstName'));
-            $guardian->guardian_lastName = ucfirst(\request('guardian_lastName'));
-            $guardian->guardian_email = strtolower(\request('guardian_email'));
-            $guardian->guardian_phoneNo = \request('guardian_phoneNo');
-            $guardian->guardian_mobileNo = \request('guardian_mobileNo');
-            $guardian->relationship = ucfirst(\request('relationship'));
-            $guardian->occupation = ucfirst(\request('occupation'));
-            $guardian->home_address = ucfirst(\request('homeAddress'));
-            $guardian->isComplete = 'Yes';
+            DB::transaction(function () use ($candidate_details) {
 
-            $guardian->save();
+                $guardian = Guardian::firstOrNew(['candidate_id' => $candidate_details->candidate_id]);
+                $guardian->guardian_title = \request('guardian_title');
+                $guardian->guardian_firstName = ucfirst(\request('guardian_firstName'));
+                $guardian->guardian_lastName = ucfirst(\request('guardian_lastName'));
+                $guardian->guardian_email = strtolower(\request('guardian_email'));
+                $guardian->guardian_phoneNo = \request('guardian_phoneNo');
+                $guardian->guardian_mobileNo = \request('guardian_mobileNo');
+                $guardian->relationship = ucfirst(\request('relationship'));
+                $guardian->occupation = ucfirst(\request('occupation'));
+                $guardian->home_address = ucfirst(\request('homeAddress'));
+                $guardian->isComplete = 'Yes';
+                $guardian->save();
+
+                //check for complete status (guardian details check)
+                if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes' && $candidate_details->isComplete === 'Yes') {
+                    $candidate_details->candidateRequirementList->where('requirement_list_id', '1')->first()->update([
+                        'isComplete' => 'Yes'
+                    ]);
+
+
+                }
+
+            });
 
         } elseif (\request('formNo') == 3) {
 
@@ -230,7 +253,7 @@ class StudentController extends Controller
             $users = User::role('Super Admin')->get();
             Notification::sendNow($users, new DocumentSubmitNotification($candidateInfo->candidate_id));
 
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             return back()->with(['error' => 'File upload failed', 'error_type' => 'error']);
         }
 

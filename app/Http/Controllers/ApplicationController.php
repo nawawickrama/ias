@@ -441,10 +441,10 @@ class ApplicationController extends Controller
 
             return back()->with(['success' => 'succesful.']);
 
-        }else{
-            Auth::logout();
-            abort(403);
         }
+
+        Auth::logout();
+        abort(403);
     }
 
 }

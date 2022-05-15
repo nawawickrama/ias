@@ -15,17 +15,18 @@ class RequiremtnListSeeder extends Seeder
     public function run()
     {
         $list = [
-            ['name' => 'Student Information', 'model' => 'App\Models\Student'],
-            ['name' => 'Required Documents', 'model' => 'App\Models\Student'],
-            ['name' => 'AAF form', 'model' => 'App\Models\Student'],
-            ['name' => 'LGO form', 'model' => 'App\Models\Student'],
-            ['name' => 'Admission Payment', 'model' => 'App\Models\Student'],
+            ['name' => 'Student Information', 'model' => 'App\Models\Student', 'type' => 'Document'],
+            ['name' => 'Required Documents', 'model' => 'App\Models\Student', 'type' => 'Document'],
+            ['name' => 'AAF form', 'model' => 'App\Models\Student', 'type' => 'Form'],
+            ['name' => 'LGO form', 'model' => 'App\Models\Student', 'type' => 'Form'],
+            ['name' => 'Admission Payment', 'model' => 'App\Models\Student', 'type' => 'Payment'],
         ];
 
         foreach ($list as $data){
             RequirementList::create([
                 'name' => $data['name'],
                 'model' => $data['model'],
+                'type' => $data['type'],
             ]);
         }
     }

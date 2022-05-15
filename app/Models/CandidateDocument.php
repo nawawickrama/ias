@@ -21,11 +21,13 @@ class CandidateDocument extends Model
         'reject_reason'
     ];
 
-    public function candidate(){
+    public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
 
-    public function document(){
+    public function document(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Document::class, 'document_id');
     }
 }

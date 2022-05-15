@@ -16,6 +16,7 @@ class CreateRequirementListsTable extends Migration
         Schema::create('requirement_lists', function (Blueprint $table) {
             $table->id('requirement_list_id');
             $table->string('name');
+            $table->enum('type', ['Document', 'Form', 'Payment']);
             $table->string('model');
             $table->timestamps();
         });

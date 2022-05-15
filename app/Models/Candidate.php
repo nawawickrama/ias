@@ -67,4 +67,9 @@ class Candidate extends Model
     {
         return $this->hasOne(Guardian::class, 'candidate_id');
     }
+
+    public function candidateRequirementList(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CandidateRequirementList::class, 'candidate_id');
+    }
 }

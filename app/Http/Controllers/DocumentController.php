@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CandidateDocument;
+use App\Models\CandidateRequirementList;
 use App\Models\DocumentCourse;
 use App\Models\User;
 use App\Notifications\DocumentStatusChangeNotification;
@@ -13,7 +14,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DocumentController extends Controller
 {
@@ -93,7 +95,7 @@ class DocumentController extends Controller
      * @param Request $request
      * admin dashboard change doc status
      */
-    public function documentStatusChange(Request $request)
+    public function documentStatusChange(Request $request): RedirectResponse
     {
 
         /** @var App\Models\User $user */
@@ -109,13 +111,25 @@ class DocumentController extends Controller
         $status = \request('status');
 
         $fileInfo = CandidateDocument::find($docCanId);
-        $user = $fileInfo->candidate->user;
+        $candidateInfo = $fileInfo->candidate;
+        $user = $candidateInfo->user;
 
         try{
             if($status == 1){
-                $fileInfo->update([
-                    'status' => 'Approved'
-                ]);
+                DB::transaction(function () use($fileInfo, $candidateInfo){
+                    $fileInfo->update([
+                        'status' => 'Approved'
+                    ]);
+
+                    //check all documents are approved and mark as document completed
+                    $candidateDocInfo = CandidateDocument::where('candidate_id', $candidateInfo->candidate_id);
+                    if($candidateDocInfo->get() !== null && count($candidateDocInfo->where('status', '!=', 'Approved')->get()) === 0){
+                        $candidateInfo->candidateRequirementList->where('requirement_list_id', '2')->first()->update([
+                            'isComplete' => 'Yes'
+                        ]);
+                    }
+
+                });
             }elseif($status == 0){
                 $fileInfo->update([
                     'reject_reason' => ucfirst(\request('rejectReason')),
@@ -154,5 +168,66 @@ class DocumentController extends Controller
 
         return view('student.registration.documents')->with(['candidateDetails' => $candidateDetails, 'documentDetails' => $documentDetails]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * Send AAF Or LGO for candidate from admin end
+     */
+    public function sendFormToCandidate(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'candidateId' => 'required',
+            'referenceNo' => 'required|unique:candidate_requirement_lists,reference_no',
+            'formType' => 'required',
+            'deadLine' => 'required',
+        ]);
+
+        if ($validator->fails()){
+            $all_errors = null;
+
+            foreach ($validator->errors()->messages() as $errors){
+                foreach ($errors as $error){
+                    $all_errors .= $error."<br>";
+                }
+            }
+
+            return back()->with(['error' => $all_errors, 'error_type' => 'error']);
+        }
+
+        $candidate_id = \request('candidateId');
+        $reference_no = \request('referenceNo');
+        $formType = \request('formType');
+        $deadLine = \request('deadLine');
+
+        try {
+
+            if ($formType == 'AAF') {
+                $AAForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 3]);
+                $AAForm->reference_no = $reference_no;
+                $AAForm->dead_line = $deadLine;
+                $AAForm->save();
+
+//                CandidateRequirementList::create([
+//                    'requirement_list_id' => '3',
+//                    'candidate_id' => $candidate_id,
+//                    'reference_no' => $reference_no,
+//                    'dead_line' => $deadLine
+//                ]);
+            } elseif ($formType == 'LGO') {
+                CandidateRequirementList::create([
+                    'requirement_list_id' => '4',
+                    'candidate_id' => $candidate_id,
+                    'reference_no' => $reference_no,
+                    'dead_line' => $deadLine
+                ]);
+            }
+        }catch (\Throwable $e){
+            dd($e);
+            return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
+        }
+        return back()->with(['success' => 'Form Send Successful.']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\CandidateRequirementList;
 use App\Models\Potential;
 use App\Notifications\cpfRequestNotify;
 use App\Notifications\LoginNotify;
@@ -75,7 +76,7 @@ class CpfController extends Controller
 
         $course_code = Course::find(request('course_id'))->course_code;
 
-        if ( $course_code == 'Direct job') {
+        if ($course_code == 'Direct job') {
             $request->validate([
                 'job_feild' => 'required',
             ]);
@@ -154,7 +155,7 @@ class CpfController extends Controller
                         'nationality' => request('nationality'),
                         'telephone' => request('telephone'),
                         'email' => request('email'),
-                        'address' => request('address').', '.request('city').', '.request('province').', '.request('zip'),
+                        'address' => request('address') . ', ' . request('city') . ', ' . request('province') . ', ' . request('zip'),
                         'country' => request('country'),
 
                         'city' => request('city'),
@@ -244,7 +245,7 @@ class CpfController extends Controller
 
         //notification
 
-        if(!empty(\request('agent_id'))){
+        if (!empty(\request('agent_id'))) {
 
             $user_id = Agent::find(\request('agent_id'))->user_id;
             $user = \App\Models\User::role('Agent')->where('id', $user_id)->get();
@@ -263,7 +264,7 @@ class CpfController extends Controller
     {
         $agent_details = Agent::where([['agent_status', 1], ['reference_no', $reference_no]])->first();
 
-        if($agent_details == NULL){
+        if ($agent_details == NULL) {
             return redirect('/login')->with(['error' => 'Invalid Reference / Inactive Agent', 'error_type' => 'warning']);
         }
 
@@ -282,7 +283,12 @@ class CpfController extends Controller
         return view('cpf.cpf')->with(['lead_details' => $lead_details, 'country' => $country, 'course_details' => $course_details]);
     }
 
-    public function makePotentialStudent(){
+    /**
+     * @return int
+     * Make Candidate as a potential one bt admin
+     */
+    public function makePotentialStudent(): int
+    {
         $candidateId = \request('candidateID');
         $cpfID = \request('cpfID');
 
@@ -290,38 +296,54 @@ class CpfController extends Controller
         $cpfDetails = Cpf::where('candidate_id', $candidateId);
 
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&_-=+?";
-        $password = substr( str_shuffle( $chars ), 0, 8 );
+        $password = substr(str_shuffle($chars), 0, 8);
 
 
-        DB::transaction( function () use($candidateId, $cpfDetails, $cpfID, $password, $candidateDetails) {
-            $cpfDetails->update([
-                'application_status' => 5,
-                'status_date' => date('Y-m-d H:i:s'),
-            ]);
+        try {
+            DB::transaction(function () use ($candidateId, $cpfDetails, $cpfID, $password, $candidateDetails) {
+                $cpfDetails->update([
+                    'application_status' => 5,
+                    'status_date' => date('Y-m-d H:i:s'),
+                ]);
 
-            Potential::create([
-                'cpf_id' => $cpfID,
-                'candidate_id' => $candidateId,
-                'potential_status' => 1,
-                'agent_id' => $cpfDetails->first()->agent_id,
-            ]);
+                Potential::create([
+                    'cpf_id' => $cpfID,
+                    'candidate_id' => $candidateId,
+                    'potential_status' => 1,
+                    'agent_id' => $cpfDetails->first()->agent_id,
+                ]);
 
-            $user = \App\Models\User::create([
-                'name' => $candidateDetails->first_name.' '.$candidateDetails->sur_name,
-                'email' => $candidateDetails->email,
-                'password' => Hash::make($password),
-                'status' => 1
-            ]);
+                $user = \App\Models\User::create([
+                    'name' => $candidateDetails->first_name . ' ' . $candidateDetails->sur_name,
+                    'email' => $candidateDetails->email,
+                    'password' => Hash::make($password),
+                    'status' => 1
+                ]);
 
-            $candidateDetails->update([
-                'status' => 'Potential',
-                'user_id' => $user->id
-            ]);
+                $candidateDetails->update([
+                    'status' => 'Potential',
+                    'user_id' => $user->id
+                ]);
 
-            $user->assignRole('Student');
+                CandidateRequirementList::create([
+                    'requirement_list_id' => 1,
+                    'candidate_id' => $candidateId
+                ]);
 
-            $user->notify(new LoginNotify($password));
-        });
+                CandidateRequirementList::create([
+                    'requirement_list_id' => 2,
+                    'candidate_id' => $candidateId
+                ]);
+
+
+                $user->assignRole('Student');
+                $user->notify(new LoginNotify($password));
+            });
+        } catch (Throwable $e) {
+            return response()->json()->status(500);
+        }
+
+        return response()->json()->status(200);
 
     }
 }

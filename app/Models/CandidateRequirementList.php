@@ -15,7 +15,14 @@ class CandidateRequirementList extends Model
 
     protected $fillable = [
         'requirement_list_id',
-        'user_id',
-        'isComplete'
+        'candidate_id',
+        'isComplete',
+        'reference_no',
+        'dead_line',
     ];
+
+    public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Candidate::class, 'candidate_id');
+    }
 }
