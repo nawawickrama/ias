@@ -60,13 +60,12 @@ class FormController extends Controller
             $formCreate = CandidateForm::firstOrNew(['candidate_id' => $user->candidate->candidate_id, 'form_id' => \request('formType') === 'AAF' ? 1 : 2]);
             $formCreate->file_path = $fill_path;
             $formCreate->status = 'Pending';
-            $fileCheck->reject_reason = NULL;
-            $fileCheck->submit_date = date('Y-m-d H:i:s');
+            $formCreate->reject_reason = NULL;
+            $formCreate->submit_date = date('Y-m-d H:i:s');
             $formCreate->save();
 
-
-
         } catch (\Throwable $e) {
+//            dd($e);
             return back()->with(['error' => 'Form Uploaded Failed', 'error_type' => 'error']);
         }
 
@@ -136,8 +135,6 @@ class FormController extends Controller
                     'status' => 'Rejected'
                 ]);
             }
-
-
 
         } catch (\Throwable $e) {
             return back()->with(['error' => 'Status Change Failed.', 'error_type' => 'error']);
