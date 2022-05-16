@@ -15,7 +15,8 @@ class Form extends Model
 
     protected $fillable = [
         'form_name',
-        'file_path'
+        'file_path',
+        'payment'
     ];
 
     public function candidates(): \Illuminate\Database\Eloquent\Relations\HasMany

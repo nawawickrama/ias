@@ -17,6 +17,7 @@ class CreateFormsTable extends Migration
             $table->id('form_id');
             $table->string('form_name');
             $table->string('file_path')->nullable();
+            $table->float('payment');
             $table->timestamps();
         });
     }
