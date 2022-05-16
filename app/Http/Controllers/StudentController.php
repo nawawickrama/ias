@@ -55,6 +55,7 @@ class StudentController extends Controller
         return view('student.registration.information')->with(['guardianDetails' => $guardianDetails, 'countries' => $countries, 'coursesDetails' => $coursesDetails, 'candidateDetails' => $candidateDetails]);
     }
 
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -182,14 +183,15 @@ class StudentController extends Controller
                     }
                 }
             });
-
-            $users = User::role('Super Admin')->get();
-            Notification::sendNow($users, new DocumentSubmitNotification($candidate_details->candidate_id));
         }
+
+        $users = User::role('Super Admin')->get();
+        Notification::sendNow($users, new DocumentSubmitNotification($candidate_details->candidate_id));
 
         return response()->json($candidate_details->candidate_id);
 
     }
+
 
     /**
      * @return Application|Factory|View
@@ -243,38 +245,70 @@ class StudentController extends Controller
             $documentInfo->update([
                 'file_path' => $fill_path,
                 'status' => 'Pending',
-                'reject_reason' => NULL
+                'reject_reason' => NULL,
+                'submit_date' => date('Y-m-d H:i:s'),
             ]);
 
             //delete old file
-            Storage::disk('public')->delete('student_document/1_NIC_1652536910.png');
+            Storage::disk('public')->delete($documentInfo->file_path);
 
-            //send notification
-            $users = User::role('Super Admin')->get();
-            Notification::sendNow($users, new DocumentSubmitNotification($candidateInfo->candidate_id));
 
         } catch (\Throwable $e) {
             return back()->with(['error' => 'File upload failed', 'error_type' => 'error']);
         }
 
+        //send notification
+        $users = User::role('Super Admin')->get();
+        Notification::sendNow($users, new DocumentSubmitNotification($candidateInfo->candidate_id));
+
         return back()->with(['success' => 'File re-uploaded successful.']);
     }
 
-    public function aaFormPage(){
+
+    /**
+     * @return Application|Factory|View
+     * Candidate AAF Panel
+     */
+    public function aaFormPage()
+    {
         /** @var App\Models\User $user */
         $user = Auth::user();
 
-        if(!$user->hasRole('Student')){
+        if (!$user->hasRole('Student')) {
             Auth::logout();
             abort(403);
         }
 
         $aafDetails = $user->candidate->candidateRequirementList->where('requirement_list_id', '3')->first();
-        if(!isset($aafDetails)){
+        if (!isset($aafDetails)) {
             abort(403);
         }
 
-        $isSubmit = $user->candidate->forms->where('form_id', '1')->count();
+        $isSubmit = $user->candidate->forms->where('form_id', '1')->first();
         return \view('student.forms.aaf')->with(['aafDetails' => $aafDetails, 'isSubmit' => $isSubmit]);
+    }
+
+
+    /**
+     * @return Application|Factory|View
+     * Candidate LGO Panel
+     */
+    public function LGOFormPage()
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->hasRole('Student')) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $lgoDetails = $user->candidate->candidateRequirementList->where('requirement_list_id', '4')->first();
+        if (!isset($lgoDetails)) {
+            abort(403);
+        }
+
+        $isSubmit = $user->candidate->forms->where('form_id', '2')->first();
+        return \view('student.forms.lgo')->with(['lgoDetails' => $lgoDetails, 'isSubmit' => $isSubmit]);
     }
 }

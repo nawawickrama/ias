@@ -21,14 +21,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        @foreach($forms as $form)
-                            @php
-                                $candidateDetails = $form->candidate;
-                                $cpfDetails = $candidateDetails->cpf;
-                                $courseDetails = $cpfDetails->course;
-                                $agentDetails = $cpfDetails->agent;
-                            @endphp
+                    @foreach($forms as $form)
+                        @php
+                            $candidateDetails = $form->candidate;
+                            $cpfDetails = $candidateDetails->cpf;
+                            $courseDetails = $cpfDetails->course;
+                            $agentDetails = $cpfDetails->agent;
+                        @endphp
+                        <tr>
                             <td>{{$form->submit_date}}</td>
                             <td>{{$courseDetails->course_name}}</td>
                             <td>
@@ -57,7 +57,9 @@
                                             <i data-feather="check-square"></i>
                                         </button>
                                     </span>
-                                @elseif($form->status === 'Approved' || $form->status === 'Rejected')
+                                @endif
+
+                                @if($form->status === 'Pending' || $form->status === 'Approved')
                                     <span data-toggle="tooltip" data-placement="top" title="Reject Document">
                                         <button type="button" class="btn btn-danger btn-icon btn-status-change"
                                                 data-toggle="modal" data-target="#modelrej"
@@ -67,15 +69,13 @@
                                     </span>
                                 @endif
                                 <span data-toggle="tooltip" data-placement="top" title="View Signed Document">
-                                <a href="{{'/storage/'.$form->file_path}}" target="_blank"><button type="button"
-                                                                                                   class="btn btn-warning btn-icon">
-                                    <i data-feather="eye"></i>
-                                </button></a>
-                            </span>
+                                    <a href="{{'/storage/'.$form->file_path}}" target="_blank"><button type="button" class="btn btn-warning btn-icon">
+                                        <i data-feather="eye"></i>
+                                    </button></a>
+                                </span>
                             </td>
-
-                        @endforeach
-                    </tr>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

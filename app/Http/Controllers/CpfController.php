@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CandidateRequirementList;
 use App\Models\Potential;
+use App\Models\User;
 use App\Notifications\cpfRequestNotify;
 use App\Notifications\LoginNotify;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ use App\Models\VocationalTraining;
 use App\Models\WorkExperience;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Throwable;
 
 class CpfController extends Controller
@@ -239,7 +241,6 @@ class CpfController extends Controller
                 }
             });
         } catch (Throwable $e) {
-            dd($e);
             return back()->with(['error' => 'Application submission failed.', 'error_type' => 'error']);
         }
 
@@ -248,13 +249,13 @@ class CpfController extends Controller
         if (!empty(\request('agent_id'))) {
 
             $user_id = Agent::find(\request('agent_id'))->user_id;
-            $user = \App\Models\User::role('Agent')->where('id', $user_id)->get();
-            \Illuminate\Support\Facades\Notification::sendnow($user, new cpfRequestNotify($cpf_info));
+            $user = User::role('Agent')->where('id', $user_id)->get();
+            Notification::sendnow($user, new cpfRequestNotify($cpf_info));
         }
 
         //super admin notification
-        $user = \App\Models\User::role('Super Admin')->get();
-        \Illuminate\Support\Facades\Notification::sendnow($user, new cpfRequestNotify($cpf_info));
+        $user = User::role('Super Admin')->get();
+        Notification::sendnow($user, new cpfRequestNotify($cpf_info));
 
         return back()->with(['success' => 'Application submission successful.']);
     }

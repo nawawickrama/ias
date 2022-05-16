@@ -182,12 +182,12 @@ Route::post('/send-forms-to-candidate', [DocumentController::class, 'sendFormToC
 
 Route::get('/student/aaf',[StudentController::class, 'aaFormPage'])->name('aaf');
 Route::post('/student/aaf',[FormController::class, 'submitForm'])->name('submitAAForm');
+Route::get('/student/lgo',[StudentController::class, 'LGOFormPage'])->name('lgo');
 
 //approve AAF and LOG from admin
 Route::get('/verify-lgo-aaf',[FormController::class, 'formStatusPage'])->name('verify-lgo-aaf');
 Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name('verify-lgo-aaf');
 
 Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
-Route::view('/student/lgo','student.forms.lgo')->name('lgo');
 
 Route::view('/selected-students','admin.selected.selected-students')->name('selected-students');
