@@ -136,7 +136,12 @@ $user = Auth::user();
                     </div>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a href="{{ route('payments-manager') }}" class="nav-link">
+                    <i class="link-icon text-warning" data-feather="credit-card"></i>
+                    <span class="link-title">Payments Manager</span>
+                </a>
+            </li>
             @if ($user->can('user.create') || $user->can('user.view') || $user->can('role.create') || $user->can('role.view') || $user->can('permission.view') || $user->can('permission.create') || $user->can('agent.view') || $user->can('agent.create'))
             <li class="nav-item nav-category">User Management</li>
             <li class="nav-item">
