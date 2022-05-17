@@ -192,8 +192,3 @@ Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name
 //Student Payment Manager
 Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
 
-<<<<<<< Updated upstream
-=======
-Route::view('/selected-students','admin.selected.selected-students')->name('selected-students');
-Route::view('/payments-manager','admin.payments.payments-manager')->name('payments-manager');
->>>>>>> Stashed changes
