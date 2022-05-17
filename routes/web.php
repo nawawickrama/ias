@@ -193,3 +193,4 @@ Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name
 Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
 
 Route::view('/payments-manager','admin.payments.payments-manager')->name('payments-manager');
+Route::view('/lgo','admin.applications.lgo')->name('lgo');
