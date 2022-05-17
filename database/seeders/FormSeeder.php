@@ -15,13 +15,14 @@ class FormSeeder extends Seeder
     public function run()
     {
         $forms = [
-            ['name' => 'AAF'],
-            ['name' => 'LGO']
+            ['name' => 'AAF', 'payment' => '400'],
+            ['name' => 'LGO', 'payment' => '540']
         ];
 
         foreach ($forms as $form){
             Form::create([
-                'form_name' => $form['name']
+                'form_name' => $form['name'],
+                'payment' => $form['payment']
             ]);
         }
     }

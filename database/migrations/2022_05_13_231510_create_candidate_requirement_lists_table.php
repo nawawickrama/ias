@@ -23,7 +23,7 @@ class CreateCandidateRequirementListsTable extends Migration
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
             $table->enum('isComplete', ['Yes', 'No'])->default('No');
 
-            $table->string('reference_no')->nullable()->unique();
+            $table->string('reference_no')->nullable();
             $table->date('dead_line')->nullable();
 
             $table->timestamps();

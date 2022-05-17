@@ -17,9 +17,10 @@ class RequiremtnListSeeder extends Seeder
         $list = [
             ['name' => 'Student Information', 'model' => 'App\Models\Student', 'type' => 'Document'],
             ['name' => 'Required Documents', 'model' => 'App\Models\Student', 'type' => 'Document'],
-            ['name' => 'AAF form', 'model' => 'App\Models\Student', 'type' => 'Form'],
-            ['name' => 'LGO form', 'model' => 'App\Models\Student', 'type' => 'Form'],
-            ['name' => 'Admission Payment', 'model' => 'App\Models\Student', 'type' => 'Payment'],
+            ['name' => 'AA Form', 'model' => 'App\Models\Student', 'type' => 'Form'],
+            ['name' => 'LGO Form', 'model' => 'App\Models\Student', 'type' => 'Form'],
+            ['name' => 'AAF Payment', 'model' => 'App\Models\Student', 'type' => 'Payment'],
+            ['name' => 'LGO Payment', 'model' => 'App\Models\Student', 'type' => 'Payment'],
         ];
 
         foreach ($list as $data){

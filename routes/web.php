@@ -7,6 +7,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingControler;
 use App\Http\Controllers\StudentController;
@@ -188,6 +189,6 @@ Route::get('/student/lgo',[StudentController::class, 'LGOFormPage'])->name('lgo'
 Route::get('/verify-lgo-aaf',[FormController::class, 'formStatusPage'])->name('verify-lgo-aaf');
 Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name('verify-lgo-aaf');
 
-Route::view('/student/payments-manager','student.payments.payments-manager')->name('payments-manager');
+//Student Payment Manager
+Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
 
-Route::view('/selected-students','admin.selected.selected-students')->name('selected-students');

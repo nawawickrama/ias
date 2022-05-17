@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\CandidateDocument;
+use App\Models\CandidateForm;
 use App\Models\Cpf;
 use App\Models\Document;
 use App\Models\Lead;
@@ -81,6 +82,7 @@ class NotificationController extends Controller
             $pendingLeads = Lead::where('status', 2);
             $potentialStudent =Potential::where('potential_status', 1);
             $pendingDocument = CandidateDocument::where('status', 'Pending');
+            $pendingForms = CandidateForm::where('status','Pending');
 
             if ($user->hasRole('Agent')) {
                 $agent_id = Agent::where('user_id', $user->id)->first()->agent_id;
@@ -88,17 +90,20 @@ class NotificationController extends Controller
                 $pendingCPF = $pendingCPF->where('agent_id', $agent_id);
                 $pendingLeads = $pendingLeads->where('handle_by', $user->id);
                 $potentialStudent = $potentialStudent->where('agent_id', $agent_id);
+
             }
 
             $pendingCPF = $pendingCPF->count();
             $pendingLeads = $pendingLeads->count();
             $potentialStudent = $potentialStudent->count();
             $pendingDocument = $pendingDocument->count();
+            $pendingForms = $pendingForms->count();
 
             $response ['pendingCPF'] =  $pendingCPF;
             $response ['pendingLeads'] =  $pendingLeads;
             $response ['potentialStudent'] =  $potentialStudent;
             $response ['pendingDocument'] =  $pendingDocument;
+            $response ['pendingForms'] =  $pendingForms;
 
             return response()->json($response);
         }

@@ -15,6 +15,12 @@ class RequirementList extends Model
 
     protected $fillable = [
         'name',
-        'model'
+        'model',
+        'type',
     ];
+
+    public function RequiredCandidates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CandidateRequirementList::class, 'requirement_list_id');
+    }
 }

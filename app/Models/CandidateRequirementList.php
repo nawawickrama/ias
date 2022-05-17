@@ -25,4 +25,9 @@ class CandidateRequirementList extends Model
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
+
+    public function requirementListItems(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(RequirementList::class, 'requirement_list_id');
+    }
 }

@@ -55,7 +55,7 @@ function indicator() {
         type: 'POST',
         dataType: "json",
         success: function(data) {
-            let options = ['pendingCPF', 'pendingLeads', 'potentialStudent', 'pendingDocument'];
+            let options = ['pendingCPF', 'pendingLeads', 'potentialStudent', 'pendingDocument', 'pendingForms'];
             options.forEach(function (value, index,){
 
                 if (data[value] > 0) {

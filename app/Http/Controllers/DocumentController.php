@@ -177,7 +177,7 @@ class DocumentController extends Controller
      * @return RedirectResponse
      * Send AAF Or LGO for candidate from admin end
      */
-    public function sendFormToCandidate(Request $request)
+    public function sendFormToCandidate(Request $request): RedirectResponse
     {
 
         $validator = Validator::make($request->all(), [
@@ -206,26 +206,43 @@ class DocumentController extends Controller
 
         try {
 
-            if ($formType == 'AAF') {
-                $AAForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 3]);
-                $AAForm->reference_no = $reference_no;
-                $AAForm->dead_line = $deadLine;
-                $AAForm->save();
+            DB::transaction(function () use($candidate_id, $formType, $reference_no, $deadLine){
+                if ($formType == 'AAF') {
+                    $AAForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 3]);
+                    $AAForm->reference_no = $reference_no;
+                    $AAForm->dead_line = $deadLine;
+                    $AAForm->save();
 
-            } elseif ($formType == 'LGO') {
-                $LGOForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 4]);
-                $LGOForm->reference_no = $reference_no;
-                $LGOForm->dead_line = $deadLine;
-                $LGOForm->save();
-            }
 
-            //send notification to candidate.
-            $user = Candidate::find($candidate_id)->user;
-            Notification::sendNow($user, new FormSendNotification($formType, $candidate_id));
+                    $AAFPayment = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 5]);
+                    $AAFPayment->reference_no = $reference_no;
+                    $AAFPayment->dead_line = $deadLine;
+                    $AAFPayment->save();
+
+
+                } elseif ($formType == 'LGO') {
+                    $LGOForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 4]);
+                    $LGOForm->reference_no = $reference_no;
+                    $LGOForm->dead_line = $deadLine;
+                    $LGOForm->save();
+
+                    $LGOPayment = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 6]);
+                    $LGOPayment->reference_no = $reference_no;
+                    $LGOPayment->dead_line = $deadLine;
+                    $LGOPayment->save();
+                }
+            });
+
 
         }catch (\Throwable $e){
+            dd($e);
             return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
+
+        //send notification to candidate.
+        $user = Candidate::find($candidate_id)->user;
+        Notification::sendNow($user, new FormSendNotification($formType, $candidate_id));
+
         return back()->with(['success' => 'Form Send Successful.']);
     }
 
