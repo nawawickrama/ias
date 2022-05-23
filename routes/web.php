@@ -152,12 +152,12 @@ Route::get('/ajax/notification/mark_as_read/{notification}', [NotificationContro
 Route::post('/ajax/pending', [NotificationController::class, 'indicator'])->name('check_pending_cpf');
 
 //student=======================
-Route::get('/student/dashboard',[HomeController::class, 'index'])->name('studentDashboard');
-Route::get('/student/information',[StudentController::class, 'studentInformation'])->name('studentInformation');
-Route::post('/student/information',[StudentController::class, 'studentInformationPost'])->name('studentInformation');
+Route::get('/student/dashboard', [HomeController::class, 'index'])->name('studentDashboard');
+Route::get('/student/information', [StudentController::class, 'studentInformation'])->name('studentInformation');
+Route::post('/student/information', [StudentController::class, 'studentInformationPost'])->name('studentInformation');
 
-Route::get('/student/documents',[DocumentController::class, 'candidate_document'])->name('candidateDocument');
-Route::post('/student/documents/resubmit',[StudentController::class, 'reUploadDocument'])->name('reUploadDocument');
+Route::get('/student/documents', [DocumentController::class, 'candidate_document'])->name('candidateDocument');
+Route::post('/student/documents/resubmit', [StudentController::class, 'reUploadDocument'])->name('reUploadDocument');
 
 
 
@@ -181,13 +181,13 @@ Route::post('/document-status-change', [DocumentController::class, 'documentStat
 //send AAF or LGO from admin to candidate
 Route::post('/send-forms-to-candidate', [DocumentController::class, 'sendFormToCandidate'])->name('sendFormToCandidate');
 
-Route::get('/student/aaf',[StudentController::class, 'aaFormPage'])->name('aaf');
-Route::post('/student/aaf',[FormController::class, 'submitForm'])->name('submitAAForm');
-Route::get('/student/lgo',[StudentController::class, 'LGOFormPage'])->name('lgo');
+Route::get('/student/aaf', [StudentController::class, 'aaFormPage'])->name('aaf');
+Route::post('/student/aaf', [FormController::class, 'submitForm'])->name('submitAAForm');
+Route::get('/student/lgo', [StudentController::class, 'LGOFormPage'])->name('lgo');
 
 //approve AAF and LOG from admin
-Route::get('/verify-lgo-aaf',[FormController::class, 'formStatusPage'])->name('verify-lgo-aaf');
-Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name('verify-lgo-aaf');
+Route::get('/verify-lgo-aaf', [FormController::class, 'formStatusPage'])->name('verify-lgo-aaf');
+Route::post('/verify-lgo-aaf', [FormController::class, 'formStatusChange'])->name('verify-lgo-aaf');
 
 //Student Payment Manager
 Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
@@ -195,3 +195,11 @@ Route::post('/student/make-payment',[PaymentController::class, 'makePayment'])->
 
 Route::get('/admin/payments-manager',[PaymentController::class, 'paymentManager'])->name('admin-payments-manager');
 //Route::view('/lgo','admin.applications.lgo')->name('lgo');
+
+Route::view('/aaf-gvet', 'admin.applications.aaf-gvet')->name('aaf-gvet');
+Route::view('/aaf-estep', 'admin.applications.aaf-estep')->name('aaf-estep');
+Route::view('/aaf-pap', 'admin.applications.aaf-pap')->name('aaf-pap');
+Route::view('/aaf-mep', 'admin.applications.aaf-mep')->name('aaf-mep');
+
+//Payment receipt
+Route::view('/fee-receipt', 'admin.payments.receipt')->name('fee-receipt');
