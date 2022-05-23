@@ -193,7 +193,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-9">
-                            <input type="text" name="referenceNo" id="" class="form-control input-ref" required>
+                            <input type="text" name="referenceNo" placeholder="Enter of Generate a Key" id="" class="form-control input-ref" required>
                         </div>
                         <div class="form-group col-md-3">
                             <button type="button" class="btn btn-primary btn-generate-code">Generate
@@ -203,7 +203,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="">Deadline :</label>
-                            <input type="date" name="deadLine" id="" class="form-control" required>
+                            <input type="date" name="deadLine" id="" value="{{date('Y-m-d', strtotime(date('Y-m-d'). '+14 days' ))}}" class="form-control" required>
                         </div>
                         <input type="hidden" name="candidateId" class="candidateId">
                         <input type="hidden" name="formType" id="" value="LGO">
@@ -238,7 +238,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-9">
-                            <input type="text" name="referenceNo" id="" class="form-control input-ref" required>
+                            <input type="text" name="referenceNo" placeholder="Enter of Generate a Key" id="" class="form-control input-ref" required>
                         </div>
                         <div class="form-group col-md-3">
                             <button type="button" class="btn btn-primary btn-generate-code">Generate
@@ -248,7 +248,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="">Deadline :</label>
-                            <input type="date" name="deadLine" id="" class="form-control" required>
+                            <input type="date" name="deadLine" id="" value="{{date('Y-m-d', strtotime(date('Y-m-d'). '+14 days' ))}}" class="form-control" required>
                         </div>
                         <input type="hidden" name="candidateId" class="candidateId">
                         <input type="hidden" name="formType" id="" value="AAF">

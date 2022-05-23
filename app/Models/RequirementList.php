@@ -19,7 +19,7 @@ class RequirementList extends Model
         'type',
     ];
 
-    public function RequiredCandidates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function candidateConnection(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CandidateRequirementList::class, 'requirement_list_id');
     }

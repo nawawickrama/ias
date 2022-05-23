@@ -121,7 +121,8 @@ reUploadForm.validate({
         resubmitDoc: 'required',
     },
     submitHandler: function() {
-        $('#reUploadDocumentForm').html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>  Loading...").attr('disabled', 'true').trigger('submit');
+
+        $('#reUploadDocumentForm').trigger('submit');
     }
 });
 

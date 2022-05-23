@@ -11,28 +11,37 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Student</th>
-                        <th scope="col">Application</th>
+                        <th scope="col">Candidate</th>
+                        <th scope="col">Payment Category</th>
                         <th scope="col">Ref No</th>
                         <th scope="col">Paid Date</th>
-                        <th scope="col">Paid Amount</th>
-                        <th scope="col">Balance</th>
-                        <th scope="col">Total Fee</th>
+                        <th scope="col">Paid Amount (£)</th>
+                        <th scope="col">Balance (£)</th>
+                        <th scope="col">Total Fee (£)</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($paymentDetails as $key => $payment)
+                    @php
+                        $candidateInfo = $payment->candidate;
+                    @endphp
                     <tr>
-                        <td scope="row">1</td>
-                        <td>Ayesh Nawawickrama</td>
-                        <td><span class="badge badge-primary">LGO</span></td>
-                        <td>GDND2002</td>
-                        <td>2022 Jan 21</td>
-                        <td>2000 Euro</td>
-                        <td>200 Euro</td>
-                        <td>2200 Euro</td>
-                        <td><span class="badge badge-primary">Pending Verification</span></td>
+                        <td>{{$key+1}}</td>
+                        <td>{{$candidateInfo->first_name}} {{$candidateInfo->sur_name}}</td>
+                        <td>@if($payment->form_type === 'LGO')<span class="badge" style="background-color:purple; color: white">LGO FORM</span> @elseif($payment->form_type === 'AAF')<span class="badge badge-primary">AA FORM</span>@endif</td>
+                        <td>{{$payment->reference_no}}</td>
+                        <td>{{date('d F Y - h:i A', strtotime($payment->paid_date))}}</td>
+                        <td style="text-align: right">{{$payment->paid_amount}}</td>
+                        <td style="text-align: right">{{$payment->full_payment - $payment->paid_amount}}</td>
+                        <td style="text-align: right">{{$payment->full_payment}}</td>
+                        <td>
+                            @if($payment->status == 'Pending')<span class="badge badge-warning">Pending Verification</span>
+                            @elseif($payment->status == 'Approved')<span class="badge badge-success">Approved</span>
+                            @elseif($payment->status == 'Rejected')<span class="badge badge-danger">Rejected</span>
+                            @endif
+                        </td>
                         <td>
                             <span data-toggle="tooltip" data-placement="top" title="Approve Payment">
                                 <button type="button" class="btn btn-success btn-icon btn-form-submit" data-toggle="modal" data-target="#modelapp">
@@ -46,6 +55,7 @@
                             </span>
                         </td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

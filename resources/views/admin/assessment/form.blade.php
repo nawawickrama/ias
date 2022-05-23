@@ -12,7 +12,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
-                    <p>Applying for :<em class="text-secondary">{{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_feild }}) @endif</em>
+                    <p>Applying for :<em
+                            class="text-secondary">{{ $program->course_code }} @if ($program->course_code == 'Direct job')
+                                ({{ $cpf_details->job_feild }}) @endif</em>
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -36,7 +38,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Adimission decision :</p>
+                    <p>Admission decision :</p>
                 </div>
             </div>
             <form action="" method="POST" id="send-form">
@@ -46,8 +48,9 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
-                                    value="1">
-                                Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_feild }}) @endif program.
+                                       value="1">
+                                Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
+                                    ({{ $cpf_details->job_feild }}) @endif program.
                             </label>
                         </div>
                     </div>
@@ -57,8 +60,9 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
-                                    value="3">
-                                Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_feild }}) @endif program with the
+                                       value="3">
+                                Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
+                                    ({{ $cpf_details->job_feild }}) @endif program with the
                                 condition.
                             </label>
                         </div>
@@ -69,7 +73,7 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
-                                    value="0">
+                                       value="0">
                                 Not selected.
                             </label>
                         </div>
@@ -77,10 +81,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p>This is the initial assessment result of you and this is not the admission letter. In order to
+                        <p>This is the initial assessment result of you and this is not the admission letter. In order
+                            to
                             receive the Admission Acceptance Form<br> (AAF), complete documents must
-                            be sent to the college as per the guidelines stipulated in our official website (www iaos de).
-                            Only upon receiving the <br> complete documents the final admission decision will be made. </p>
+                            be sent to the college as per the guidelines stipulated in our official website (www iaos
+                            de).
+                            Only upon receiving the <br> complete documents the final admission decision will be made.
+                        </p>
                     </div>
                 </div>
                 <hr>
@@ -105,30 +112,32 @@
             <div class="row">
                 <div class="col-md-12">
                     <p>Datum :@php
-                        if ($cpf_details->status_date != null) {
-                            echo $cpf_details->status_date;
-                        } else {
-                            echo date('d.m.Y');
-                        }
-                    @endphp, Unterschrift/Stempel prufer(n).</p>
+                            if ($cpf_details->status_date != null) {
+                                echo $cpf_details->status_date;
+                            } else {
+                                echo date('d.m.Y');
+                            }
+                        @endphp, Unterschrift/Stempel prufer(n).</p>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-md-3">
                     <button type="button" class="btn btn-block btn-success" id="btn-email"
-                        cpf_id="{{ $cpf_details->cpf_id }}">Email Aseesment form</button>
+                            cpf_id="{{ $cpf_details->cpf_id }}">Email Assessment form
+                    </button>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Aseesment
-                        form</button>
+                    <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Assessment
+                        form
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        $('document').ready(function() {
-            $('#btn-email').click(function() {
+        $('document').ready(function () {
+            $('#btn-email').click(function () {
                 let comment_info = $('#comments_form').val()
                 let cpf_id = $(this).attr('cpf_id');
                 // let addmission_info = $('#addmission_form').val();
@@ -141,7 +150,7 @@
                 $('#ModalEmail').modal('show');
             });
 
-            $('#btn-download').click(function() {
+            $('#btn-download').click(function () {
                 $('#send-form').attr('action', "{{ route('download_assessment_form') }}");
                 $('#send-form').submit();
             });
@@ -150,7 +159,7 @@
 
     <!-- Modal Email -->
     <div class="modal fade" id="ModalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -159,36 +168,39 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('email_assessment_form') }}" method="POST">
+                <form action="{{ route('email_assessment_form') }}" method="POST">
+                    <div class="modal-body">
                         @csrf
                         <label>Send this assessment form to :</label>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="1" required>
+                                <input type="radio" class="form-check-input" name="email_method" id="" value="1"
+                                       required>
                                 Student
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="2" required>
+                                <input type="radio" class="form-check-input" name="email_method" id="" value="2"
+                                       required>
                                 Agent
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="3" required>
+                                <input type="radio" class="form-check-input" name="email_method" id="" value="3"
+                                       required>
                                 Both
                             </label>
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" value="" id="appli_id" name="appli_id">
-                    <input type="hidden" value="" id="comments" name="comments">
-                    <input type="hidden" value="" id="addmission" name="addmission">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Send Email</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" value="" id="appli_id" name="appli_id">
+                        <input type="hidden" value="" id="comments" name="comments">
+                        <input type="hidden" value="" id="addmission" name="addmission">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Send Email</button>
+                    </div>
                 </form>
             </div>
         </div>

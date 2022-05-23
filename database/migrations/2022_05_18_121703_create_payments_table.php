@@ -19,17 +19,19 @@ class CreatePaymentsTable extends Migration
             $table->float('paid_amount');
             $table->dateTime('paid_date')->default(DB::raw('CURRENT_TIMESTAMP'));
 
-            $table->unsignedBigInteger('form_type');
+            $table->string('form_type'); //AAF or LGO
 
-            $table->unsignedBigInteger('candidate_form_id');
-            $table->foreign('candidate_form_id')->references('candidate_form_id')->on('candidate_forms');
+            $table->unsignedBigInteger('pcrl_id');
+            $table->foreign('pcrl_id')->references('pcrl_id')->on('payment_candidate_requirement_lists');
 
             $table->unsignedBigInteger('candidate_id');
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
 
             $table->float('full_payment');
-            $table->enum('status', ['Pending', 'Approved', 'Rejected']);
+            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
 
+            $table->string('reference_no');
+            $table->string('reject_reason')->nullable();
 
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Models\CandidateDocument;
 use App\Models\CandidateRequirementList;
 use App\Models\DocumentCourse;
+use App\Models\PaymentCandidateRequirementList;
 use App\Models\User;
 use App\Notifications\DocumentStatusChangeNotification;
 use App\Notifications\FormSendNotification;
@@ -219,6 +220,12 @@ class DocumentController extends Controller
                     $AAFPayment->dead_line = $deadLine;
                     $AAFPayment->save();
 
+                    $setPayment = PaymentCandidateRequirementList::firstOrNew(['crl_id' => $AAFPayment->candidate_requirement_list_id]);
+                    $setPayment->form_id = 1;
+                    $setPayment->candidate_id = $candidate_id;
+                    $setPayment->save();
+
+
 
                 } elseif ($formType == 'LGO') {
                     $LGOForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 4]);
@@ -230,12 +237,18 @@ class DocumentController extends Controller
                     $LGOPayment->reference_no = $reference_no;
                     $LGOPayment->dead_line = $deadLine;
                     $LGOPayment->save();
+
+                    $setPayment = PaymentCandidateRequirementList::firstOrNew(['crl_id' => $LGOPayment->candidate_requirement_list_id]);
+                    $setPayment->form_id = 2;
+                    $setPayment->candidate_id = $candidate_id;
+                    $setPayment->save();
+
                 }
             });
 
 
         }catch (\Throwable $e){
-            dd($e);
+//            dd($e);
             return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
 

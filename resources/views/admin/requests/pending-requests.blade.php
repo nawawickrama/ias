@@ -45,6 +45,7 @@
                             <form action="" id="send-form" method="POST">
                                 @csrf
                                 <input type="hidden" name="email" value="" id="email_form">
+                                <input type="hidden" name="cpdId" value="" id="cpdId_form">
 
                                 @can('cpf.view')
                                 <a href="{{ route('view-application', $cpf->cpf_id) }}" target="_blank" class="text-white"><button type="button" class="btn btn-primary btn-icon" data-toggle="tooltip" data-placement="top" title="View Application">
@@ -61,10 +62,9 @@
                                 @endcan
 
                                 @can('pending-request.accept')
-                                <a href="{{ route('send_assessment_form', $cpf->cpf_id) }}" target="_blank"><button type="button" class="btn btn-success btn-icon" data-toggle="tooltip" data-placement="top" title="Send Assestment Form">
+                                <button type="button" class="btn btn-success btn-icon btn-send-form" data-toggle="tooltip" data-placement="top" title="Send Assessment Form" cpf-id="{{$cpf->cpf_id}}">
                                         <i data-feather="flag"></i>
                                     </button>
-                                </a>
                                 @endcan
 
                                 @can('email-send.create')
@@ -96,9 +96,18 @@
         $('.btn-email').click(function() {
             let email = $(this).attr('data-email');
             $('#email_form').val(email);
+            $('#send-form').attr('target','_self');
             $('#send-form').attr('action', "{{ route('email_button') }}");
             $('#send-form').submit();
         });
+
+        $('.btn-send-form').click(function (){
+            let cpf_id = $(this).attr('cpf-id');
+            $('#cpdId_form').val(cpf_id);
+            $('#send-form').attr('action',"{{route('send_assessment_form')}}");
+            $('#send-form').attr('target','_blank');
+            $('#send-form').submit();
+        })
     });
 </script>
 @endsection

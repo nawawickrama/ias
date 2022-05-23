@@ -53,7 +53,7 @@ Route::post('/covert-pending', [ApplicationController::class, 'cpf_rollback'])->
 
 
 //Assessment Form
-Route::get('/assessment-form/{cpfId}', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
+Route::post('/assessment-form/', [ApplicationController::class, 'send_assestment_form'])->name('send_assessment_form');
 Route::post('/assessment-email/', [ApplicationController::class, 'email_assestment_form'])->name('email_assessment_form');
 Route::post('/assessment-email-button/', [ApplicationController::class, 'email_assestment_form_by_button'])->name('email_assestment_form_by_button');
 Route::post('/assessment-down/', [ApplicationController::class, 'download_assestment_form'])->name('download_assessment_form');
@@ -191,6 +191,7 @@ Route::post('/verify-lgo-aaf',[FormController::class, 'formStatusChange'])->name
 
 //Student Payment Manager
 Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
+Route::post('/student/make-payment',[PaymentController::class, 'makePayment'])->name('make-payment');
 
-Route::view('/payments-manager','admin.payments.payments-manager')->name('payments-manager');
-Route::view('/lgo','admin.applications.lgo')->name('lgo');
+Route::get('/admin/payments-manager',[PaymentController::class, 'paymentManager'])->name('admin-payments-manager');
+//Route::view('/lgo','admin.applications.lgo')->name('lgo');

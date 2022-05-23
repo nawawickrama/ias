@@ -184,11 +184,13 @@ class ApplicationController extends Controller
         }
     }
 
-    public function send_assestment_form($cpfId)
+    public function send_assestment_form(Request $request)
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
         $permission = $user->can('assestment-form.download');
+
+        $cpfId = $request->cpdId;
 
         if($permission){
             $cpf_details = Cpf::where('cpf_id', $cpfId);
@@ -201,10 +203,10 @@ class ApplicationController extends Controller
             $cpf_details = $cpf_details->first();
             return view('admin.assessment.form')->with(['cpf_details' => $cpf_details]);
 
-        }else{
-            Auth::logout();
-            abort(403);
         }
+
+        Auth::logout();
+        abort(403);
     }
 
     public function email_assestment_form(Request $request)
