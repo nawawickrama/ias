@@ -24,10 +24,10 @@ class CourseSeeder extends Seeder
             'MEP' => ['code' => 'MEP', 'name' => 'Master Eligibility Program', 'description' => 'Pre- Master program for students who wish to start
             their Masters In Germany'],
 
-            // 'PAP' => ['code' => 'PAP', 'name' => 'Master Eligibility Program', 'description' => 'German license preparation program for foreign nurses seeking jobs in Germany'],
+             'PAP' => ['code' => 'PAP', 'name' => 'Master Eligibility Program', 'description' => 'German license preparation program for foreign nurses seeking jobs in Germany'],
 
-            // 'GVET' => ['code' => 'GVET', 'name' => 'Master Eligibility Program', 'description' => ''],
-            
+             'GVET' => ['code' => 'GVET', 'name' => 'Master Eligibility Program', 'description' => ''],
+
             'Direct job' => ['code' => 'Direct job', 'name' => 'Technical and IT fields', 'description' => 'Technical and IT fields'],
         ];
 
