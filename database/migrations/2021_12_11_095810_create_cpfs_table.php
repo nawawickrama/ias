@@ -22,7 +22,7 @@ class CreateCpfsTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('course_id')->on('courses');
 
-            $table->string('job_feild')->nullable(); //if program is direct job
+            $table->string('job_field')->nullable(); //if program is direct job
 
             $table->boolean('ge_lang'); //1->yes , 0-> no
             $table->string('ge_lang_level')->nullable();

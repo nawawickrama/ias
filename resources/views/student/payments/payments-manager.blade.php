@@ -39,15 +39,15 @@
                     @php
                         $PCRLDetails = \App\Models\PaymentCandidateRequirementList::where('crl_id', $list->candidate_requirement_list_id)->first();
                         $formDetails = $PCRLDetails->form;
-                        $paymentDetails = $PCRLDetails->payment;
+                        $paymentDetails = $PCRLDetails->payments;
                         $paid_amount = $paymentDetails->where('status', 'Approved')->sum('paid_amount');
-                        $balance_amount = $formDetails->payment - $paid_amount;
+                        $balance_amount = $PCRLDetails->price - $paid_amount;
                     @endphp
                     <tr>
                         <td>{{$list->name}}</td>
                         <td>{{$list->reference_no}}</td>
                         <td>{{date('d F Y', strtotime($list->dead_line))}}</td>
-                        <td style="text-align: right">{{$formDetails->payment}}</td>
+                        <td style="text-align: right">{{$PCRLDetails->price}}</td>
                         <td style="text-align: right">{{$paid_amount}}</td>
                         <td style="text-align: right">{{$balance_amount}}</td>
                         <td>

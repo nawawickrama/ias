@@ -68,19 +68,9 @@ class Candidate extends Model
         return $this->hasOne(Guardian::class, 'candidate_id');
     }
 
-    public function candidateRequirementList(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CandidateRequirementList::class, 'candidate_id');
-    }
-
     public function forms(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CandidateForm::class, 'candidate_id');
-    }
-
-    public function pcrlInfo(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(PaymentCandidateRequirementList::class, 'candidate_id');
     }
 
     public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany

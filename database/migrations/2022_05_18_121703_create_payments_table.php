@@ -21,9 +21,6 @@ class CreatePaymentsTable extends Migration
 
             $table->string('form_type'); //AAF or LGO
 
-            $table->unsignedBigInteger('pcrl_id');
-            $table->foreign('pcrl_id')->references('pcrl_id')->on('payment_candidate_requirement_lists');
-
             $table->unsignedBigInteger('candidate_id');
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
 

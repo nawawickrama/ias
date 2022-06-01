@@ -44,9 +44,9 @@ class FormSeeder extends Seeder
 
         foreach ($subForms as $sub){
             SubForm::create([
-                'course_id' => $sub->course_id,
-                'form_id' => $sub->form_id,
-                'price' => $sub->price,
+                'course_id' => $sub['course_id'],
+                'form_id' => $sub['form_id'],
+                'price' => $sub['price'],
             ]);
         }
     }

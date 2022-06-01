@@ -26,7 +26,7 @@
                         @if ($program->course_code == 'Direct job')
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <p>Which Field : <em class="text-secondary">{{ $cpf_details->job_feild }}</em></p>
+                                    <p>Which Field : <em class="text-secondary">{{ $cpf_details->job_field }}</em></p>
                                 </div>
                             </div>
                         @endif

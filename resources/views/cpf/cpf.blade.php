@@ -32,10 +32,10 @@
                         <div class="form-row" id='job_field'>
                             <div class="form-group col-md-12">
                                 <label for="">Which Field</label>
-                                <input type="text" class="form-control @error('job_feild') is-invalid @enderror"
-                                       name="job_feild" id="which_job" aria-describedby="helpId" placeholder=""
-                                       value="{{ old('job_feild') }}">
-                                @error('job_feild')
+                                <input type="text" class="form-control @error('job_field') is-invalid @enderror"
+                                       name="job_field" id="which_job" aria-describedby="helpId" placeholder=""
+                                       value="{{ old('job_field') }}">
+                                @error('job_field')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

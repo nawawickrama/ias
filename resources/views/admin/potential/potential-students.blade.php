@@ -22,21 +22,27 @@
                 <tbody>
                     @foreach($potentialDetails as $unit)
                     @php
-                    $candidateDetails = $unit->candidate;
-                    $cpfDetails = $unit->cpf;
-                    $agentDetails = $cpfDetails->agent;
-                    $countryDetails = $candidateDetails->countryInfo;
-                    $courseDetails = $cpfDetails->course;
+                        $candidateDetails = $unit->candidate;
+                        $cpfDetails = $unit->cpf;
+                        $agentDetails = $cpfDetails->agent;
+                        $countryDetails = $candidateDetails->countryInfo;
+                        $courseDetails = $cpfDetails->course;
 
-                    $documentSettings = $candidateDetails->candidateRequirementList;
-                    if(isset($documentSettings)){
-                    $information = $documentSettings->where('requirement_list_id', '1')->first();
-                    $document = $documentSettings->where('requirement_list_id', '2')->first();
-                    $aff = $documentSettings->where('requirement_list_id', '3')->first();
-                    $log = $documentSettings->where('requirement_list_id', '4')->first();
-                    $payment = $documentSettings->where('requirement_list_id', '5')->first();
-                    }
-                    $candidateDocumentCheck = $candidateDetails->documents;
+                        $documentSettings = $candidateDetails->candidateRequirementList;
+                    
+                        if(isset($documentSettings)){
+                            $information = $documentSettings->where('requirement_list_id', '1')->first();
+                            $document = $documentSettings->where('requirement_list_id', '2')->first();
+                            $aff = $documentSettings->where('requirement_list_id', '3')->first();
+                            $log = $documentSettings->where('requirement_list_id', '4')->first();
+                            
+                            dd($aff_payment = $aff->pcrlInfo);
+
+                            // $log_payment = $documentSettings->where('requirement_list_id', '6')->first();
+                        }
+                    
+                        $candidateDocumentCheck = $candidateDetails->documents;
+
                     @endphp
                     <tr>
                         <td>{{$courseDetails->course_code.' - '.$courseDetails->course_name}}</td>
@@ -80,11 +86,15 @@
                                     <span class="badge badge-success">LGO Completed</span>
                                     @endif
 
-                                    @if(isset($payment) && $payment->isComplete === 'No')
+
+                                    @if(isset($payment) && count($payment->payments) == 0)
+                                    <span class="badge badge-danger">Not Paid</span>
+                                    @elseif(isset($payment) && count($aff_payment->payments)  > 0 && $payment->isComplete === 'No')
                                     <span class="badge badge-warning">Payment Pending</span>
                                     @elseif(isset($payment) && $payment->isComplete === 'Yes')
                                     <span class="badge badge-success">Payment Completed</span>
                                     @endif
+                                    
                                 </div>
                             </div>
                         </td>
@@ -243,6 +253,11 @@
                         <div class="form-group col-md-3">
                             <button type="button" class="btn btn-primary btn-generate-code">Generate
                             </button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input type="text" name="coz_price" placeholder="Enter Price" id="" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-row">

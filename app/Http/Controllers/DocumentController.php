@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateForm;
 use App\Models\CandidateRequirementList;
 use App\Models\DocumentCourse;
+use App\Models\Form;
 use App\Models\PaymentCandidateRequirementList;
+use App\Models\SubForm;
 use App\Models\User;
 use App\Notifications\DocumentStatusChangeNotification;
 use App\Notifications\FormSendNotification;
@@ -71,7 +74,7 @@ class DocumentController extends Controller
 
             if ($doc->status == 'Pending') {
                 $button = "<span class='badge badge-warning'>Pending</span>";
-                $action = $approve.' '.$reject;
+                $action = $approve . ' ' . $reject;
 
             } elseif ($doc->status == 'Approved') {
                 $button = "<span class='badge badge-success'>Approved</span>";
@@ -117,23 +120,23 @@ class DocumentController extends Controller
         $candidateInfo = $fileInfo->candidate;
         $user = $candidateInfo->user;
 
-        try{
-            if($status == 1){
-                DB::transaction(function () use($fileInfo, $candidateInfo){
+        try {
+            if ($status == 1) {
+                DB::transaction(function () use ($fileInfo, $candidateInfo) {
                     $fileInfo->update([
                         'status' => 'Approved'
                     ]);
 
                     //check all documents are approved and mark as document completed
                     $candidateDocInfo = CandidateDocument::where('candidate_id', $candidateInfo->candidate_id);
-                    if($candidateDocInfo->get() !== null && count($candidateDocInfo->where('status', '!=', 'Approved')->get()) === 0){
+                    if ($candidateDocInfo->get() !== null && count($candidateDocInfo->where('status', '!=', 'Approved')->get()) === 0) {
                         $candidateInfo->candidateRequirementList->where('requirement_list_id', '2')->first()->update([
                             'isComplete' => 'Yes'
                         ]);
                     }
 
                 });
-            }elseif($status == 0){
+            } elseif ($status == 0) {
                 $fileInfo->update([
                     'reject_reason' => ucfirst(\request('rejectReason')),
                     'status' => 'Rejected'
@@ -144,7 +147,7 @@ class DocumentController extends Controller
             Notification::sendNow($user, new DocumentStatusChangeNotification($user->email, $fileInfo->document, $status));
 
 
-        }catch(\Throwable $e){
+        } catch (\Throwable $e) {
             return back()->with(['error' => 'Status Change Failed.', 'error_type' => 'error']);
         }
         return back()->with('success', 'Status Changed.');
@@ -155,12 +158,13 @@ class DocumentController extends Controller
      * @return Application|Factory|View
      * student panel document page
      */
-    public function candidate_document(){
+    public function candidate_document()
+    {
 
         /** @var App\Models\User $user */
         $user = Auth::user();
 
-        if(!$user->hasRole('Student')){
+        if (!$user->hasRole('Student')) {
             Auth::logout();
             abort(403);
         }
@@ -188,12 +192,12 @@ class DocumentController extends Controller
             'deadLine' => 'required',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             $all_errors = null;
 
-            foreach ($validator->errors()->messages() as $errors){
-                foreach ($errors as $error){
-                    $all_errors .= $error."<br>";
+            foreach ($validator->errors()->messages() as $errors) {
+                foreach ($errors as $error) {
+                    $all_errors .= $error . "<br>";
                 }
             }
 
@@ -207,48 +211,30 @@ class DocumentController extends Controller
 
         try {
 
-            DB::transaction(function () use($candidate_id, $formType, $reference_no, $deadLine){
+
+            DB::transaction(function () use ($candidate_id, $formType, $reference_no, $deadLine) {
+
+                $formId = Form::where('form_name', $formType)->first()->form_id;
+
+                $form = CandidateForm::create([
+                    'candidate_id' => $candidate_id,
+                    'reference_no' => $reference_no,
+                    'form_id' => $formId,
+                    'dead_line' => $deadLine
+                ]);
+
                 if ($formType == 'AAF') {
-                    $AAForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 3]);
-                    $AAForm->reference_no = $reference_no;
-                    $AAForm->dead_line = $deadLine;
-                    $AAForm->save();
-
-
-                    $AAFPayment = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 5]);
-                    $AAFPayment->reference_no = $reference_no;
-                    $AAFPayment->dead_line = $deadLine;
-                    $AAFPayment->save();
-
-                    $setPayment = PaymentCandidateRequirementList::firstOrNew(['crl_id' => $AAFPayment->candidate_requirement_list_id]);
-                    $setPayment->form_id = 1;
-                    $setPayment->candidate_id = $candidate_id;
-                    $setPayment->save();
-
-
-
-                } elseif ($formType == 'LGO') {
-                    $LGOForm = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 4]);
-                    $LGOForm->reference_no = $reference_no;
-                    $LGOForm->dead_line = $deadLine;
-                    $LGOForm->save();
-
-                    $LGOPayment = CandidateRequirementList::firstOrNew(['candidate_id' => $candidate_id, 'requirement_list_id' => 6]);
-                    $LGOPayment->reference_no = $reference_no;
-                    $LGOPayment->dead_line = $deadLine;
-                    $LGOPayment->save();
-
-                    $setPayment = PaymentCandidateRequirementList::firstOrNew(['crl_id' => $LGOPayment->candidate_requirement_list_id]);
-                    $setPayment->form_id = 2;
-                    $setPayment->candidate_id = $candidate_id;
-                    $setPayment->save();
-
+                    $cpfDetails = Candidate::find($candidate_id)->cpf;
+                    $course_data = CandidateForm::find($form->candidate_form_id)->update([
+                        'sub_form_id' => SubForm::where([['course_id', $cpfDetails->course_id], ['form_id', $formId]])->first()->sub_form_id
+                    ]);
                 }
+
             });
 
 
-        }catch (\Throwable $e){
-//            dd($e);
+        } catch (\Throwable $e) {
+            dd($e);
             return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
 

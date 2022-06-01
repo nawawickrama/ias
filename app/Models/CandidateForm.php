@@ -16,6 +16,7 @@ class CandidateForm extends Model
     protected $fillable = [
         'candidate_id',
         'form_id',
+        'sub_form_id',
         'file_path',
         'status',
         'reject_reason',

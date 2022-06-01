@@ -18,4 +18,9 @@ class SubForm extends Model
         'form_id',
         'price',
     ];
+
+    public function course(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Candidate::class, 'course_id');
+    }
 }

@@ -107,7 +107,7 @@
                             @endif
                             <td scope="row">{{ $cpf->cpf_id }}</td>
                             <td>{{ $program->course_code }} @if ($program->course_code == 'Direct job')
-                                    ({{ $cpf->job_feild }}) @endif</td>
+                                    ({{ $cpf->job_field }}) @endif</td>
                             <td>{{ $candidate->first_name }} {{ $candidate->sur_name }}</td>
                             <td>{{ $candidate->email }}</td>
                             <td>@if (isset($cpf->agent_id)) {{ $agent->name }} @else {{ 'N/A' }} @endif</td>

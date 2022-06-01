@@ -80,7 +80,7 @@ class CpfController extends Controller
 
         if ($course_code == 'Direct job') {
             $request->validate([
-                'job_feild' => 'required',
+                'job_field' => 'required',
             ]);
         }
 
@@ -168,7 +168,7 @@ class CpfController extends Controller
 
                 $cpf_info = Cpf::create([
                     'course_id' => request('course_id'),
-                    'job_feild' => request('job_feild'),
+                    'job_field' => request('job_field'),
                     'ge_lang' => request('german_language'),
                     'ge_lang_level' => request('german_level'),
                     'how_to_know' => request('how_to_know'),

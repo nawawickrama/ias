@@ -24,10 +24,6 @@ class Payment extends Model
         'reference_no'
     ];
 
-    public function paymentCandidateReqList(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(PaymentCandidateRequirementList::class, 'pcrl_id');
-    }
 
     public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

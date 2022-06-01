@@ -33,4 +33,8 @@ class Course extends Model
     public function documents(){
         return $this->hasMany(DocumentCourse::class, 'course_id');
     }
+
+    public function subform(){
+        return $this->hasOne(SubForm::class, 'course_id');
+    }
 }

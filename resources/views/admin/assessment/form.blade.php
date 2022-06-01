@@ -14,7 +14,7 @@
                 <div class="col-md-8">
                     <p>Applying for :<em
                             class="text-secondary">{{ $program->course_code }} @if ($program->course_code == 'Direct job')
-                                ({{ $cpf_details->job_feild }}) @endif</em>
+                                ({{ $cpf_details->job_field }}) @endif</em>
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -50,7 +50,7 @@
                                 <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
                                        value="1">
                                 Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
-                                    ({{ $cpf_details->job_feild }}) @endif program.
+                                    ({{ $cpf_details->job_field }}) @endif program.
                             </label>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                                 <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
                                        value="3">
                                 Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
-                                    ({{ $cpf_details->job_feild }}) @endif program with the
+                                    ({{ $cpf_details->job_field }}) @endif program with the
                                 condition.
                             </label>
                         </div>

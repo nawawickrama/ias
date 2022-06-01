@@ -30,7 +30,7 @@
                 @endphp
                 <div class="row">
                     <div class="col-md-8">
-                        <p>Applying for :<em class="text-secondary"> {{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_feild }}) @endif
+                        <p>Applying for :<em class="text-secondary"> {{ $program->course_code }} @if ($program->course_code == 'Direct job') ({{ $cpf_details->job_field }}) @endif
                                 course</em></p>
                     </div>
                     <div class="col-md-4">
