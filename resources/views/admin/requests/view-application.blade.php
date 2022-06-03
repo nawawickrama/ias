@@ -1,109 +1,128 @@
-@extends('layouts.dashboard.main')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ config('app.name') }}</title>
+    <link rel="stylesheet" href="{{ url('assets/vendors/core/core.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/jquery-tags-input/jquery.tagsinput.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/dropzone/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/dropify/dist/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/fonts/feather-font/css/iconfont.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/demo_1/style.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendors/jquery-steps/jquery.steps.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
 
-@section('content')
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <p>Application view</p>
-        </div>
-        <div class="card-body">
-            <form action="">
-                <div class="form-row">
-                    <p class="font-weight-bold">Select the program</p>
-                </div>
-                <hr>
-                <div class="form-row mt-2">
-                    <div class="form-check col-md-12">
-                        <p>Selected Program : <em class="text-secondary">{{ $program->course_code }}</em></p>
+<body>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <p>Application view</p>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    <div class="form-row">
+                        <p class="font-weight-bold">Select the program</p>
                     </div>
-                </div>
-                @if ($program->course_code == 'Direct job')
+                    <hr>
+                    <div class="form-row mt-2">
+                        <div class="form-check col-md-12">
+                            <p>Selected Program : <em class="text-secondary">{{ $program->course_code }}</em></p>
+                        </div>
+                    </div>
+                    @if ($program->course_code == 'Direct job')
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <p>Which Field : <em class="text-secondary">{{ $cpf_details->job_field }}</em></p>
                         </div>
                     </div>
-                @endif
-                <div class="form-row mt-4">
-                    <p class="font-weight-bold">Personal Details</p>
-                </div>
-                <hr>
-                <div class="form-row mt-2">
-                    <div class="form-group col-md-6">
-                        <p>First Name : <em class="text-secondary">{{ $candidate->first_name }}</em></p>
+                    @endif
+                    <div class="form-row mt-4">
+                        <p class="font-weight-bold">Personal Details</p>
                     </div>
-                    <div class="form-group col-md-6">
-                        <p>Surname : <em class="text-secondary">{{ $candidate->sur_name }}</em></p>
+                    <hr>
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-6">
+                            <p>First Name : <em class="text-secondary">{{ $candidate->first_name }}</em></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <p>Surname : <em class="text-secondary">{{ $candidate->sur_name }}</em></p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <p>Sex : <em class="text-secondary">@php
-                            $sex = $candidate->sex;
-                            if ($sex == 0) {
-                                echo 'Female';
-                            } else {
-                                echo 'Male';
-                            }
-                        @endphp</em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Sex : <em class="text-secondary">@php
+                                    $sex = $candidate->sex;
+                                    if ($sex == 0) {
+                                    echo 'Female';
+                                    } else {
+                                    echo 'Male';
+                                    }
+                                    @endphp</em></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <p>Date of birth : <em class="text-secondary">@php echo date('F j, Y',strtotime($candidate->dob)); @endphp</em></p>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <p>Date of birth : <em class="text-secondary">@php echo date('F j, Y',strtotime($candidate->dob)); @endphp</em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Nationality required : <em class="text-secondary">{{ $nationality }}</em></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <p>Country / State : <em class="text-secondary">{{ $country }}</em></p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <p>Nationality required : <em
-                                class="text-secondary">{{ $nationality }}</em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Telephone number (with ISD code) : <em class="text-secondary">{{ $candidate->telephone }}</em></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <p>Email : <em class="text-secondary">{{ $candidate->email }}</em></p>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <p>Country / State : <em class="text-secondary">{{ $country }}</em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>Address : <em class="text-secondary">{{ $candidate->address }}, {{$country}}</em></p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <p>Telephone number (with ISD code) : <em
-                                class="text-secondary">{{ $candidate->telephone }}</em></p>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <p>Email : <em class="text-secondary">{{ $candidate->email }}</em></p>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>Address : <em class="text-secondary">{{ $candidate->address }}, {{$country}}</em></p>
-                    </div>
-                </div>
 
-                @php
+                    @php
                     $sec_school = $cpf_details->sec_sch;
-                @endphp
-                @if (count($sec_school) > 0)
+                    @endphp
+                    @if (count($sec_school) > 0)
                     <div class="form-row mt-4">
                         <p class="font-weight-bold">Educational Background</p>
                     </div>
                     <hr>
                     @foreach ($sec_school as $sch)
-                        <div class="form-row mt-2">
-                            <div class="form-group col-md-4">
-                                <p>{{ $sch->sec_edu_type }} Schooling : <em
-                                        class="text-secondary">{{ $sch->years_level }}</em></p>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <p>Duration : <em class="text-secondary">{{ $sch->duration }}</em></p>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <p>Overall Result Percentage (%) : <em
-                                        class="text-secondary">{{ $sch->result_percentage }}</em></p>
-                            </div>
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <p>{{ $sch->sec_edu_type }} Schooling : <em class="text-secondary">{{ $sch->years_level }}</em></p>
                         </div>
-                    @endforeach
-                @endif
+                        <div class="form-group col-md-2">
+                            <p>Duration : <em class="text-secondary">{{ $sch->duration }}</em></p>
+                        </div>
 
-                @php
+                        <div class="form-group col-md-4">
+                            <p>Overall Result Percentage (%) : <em class="text-secondary">{{ $sch->result_percentage }}</em></p>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
+
+                    @php
                     $vacational = $cpf_details->vocational_t;
-                @endphp
-                @isset($vacational)
+                    @endphp
+                    @isset($vacational)
                     <div class="form-row mt-4">
                         <p class="font-weight-bold">Vocational Training</p>
                     </div>
@@ -119,147 +138,146 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <p>Overall Result Percentage (%) : <em
-                                    class="text-secondary">{{ $vacational->result_percentage }}</em></p>
+                            <p>Overall Result Percentage (%) : <em class="text-secondary">{{ $vacational->result_percentage }}</em></p>
                         </div>
                         <div class="form-group col-md-6">
-                            <p>Duration of the vocational training (Months) : <em
-                                    class="text-secondary">{{ $vacational->duration }}</em></p>
+                            <p>Duration of the vocational training (Months) : <em class="text-secondary">{{ $vacational->duration }}</em></p>
                         </div>
                     </div>
-                @endisset
+                    @endisset
 
-                @php
+                    @php
                     $higher_edu = $cpf_details->higher_edu;
-                @endphp
-                @if (count($higher_edu) > 0)
+                    @endphp
+                    @if (count($higher_edu) > 0)
                     @foreach ($higher_edu as $h_edu)
-                        <div class="form-row mt-4">
-                            <p class="font-weight-bold">{{ $h_edu->higher_edu_type }}</p>
+                    <div class="form-row mt-4">
+                        <p class="font-weight-bold">{{ $h_edu->higher_edu_type }}</p>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Name of the university : <em class="text-secondary">{{ $h_edu->university }}</em></p>
                         </div>
-                        <hr>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <p>Name of the university : <em class="text-secondary">{{ $h_edu->university }}</em></p>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <p>Major subject : <em class="text-secondary">{{ $h_edu->major_subject }}</em></p>
-                            </div>
+                        <div class="form-group col-md-6">
+                            <p>Major subject : <em class="text-secondary">{{ $h_edu->major_subject }}</em></p>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <p>Years of the degree program : <em class="text-secondary">{{ $h_edu->year }}</em></p>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <p>Overall Result Percentage (%) : <em
-                                        class="text-secondary">{{ $h_edu->result_percentage }}</em></p>
-                            </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Years of the degree program : <em class="text-secondary">{{ $h_edu->year }}</em></p>
                         </div>
+                        <div class="form-group col-md-6">
+                            <p>Overall Result Percentage (%) : <em class="text-secondary">{{ $h_edu->result_percentage }}</em></p>
+                        </div>
+                    </div>
                     @endforeach
-                @endif
+                    @endif
 
-                @php
+                    @php
                     $work_exp = $cpf_details->work_exp;
-                @endphp
-                @if (count($work_exp) > 0)
+                    @endphp
+                    @if (count($work_exp) > 0)
                     <div class="form-row mt-4">
                         <p class="font-weight-bold">Working Experience</p>
                     </div>
                     <hr>
                     @foreach ($work_exp as $exp)
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <p>Name of the field that you work : <em class="text-secondary">{{ $exp->field }}</em>
-                                </p>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <p>Years of experience : <em class="text-secondary">{{ $exp->duration }}</em></p>
-                            </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Name of the field that you work : <em class="text-secondary">{{ $exp->field }}</em>
+                            </p>
                         </div>
-                    @endforeach
-                @endif
-
-                <div class="form-row mt-4">
-                    <p class="font-weight-bold">Language proficiency & other details</p>
-                </div>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>German language proficiency (please include certified copies of certificates) Have your learnt
-                            German? : <em class="text-secondary">@php
-                                $ge_lang = $cpf_details->ge_lang;
-                                if ($ge_lang == 1) {
-                                    echo 'Yes';
-                                } else {
-                                    echo 'No';
-                                }
-                            @endphp</em></p>
+                        <div class="form-group col-md-6">
+                            <p>Years of experience : <em class="text-secondary">{{ $exp->duration }}</em></p>
+                        </div>
                     </div>
-                </div>
-                @if ($ge_lang == 1)
+                    @endforeach
+                    @endif
+
+                    <div class="form-row mt-4">
+                        <p class="font-weight-bold">Language proficiency & other details</p>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>German language proficiency (please include certified copies of certificates) Have your learnt
+                                German? : <em class="text-secondary">@php
+                                    $ge_lang = $cpf_details->ge_lang;
+                                    if ($ge_lang == 1) {
+                                    echo 'Yes';
+                                    } else {
+                                    echo 'No';
+                                    }
+                                    @endphp</em></p>
+                        </div>
+                    </div>
+                    @if ($ge_lang == 1)
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <p>Which level? : <em class="text-secondary">{{ $cpf_details->ge_lang_level }}</em></p>
                         </div>
                     </div>
-                @endif
+                    @endif
 
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>How did you know about IAS College? : <em class="text-secondary">
-                                {{ $cpf_details->how_to_know }}
-                            </em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>How did you know about IAS College? : <em class="text-secondary">
+                                    {{ $cpf_details->how_to_know }}
+                                </em></p>
+                        </div>
                     </div>
-                </div>
-                @if ($cpf_details->how_to_know == 'Agent/Educational Consultancy')
+                    @if ($cpf_details->how_to_know == 'Agent/Educational Consultancy')
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             @php
-                                if($cpf_details->agent_id != NULL) $agent_info = App\Models\Agent::find($cpf_details->agent_id)->user;
+                            if($cpf_details->agent_id != NULL) $agent_info = App\Models\Agent::find($cpf_details->agent_id)->user;
                             @endphp
                             <p>Name of the agent or education consultancy (If you know IAS college from agent or education
                                 consultancy) : <em class="text-secondary">{{ $agent_info->name ?? 'N/A' }}</em></p>
                         </div>
                     </div>
-                @endif
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>If you wish to provide any further reasons for your application, please use the comment box : <em
-                                class="text-secondary">{{ $cpf_details->comment }}</em></p>
+                    @endif
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>If you wish to provide any further reasons for your application, please use the comment box : <em class="text-secondary">{{ $cpf_details->comment }}</em></p>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>Declaration
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>Declaration
 
-                            I confirm that to the best of my knowledge the information I have provided on this form is true,
-                            complete and accurate. I am aware that intentionally or negligently providing false information
-                            constitutes an administrative offence and may lead to exclusion from the admissions procedure or
-                            – if discovered at a later date – to the cancellation of my admission or enrollment. I confirm
-                            that I have read the admission information for my desired course from the IAS College GmbH
-                            Homepage. <br><br>
+                                I confirm that to the best of my knowledge the information I have provided on this form is true,
+                                complete and accurate. I am aware that intentionally or negligently providing false information
+                                constitutes an administrative offence and may lead to exclusion from the admissions procedure or
+                                – if discovered at a later date – to the cancellation of my admission or enrollment. I confirm
+                                that I have read the admission information for my desired course from the IAS College GmbH
+                                Homepage. <br><br>
 
-                            In the case this application is sent to uni‐assist, I hereby confirm that I have read and accept
-                            the general terms and conditions (AGB) provided by uni‐assist e.V. on www.uni-assist.de/agb/.
-                            <br><br>
+                                In the case this application is sent to uni‐assist, I hereby confirm that I have read and accept
+                                the general terms and conditions (AGB) provided by uni‐assist e.V. on www.uni-assist.de/agb/.
+                                <br><br>
 
-                            Please Note - All information provided herein will be stored and processed by the
-                            college/university. They are fully subject to the data protection regulations currently in
-                            effect. By clicking the submit button below, you confirm your agreement with these terms.
-                            <br><br>
+                                Please Note - All information provided herein will be stored and processed by the
+                                college/university. They are fully subject to the data protection regulations currently in
+                                effect. By clicking the submit button below, you confirm your agreement with these terms.
+                                <br><br>
 
-                            Once you are selected for admission, you are required to substantiate with certified copies and
-                            translations (German or English) of your certificates. Important: All certificates must be
-                            Notary attested.</p>
+                                Once you are selected for admission, you are required to substantiate with certified copies and
+                                translations (German or English) of your certificates. Important: All certificates must be
+                                Notary attested.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <p>I agree to all terms and conditions : <em class="text-secondary">Yes</em></p>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <p>I agree to all terms and conditions : <em class="text-secondary">Yes</em></p>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+        <br>
     </div>
-@endsection
+</body>

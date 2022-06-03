@@ -4,7 +4,7 @@
     @can('agent.create')
         <div class="card">
             <div class="card-header bg-primary text-white" id="add-agent-head">
-                <p>Add Agents </p>
+                <p>Basic Information</p>
             </div>
             <div class="card-body" id="add-agent">
                 <form action="{{ route('add_agents') }}" method="post">
