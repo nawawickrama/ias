@@ -16,6 +16,11 @@ class CreateCandidateFormsTable extends Migration
     {
         Schema::create('candidate_forms', function (Blueprint $table) {
             $table->id('candidate_form_id');
+
+            $table->string('reference_no')->unique();
+            $table->date('dead_line');
+            $table->float('full_amount')->nullable();
+
             $table->unsignedBigInteger('candidate_id');
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
 
@@ -25,8 +30,10 @@ class CreateCandidateFormsTable extends Migration
             $table->unsignedBigInteger('sub_form_id')->nullable(); //if subform available
 
             $table->string('file_path')->nullable();
-            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+
+            $table->enum('status', ['Not-Uploaded', 'Pending', 'Approved', 'Rejected'])->default('Not-Uploaded');
             $table->text('reject_reason')->nullable();
+
             $table->timestamp('submit_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });

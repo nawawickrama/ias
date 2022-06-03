@@ -14,20 +14,27 @@ class Payment extends Model
     protected $primaryKey = 'payment_id';
 
     protected $fillable = [
-        'paid_amount',
-        'form_type',
-        'pcrl_id',
         'candidate_id',
-        'full_payment',
+        'reference_no',
+        'full_amount',
+        'paid_amount',
+        'remaining_amount',
+        'paid_date',
         'status',
         'reject_reason',
-        'reference_no'
+        'candidate_payment_id'
     ];
-
 
     public function candidate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
+
+    public function candidatePayment(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CandidatePayment::class, 'candidate_payment_id');
+    }
+
+
 
 }

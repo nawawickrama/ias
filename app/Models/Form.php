@@ -19,7 +19,7 @@ class Form extends Model
         'payment',
     ];
 
-    public function candidates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function candidatesForm(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CandidateForm::class, 'form_id');
     }

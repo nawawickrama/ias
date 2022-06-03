@@ -77,4 +77,9 @@ class Candidate extends Model
     {
         return $this->hasMany(Payment::class, 'candidate_id');
     }
+
+    public function candidatePayments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CandidatePayment::class, 'candidate_id');
+    }
 }

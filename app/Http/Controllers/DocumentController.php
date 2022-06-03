@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidate;
 use App\Models\CandidateDocument;
-use App\Models\CandidateForm;
-use App\Models\CandidateRequirementList;
 use App\Models\DocumentCourse;
-use App\Models\Form;
-use App\Models\PaymentCandidateRequirementList;
 use App\Models\SubForm;
 use App\Models\User;
 use App\Notifications\DocumentStatusChangeNotification;
-use App\Notifications\FormSendNotification;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -130,9 +124,10 @@ class DocumentController extends Controller
                     //check all documents are approved and mark as document completed
                     $candidateDocInfo = CandidateDocument::where('candidate_id', $candidateInfo->candidate_id);
                     if ($candidateDocInfo->get() !== null && count($candidateDocInfo->where('status', '!=', 'Approved')->get()) === 0) {
-                        $candidateInfo->candidateRequirementList->where('requirement_list_id', '2')->first()->update([
+                        /*set file completestatus
+                         * $candidateInfo->candidateRequirementList->where('requirement_list_id', '2')->first()->update([
                             'isComplete' => 'Yes'
-                        ]);
+                        ]);*/
                     }
 
                 });
@@ -177,72 +172,35 @@ class DocumentController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     * Send AAF Or LGO for candidate from admin end
-     */
-    public function sendFormToCandidate(Request $request): RedirectResponse
-    {
+    public function downloadForm(){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
 
-        $validator = Validator::make($request->all(), [
-            'candidateId' => 'required',
-            'referenceNo' => 'required|unique:candidate_requirement_lists,reference_no',
-            'formType' => 'required',
-            'deadLine' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $all_errors = null;
-
-            foreach ($validator->errors()->messages() as $errors) {
-                foreach ($errors as $error) {
-                    $all_errors .= $error . "<br>";
-                }
-            }
-
-            return back()->with(['error' => $all_errors, 'error_type' => 'error']);
+        if (!$user->hasRole('Student')) {
+            Auth::logout();
+            abort(403);
         }
 
-        $candidate_id = \request('candidateId');
-        $reference_no = \request('referenceNo');
-        $formType = \request('formType');
-        $deadLine = \request('deadLine');
+        $formType = \request('form_type');
 
-        try {
+        $user = Auth::user();
+        $candidateInfo = $user->candidate;
+        $courseInfo = $candidateInfo->cpf->course;
+        $candidateForm = $candidateInfo->forms;
+        $aafInfo = $candidateInfo->forms->where('form_id', '1')->first();
 
+        if ($formType == 'AAF') {
+            $subForm = SubForm::where([['course_id', $courseInfo->course_id], ['form_id', '1']])->first();
+            $route = !empty($subForm->route) ? $subForm->route : abort(404);
+            return view($route)->with(['candidateForm' => $candidateForm, 'aafInfo' => $aafInfo, 'candidateInfo' => $candidateInfo , 'courseInfo' => $courseInfo]);
 
-            DB::transaction(function () use ($candidate_id, $formType, $reference_no, $deadLine) {
-
-                $formId = Form::where('form_name', $formType)->first()->form_id;
-
-                $form = CandidateForm::create([
-                    'candidate_id' => $candidate_id,
-                    'reference_no' => $reference_no,
-                    'form_id' => $formId,
-                    'dead_line' => $deadLine
-                ]);
-
-                if ($formType == 'AAF') {
-                    $cpfDetails = Candidate::find($candidate_id)->cpf;
-                    $course_data = CandidateForm::find($form->candidate_form_id)->update([
-                        'sub_form_id' => SubForm::where([['course_id', $cpfDetails->course_id], ['form_id', $formId]])->first()->sub_form_id
-                    ]);
-                }
-
-            });
-
-
-        } catch (\Throwable $e) {
-            dd($e);
-            return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
         }
 
-        //send notification to candidate.
-        $user = Candidate::find($candidate_id)->user;
-        Notification::sendNow($user, new FormSendNotification($formType, $candidate_id));
+        if($formType == 'LGO') {
+            return view('admin.applications.lgo')->with(['candidateForm' => $candidateForm, 'aafInfo' => $aafInfo, 'candidateInfo' => $candidateInfo , 'courseInfo' => $courseInfo]);
+        }
 
-        return back()->with(['success' => 'Form Send Successful.']);
     }
+
 
 }

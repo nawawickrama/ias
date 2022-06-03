@@ -13,26 +13,30 @@
         <div class="alert alert-icon-primary" role="alert">
             <div class="row">
                 <div class="col-md-4">
-                    <p>Download your LGO (Learn German Online) Form : <b><a href="#">HERE</a></b></p>
+                    <form action="{{route('downloadForm')}}" method="post" id="form-download-lgo" target="_blank">
+                        @csrf
+                        <input type="hidden" name="form_type" value="LGO">
+                        <p>Download your LGO (Learn German Online) Form : <b><a href="javascript:" id="btn-download-lgo">HERE</a></b></p>
+                    </form>
                 </div>
                 <div class="col-md-4">
-                    <p>Payment Deadline : <b>{{date('d F Y', strtotime($lgoDetails->dead_line))}}</b></p>
+                    <p>Payment Deadline : <b>{{date('d F Y', strtotime($lgoAccess->dead_line))}}</b></p>
                 </div>
                 <div class="col-md-4">
                     <p>Document status :
-                        @if(!isset($isSubmit))<span class="badge badge-danger">Not Uploaded</span>
-                        @elseif($isSubmit->status === 'Rejected') <span class="badge badge-danger">Rejected</span>
-                        @elseif($isSubmit->status === 'Approved') <span class="badge badge-success">Approved</span>
-                        @elseif($isSubmit->status === 'Pending') <span class="badge badge-warning">Pending</span>
+                        @if($lgoAccess->status === 'Not-Uploaded')<span class="badge badge-danger">Not Uploaded</span>
+                        @elseif($lgoAccess->status === 'Rejected') <span class="badge badge-danger">Rejected</span>
+                        @elseif($lgoAccess->status === 'Approved') <span class="badge badge-success">Approved</span>
+                        @elseif($lgoAccess->status === 'Pending') <span class="badge badge-warning">Pending</span>
                         @endif
                     </p>
                 </div>
             </div>
         </div>
-        @if((isset($isSubmit) && $isSubmit->status === 'Rejected'))
+        @if((isset($lgoAccess) && $lgoAccess->status === 'Rejected'))
             <div class="alert alert-danger" role="alert">
                 <i data-feather="alert-circle"></i>
-                Rejected Reason : {{$isSubmit->reject_reason}}
+                Rejected Reason : {{$lgoAccess->reject_reason}}
             </div>
         @endif
         <br>
@@ -44,10 +48,10 @@
                     <input type="file" name="file" class="file-upload-default">
                     <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info @error('file') is-invalid @endif"
-                               disabled="" placeholder="Upload pdf, png, jpeg or jpg" @if(isset($isSubmit) && ($isSubmit->status === 'Approved' || $isSubmit->status === 'Pending')) {{'disabled'}} @endif>
+                               disabled="" placeholder="Upload pdf, png, jpeg or jpg" @if(isset($lgoAccess) && ($lgoAccess->status === 'Approved' || $lgoAccess->status === 'Pending')) {{'disabled'}} @endif>
                         <span class="input-group-append">
                             <button class="file-upload-browse btn btn-primary"
-                                    type="button" @if(isset($isSubmit) && ($isSubmit->status === 'Approved' || $isSubmit->status === 'Pending')) {{'disabled'}} @endif>Browse</button>
+                                    type="button" @if(isset($lgoAccess) && ($lgoAccess->status === 'Approved' || $lgoAccess->status === 'Pending')) {{'disabled'}} @endif>Browse</button>
                         </span>
                         @error('file')
                         <span class="invalid-feedback" role="alert">
@@ -66,5 +70,9 @@
         </form>
     </div>
 </div>
-
+<script>
+    $('#btn-download-lgo').click(function (){
+        $('#form-download-lgo').trigger('submit');
+    });
+</script>
 @endsection

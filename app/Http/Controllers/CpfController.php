@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\CandidateRequirementList;
 use App\Models\Potential;
 use App\Models\User;
 use App\Notifications\cpfRequestNotify;
@@ -298,9 +297,9 @@ class CpfController extends Controller
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&_-=+?";
         $password = substr(str_shuffle($chars), 0, 8);
 
-
+        $user = '';
         try {
-            DB::transaction(function () use ($candidateId, $cpfDetails, $cpfID, $password, $candidateDetails) {
+            DB::transaction(function () use ($candidateId, $cpfDetails, $cpfID, $password, $candidateDetails, &$user) {
                 $cpfDetails->update([
                     'application_status' => 5,
                     'status_date' => date('Y-m-d H:i:s'),
@@ -325,20 +324,9 @@ class CpfController extends Controller
                     'user_id' => $user->id
                 ]);
 
-                CandidateRequirementList::create([
-                    'requirement_list_id' => 1,
-                    'candidate_id' => $candidateId
-                ]);
-
-                CandidateRequirementList::create([
-                    'requirement_list_id' => 2,
-                    'candidate_id' => $candidateId
-                ]);
-
-
+            });
                 $user->assignRole('Student');
                 $user->notify(new LoginNotify($password));
-            });
         } catch (Throwable $e) {
             return response()->json()->status(500);
         }

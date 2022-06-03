@@ -17,6 +17,7 @@ class SubForm extends Model
         'course_id',
         'form_id',
         'price',
+        'route',
     ];
 
     public function course(): \Illuminate\Database\Eloquent\Relations\BelongsTo

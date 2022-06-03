@@ -16,18 +16,24 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id('payment_id');
-            $table->float('paid_amount');
-            $table->dateTime('paid_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-
-            $table->string('form_type'); //AAF or LGO
 
             $table->unsignedBigInteger('candidate_id');
             $table->foreign('candidate_id')->references('candidate_id')->on('candidates');
 
-            $table->float('full_payment');
-            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+            $table->unsignedBigInteger('candidate_payment_id');
+            $table->foreign('candidate_payment_id')->references('candidate_payment_id')->on('candidate_payments');
 
             $table->string('reference_no');
+
+            $table->float('full_amount');
+
+            $table->float('paid_amount');
+            $table->float('remaining_amount');
+
+            $table->date('paid_date');
+
+            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+
             $table->string('reject_reason')->nullable();
 
             $table->timestamps();

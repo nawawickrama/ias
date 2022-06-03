@@ -179,7 +179,7 @@ Route::get('/document-complete', [DocumentController::class, 'pendingDocument'])
 Route::post('/document-status-change', [DocumentController::class, 'documentStatusChange'])->name('documentStatusChange');
 
 //send AAF or LGO from admin to candidate
-Route::post('/send-forms-to-candidate', [DocumentController::class, 'sendFormToCandidate'])->name('sendFormToCandidate');
+Route::post('/send-forms-to-candidate', [FormController::class, 'sendFormToCandidate'])->name('sendFormToCandidate');
 
 Route::get('/student/aaf', [StudentController::class, 'aaFormPage'])->name('aaf');
 Route::post('/student/aaf', [FormController::class, 'submitForm'])->name('submitAAForm');
@@ -192,14 +192,13 @@ Route::post('/verify-lgo-aaf', [FormController::class, 'formStatusChange'])->nam
 //Student Payment Manager
 Route::get('/student/payments-manager',[PaymentController::class, 'paymentPage'])->name('payments-manager');
 Route::post('/student/make-payment',[PaymentController::class, 'makePayment'])->name('make-payment');
+Route::post('/student/status-change-payment',[PaymentController::class, 'changePaymentStatus'])->name('change-payment-status');
 
 Route::get('/admin/payments-manager',[PaymentController::class, 'paymentManager'])->name('admin-payments-manager');
 
-Route::view('/aaf-gvet', 'admin.applications.aaf-gvet')->name('aaf-gvet');
-Route::view('/aaf-estep', 'admin.applications.aaf-estep')->name('aaf-estep');
-Route::view('/aaf-pap', 'admin.applications.aaf-pap')->name('aaf-pap');
-Route::view('/aaf-mep', 'admin.applications.aaf-mep')->name('aaf-mep');
-Route::view('/lgo','admin.applications.lgo')->name('lgo');
+//download forms - student end
+Route::post('/student/download/forms', [DocumentController::class, 'downloadForm'])->name('downloadForm');
+
 
 //Payment receipt
 Route::view('/fee-receipt', 'admin.payments.receipt')->name('fee-receipt');

@@ -14,9 +14,14 @@ class CandidateForm extends Model
     protected $primaryKey = 'candidate_form_id';
 
     protected $fillable = [
+        'reference_no',
+        'dead_line',
+        'full_amount',
+
         'candidate_id',
         'form_id',
         'sub_form_id',
+
         'file_path',
         'status',
         'reject_reason',
@@ -31,5 +36,10 @@ class CandidateForm extends Model
     public function form(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Form::class, 'form_id');
+    }
+
+    public function candidatePayment(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(CandidatePayment::class, 'candidate_form_id');
     }
 }

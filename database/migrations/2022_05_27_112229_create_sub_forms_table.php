@@ -24,6 +24,8 @@ class CreateSubFormsTable extends Migration
 
             $table->float('price');
 
+            $table->string('route')->nullable();
+
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@
 
 <body>
     <div class="container mt-4">
-        <divv class="card">
+        <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-right">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12 text-right bg-secondary">
-                        2 September 2022
+                        {{date('d F Y')}}
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -31,22 +31,22 @@
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <p>
-                            Mr. Naeem Sarker <br>
-                            Pathantek, P.O, Barmi Bazar, P. S Sreepur, Dist. Gazipur <br>
-                            Email: ahmednaeem043@gmail.com <br>
-                            Passport No.: <br>
+                            {{$candidateInfo->first_name}} {{$candidateInfo->sur_name}}<br>
+                            {{$candidateInfo->address}} <br>
+                            Email:  {{$candidateInfo->email}}<br>
+                            Passport No.: {{$candidateInfo->passport_no ?? ''}}<br>
                         </p>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
-                        <p><u>Referance Number: </u></p>
+                        <p><u>Reference Number: {{$aafInfo->reference_no}}</u></p>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <p>
-                            Dear Mr. Naeem Sarker, <br>
+                            Dear {{$candidateInfo->first_name}} {{$candidateInfo->sur_name}}, <br>
                             Thank you very much for your interest to join our German language-training Online A1 till B1 level. In order to join the German Vocational Education and Training (GVET) AZUBI program in Germany a minimum of B1 level is required. You have received the following offer:
 
                         </p>
@@ -146,8 +146,10 @@
                     </div>
                 </div>
             </div>
-        </divv>
+        </div>
     </div>
 </body>
-
+<script>
+    window.print();
+</script>
 </html>

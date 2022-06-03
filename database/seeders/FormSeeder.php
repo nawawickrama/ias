@@ -29,17 +29,17 @@ class FormSeeder extends Seeder
 
         $subForms =[
             //step -aaf
-            ['course_id' => '1', 'form_id' => 1, 'price' => 1450],
+            ['course_id' => '1', 'form_id' => 1, 'price' => 1450, 'route' => ''],
             //e-step -aaf
-            ['course_id' => '2', 'form_id' => 1, 'price' => 1380],
+            ['course_id' => '2', 'form_id' => 1, 'price' => 1380, 'route' => 'admin.applications.aaf-estep'],
             //mep -aaf
-            ['course_id' => '3', 'form_id' => 1, 'price' => 1180],
+            ['course_id' => '3', 'form_id' => 1, 'price' => 1180, 'route' => 'admin.applications.aaf-mep'],
             //pap -aaf
-            ['course_id' => '4', 'form_id' => 1, 'price' => 2580],
+            ['course_id' => '4', 'form_id' => 1, 'price' => 2580, 'route' => 'admin.applications.aaf-pap'],
             //gvet -aaf
-            ['course_id' => '5', 'form_id' => 1, 'price' => 1000],
+            ['course_id' => '5', 'form_id' => 1, 'price' => 1000, 'route' => 'admin.applications.aaf-gvet'],
             //direct job -aaf
-            ['course_id' => '6', 'form_id' => 1, 'price' => 1380],
+            ['course_id' => '6', 'form_id' => 1, 'price' => 1380, 'route' => ''],
         ];
 
         foreach ($subForms as $sub){
@@ -47,6 +47,7 @@ class FormSeeder extends Seeder
                 'course_id' => $sub['course_id'],
                 'form_id' => $sub['form_id'],
                 'price' => $sub['price'],
+                'route' => $sub['route'],
             ]);
         }
     }

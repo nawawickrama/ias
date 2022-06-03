@@ -35,27 +35,29 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($requirementList as $list)
+                @foreach($candidatePayment as $list)
                     @php
-                        $PCRLDetails = \App\Models\PaymentCandidateRequirementList::where('crl_id', $list->candidate_requirement_list_id)->first();
-                        $formDetails = $PCRLDetails->form;
-                        $paymentDetails = $PCRLDetails->payments;
-                        $paid_amount = $paymentDetails->where('status', 'Approved')->sum('paid_amount');
-                        $balance_amount = $PCRLDetails->price - $paid_amount;
+                        $paymentInfo = $list->payments;
                     @endphp
                     <tr>
-                        <td>{{$list->name}}</td>
+                        <td>{{$list->payment_category}} Payment</td>
                         <td>{{$list->reference_no}}</td>
                         <td>{{date('d F Y', strtotime($list->dead_line))}}</td>
-                        <td style="text-align: right">{{$PCRLDetails->price}}</td>
-                        <td style="text-align: right">{{$paid_amount}}</td>
-                        <td style="text-align: right">{{$balance_amount}}</td>
+                        <td style="text-align: right">{{$list->full_price}}</td>
+                        <td style="text-align: right">{{$paymentInfo->where('status', 'Approved')->sum('paid_amount')}}</td>
+                        <td style="text-align: right">{{$list->full_price - $paymentInfo->where('status', 'Approved')->sum('paid_amount')}}</td>
                         <td>
-                            @if(count($paymentDetails) == 0)<span class="badge badge-danger">Not Paid</span>
-                            @elseif($formDetails->payment == $paid_amount)<span class="badge badge-success">Payment Completed</span>
-                            @elseif($paid_amount != 0 && $formDetails->payment > $paid_amount)<span class="badge badge-warning">Partially Completed</span>
-                            @elseif($paymentDetails->where('status', 'Pending')->sum('paid_amount') > 0)<span class="badge badge-primary">Payment Pending</span>
-                            @else<span class="badge badge-danger">Not Paid</span>@endif
+                            @if($list->status == 'Not-Paid')
+                                <div class="badge badge-danger">NOT-PAID</div>
+                            @elseif($list->status == 'Pending')
+                                <div class="badge badge-warning">PENDING</div>
+                            @elseif($list->status == 'Partially-Paid')
+                                <div class="badge" style="background-color: purple; color: white;">PARTIALLY-PAID</div>
+                            @elseif($list->status == 'Completed')
+                                <div class="badge badge-success">COMPLETED</div>
+                            @elseif($list->status == 'Rejected')
+                                <div class="badge badge-danger">REJECTED</div>
+                            @endif
                         </td>
                         <td>
                             <button type="button" class="btn btn-warning btn-icon-text btn-sm"><i
@@ -84,23 +86,25 @@
                     <th>Paid Amount (£)</th>
                     <th>Paid Date</th>
                     <th>Status</th>
+                    <th>Reason</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($paymentHistory as $payment)
+                    @php
+                        $candidatePaymentInfo = $payment->candidatePayment;
+                    @endphp
                     <tr>
-                        <td>{{$payment->form_type}} Payment</td>
+                        <td>{{$candidatePaymentInfo->payment_category}} Payment</td>
                         <td style="text-align: right" >{{$payment->paid_amount}}</td>
                         <td>{{date('d F Y', strtotime($payment->paid_date))}}</td>
-                        <td @if($payment->status === 'Rejected') colspan="2" @endif>
+                        <td>
                             @if($payment->status === 'Pending')<span class="badge badge-warning">Pending for admin approval</span>
                             @elseif($payment->status === 'Approved')<span class="badge badge-success">Approved</span>
                             @elseif($payment->status === 'Rejected')<span class="badge badge-danger">Rejected</span>
                             @endif
                         </td>
-                        @if($payment->status === 'Rejected')
-                            <td>{{$payment->reject_reason}}</td>
-                        @endif
+                        <td>{{$payment->reject_reason ?? 'N/A'}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -139,8 +143,8 @@
                                 <label for="">Payment Category</label>
                                 <select name="payment_category" id="" required>
                                     <option value="" selected disabled>Select Category</option>
-                                    @foreach($requirementList as $list)
-                                        <option value="{{$list->requirement_list_id}}">{{$list->name}}</option>
+                                    @foreach($candidatePayment->where('status', '!=', 'Completed') as $list)
+                                        <option value="{{$list->payment_category}}">{{$list->payment_category}} Payment</option>
                                     @endforeach
                                 </select>
                             </div>

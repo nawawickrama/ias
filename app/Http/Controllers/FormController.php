@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidate;
 use App\Models\CandidateForm;
+use App\Models\CandidatePayment;
+use App\Models\Form;
+use App\Models\SubForm;
 use App\Models\User;
+use App\Notifications\FormSendNotification;
 use App\Notifications\FormStatusChangeNotification;
 use App\Notifications\FormSubmitNotification;
 use Illuminate\Contracts\Foundation\Application;
@@ -15,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class FormController extends Controller
@@ -47,7 +53,7 @@ class FormController extends Controller
         $formType = \request('formType');
 
         //delete old file
-        $fileCheck = CandidateForm::where([['candidate_id', $user->candidate->candidate_id], ['form_id', \request('formType') === 'AAF' ? 1 : 2]])->first();
+        $fileCheck = CandidateForm::where([['candidate_id', $user->candidate->candidate_id], ['form_id', \request('formType') === 'AAF' ? 1 : 2], ['status', '!=', 'Not-Uploaded']])->first();
         if(isset($fileCheck)){
             Storage::disk('public')->delete($fileCheck->file_path);
         }
@@ -91,7 +97,7 @@ class FormController extends Controller
             abort(403);
         }
 
-        $forms = CandidateForm::orderByDesc('created_at')->get();
+        $forms = CandidateForm::where('status', '!=', 'Not-Uploaded')->orderByDesc('created_at')->get();
         return view('admin.selected.verify-lgo-aaf')->with(['forms' => $forms]);
     }
 
@@ -145,5 +151,89 @@ class FormController extends Controller
 
         return back()->with('success', 'Status Changed.');
 
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * Send AAF Or LGO for candidate from admin end
+     */
+    public function sendFormToCandidate(Request $request): RedirectResponse
+    {
+
+        $validator = Validator::make($request->all(), [
+            'candidateId' => 'required',
+            'referenceNo' => 'required|unique:candidate_forms,reference_no',
+            'formType' => 'required',
+            'deadLine' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $all_errors = null;
+
+            foreach ($validator->errors()->messages() as $errors) {
+                foreach ($errors as $error) {
+                    $all_errors .= $error . "<br>";
+                }
+            }
+
+            return back()->with(['error' => $all_errors, 'error_type' => 'error']);
+        }
+
+        $candidate_id = \request('candidateId');
+        $reference_no = \request('referenceNo');
+        $formType = \request('formType');
+        $deadLine = \request('deadLine');
+
+        try {
+            DB::transaction(function () use ($candidate_id, $formType, $reference_no, $deadLine) {
+
+                $formInfo = Form::where('form_name', $formType)->first();
+
+                $form = CandidateForm::create([
+                    'reference_no' => $reference_no,
+                    'dead_line' => $deadLine,
+                    'candidate_id' => $candidate_id,
+                    'form_id' => $formInfo->form_id,
+                    'full_amount' => $formInfo->payment,
+                    'status' => 'Not-Uploaded',
+                ]);
+
+                $candidatePayment = CandidatePayment::create([
+                    'payment_category' => $formType,
+                    'reference_no' => $reference_no,
+                    'candidate_id' => $candidate_id,
+                    'candidate_form_id' => $form->candidate_form_id,
+                    'full_price' => $formInfo->payment,
+                    'dead_line' => $deadLine,
+                ]);
+
+
+                if ($formType === 'AAF') {
+                    $cpfDetails = Candidate::find($candidate_id)->cpf;
+                    $subForm = SubForm::where([['course_id', $cpfDetails->course_id], ['form_id', $formInfo->form_id]])->first();
+
+                    CandidateForm::find($form->candidate_form_id)->update([
+                        'sub_form_id' => $subForm->sub_form_id,
+                        'full_amount' => \request('coz_price') ?? $subForm->price,
+                    ]);
+
+                    CandidatePayment::find($candidatePayment->candidate_payment_id)->update([
+                        'full_price' => \request('coz_price') ?? $subForm->price,
+                    ]);
+                }
+
+            });
+
+
+        } catch (\Throwable $e) {
+            return back()->with(['error' => 'Form Send Failed.', 'error_type' => 'error']);
+        }
+
+        //send notification to candidate.
+        $user = Candidate::find($candidate_id)->user;
+        Notification::sendNow($user, new FormSendNotification($formType, $candidate_id));
+
+        return back()->with(['success' => 'Form Send Successful.']);
     }
 }

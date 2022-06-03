@@ -95,10 +95,13 @@ function formSubmit(element){
         error:function (response){
             let error = '';
             $('#modelb').modal('hide');
-
-            $.each(response.responseJSON.errors, function (index, value){
-                error += value+"<br>";
-            });
+            if(response.responseJSON.errors) {
+                $.each(response.responseJSON.errors, function (index, value) {
+                    error += value + "<br>";
+                });
+            }else{
+                error = response.responseJSON.message;
+            }
 
             notify('error', error, false);
         }

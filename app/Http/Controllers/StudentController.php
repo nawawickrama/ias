@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
-use App\Models\CandidateRequirementList;
 use App\Models\Country;
 use App\Models\Course;
 use App\Models\DocumentCourse;
@@ -12,7 +11,6 @@ use App\Models\Guardian;
 use App\Models\Potential;
 use App\Models\User;
 use App\Notifications\DocumentSubmitNotification;
-use App\Notifications\PendingLeadNotify;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -105,11 +103,11 @@ class StudentController extends Controller
                 ]);
 
                 //check for complete status (guardian details check)
-                if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes') {
+                /*if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes') {
                     $candidate_details->candidateRequirementList->where('requirement_list_id', '1')->first()->update([
                         'isComplete' => 'Yes'
                     ]);
-                }
+                }*/
             });
 
         } elseif (\request('formNo') == 2) {
@@ -142,14 +140,12 @@ class StudentController extends Controller
                 $guardian->save();
 
                 //check for complete status (guardian details check)
-                if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes' && $candidate_details->isComplete === 'Yes') {
-                    $candidate_details->candidateRequirementList->where('requirement_list_id', '1')->first()->update([
+                /*if (isset($candidate_details->guardian) && $candidate_details->guardian->isComplete === 'Yes' && $candidate_details->isComplete === 'Yes') {
+                    //set status
+                     * $candidate_details->candidateRequirementList->where('requirement_list_id', '1')->first()->update([
                         'isComplete' => 'Yes'
                     ]);
-
-
-                }
-
+                }*/
             });
 
         } elseif (\request('formNo') == 3) {
@@ -236,21 +232,22 @@ class StudentController extends Controller
         $fileName = \request('docName');
 
         $documentInfo = CandidateDocument::find($fileId);
+        $old_file_path = $documentInfo->file_path;
 
         $extension = $request->file('resubmitDoc')->getClientOriginalExtension();
         $name = $candidateInfo->candidate_id . '_' . $fileName . '_' . time() . '.' . $extension;
-        $fill_path = $request->file('resubmitDoc')->storeAs('student_document', $name, 'public');
+        $file_path = $request->file('resubmitDoc')->storeAs('student_document', $name, 'public');
 
         try {
             $documentInfo->update([
-                'file_path' => $fill_path,
+                'file_path' => $file_path,
                 'status' => 'Pending',
                 'reject_reason' => NULL,
                 'submit_date' => date('Y-m-d H:i:s'),
             ]);
 
             //delete old file
-            Storage::disk('public')->delete($documentInfo->file_path);
+            Storage::disk('public')->delete($old_file_path);
 
 
         } catch (\Throwable $e) {
@@ -279,13 +276,12 @@ class StudentController extends Controller
             abort(403);
         }
 
-        $aafDetails = $user->candidate->candidateRequirementList->where('requirement_list_id', '3')->first();
-        if (!isset($aafDetails)) {
+        $affAccess = $user->candidate->forms->where('form_id', '1')->first();
+        if (!isset($affAccess)) {
             abort(403);
         }
 
-        $isSubmit = $user->candidate->forms->where('form_id', '1')->first();
-        return \view('student.forms.aaf')->with(['aafDetails' => $aafDetails, 'isSubmit' => $isSubmit]);
+        return \view('student.forms.aaf')->with(['affAccess' => $affAccess]);
     }
 
 
@@ -303,12 +299,12 @@ class StudentController extends Controller
             abort(403);
         }
 
-        $lgoDetails = $user->candidate->candidateRequirementList->where('requirement_list_id', '4')->first();
-        if (!isset($lgoDetails)) {
+        $lgoAccess = $user->candidate->forms->where('form_id', '1')->first();
+        if (!isset($lgoAccess)) {
             abort(403);
         }
 
         $isSubmit = $user->candidate->forms->where('form_id', '2')->first();
-        return \view('student.forms.lgo')->with(['lgoDetails' => $lgoDetails, 'isSubmit' => $isSubmit]);
+        return \view('student.forms.lgo')->with(['lgoAccess' => $lgoAccess]);
     }
 }

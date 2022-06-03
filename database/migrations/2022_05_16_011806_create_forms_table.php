@@ -15,7 +15,7 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id('form_id');
-            $table->enum('form_name', ['AFF', 'LGO']);
+            $table->enum('form_name', ['AAF', 'LGO']);
             $table->string('file_path')->nullable();
             $table->float('payment');
             $table->timestamps();
