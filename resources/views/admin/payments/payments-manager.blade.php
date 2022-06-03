@@ -84,7 +84,7 @@
                         Are you sure, do you want to approve this payment?
                     </div>
                     <div class="modal-footer">
-                        <input type="text" name="payment_id" value="" class="payment_Id">
+                        <input type="hidden" name="payment_id" value="" class="payment_Id">
                         <input type="hidden" name="status" value="Approved">
                         <input type="hidden" name="remainingAmount" value="" class="remainingAmount">
                         <input type="hidden" name="fullAmount" value="" class="fullAmount">
@@ -133,8 +133,7 @@
              let payment_id = $(this).attr('payment_id');
              let remainingAmount = $(this).attr('remainingAmount');
              let fullAmount = $(this).attr('fullAmount');
-
-             alert(payment_id);
+            
              $('.payment_Id').val(payment_id);
              $('.remainingAmount').val(remainingAmount);
              $('.fullAmount').val(fullAmount);
