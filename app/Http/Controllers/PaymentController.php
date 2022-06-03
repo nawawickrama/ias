@@ -186,10 +186,27 @@ class PaymentController extends Controller
                 ]);
             });
         } catch (\Throwable $e) {
-            dd($e);
             return back()->with(['error' => 'Payment Status Changed Failed', 'error_type' => 'error']);
         }
 
         return back()->with(['success' => 'Payment Status Changed']);
+    }
+
+    public function invoice(Request $request){
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->hasRole('Student')) {
+            Auth::logout();
+            abort(403);
+        }
+
+        $candidate_payment_id = \request('candidate_payment_id');
+        $candidatePaymentInfo = CandidatePayment::find($candidate_payment_id);
+        $candidateInfo = $candidatePaymentInfo->candidate;
+        $paid_amount = $candidatePaymentInfo->payments->where('status', 'Approved')->sum('paid_amount');
+        $courseInfo = $candidateInfo->cpf->course;
+
+        return \view('admin.payments.receipt')->with(['paid_amount' => $paid_amount, 'courseInfo' => $courseInfo, 'candidate_payment_id' => $candidate_payment_id, 'candidateInfo' => $candidateInfo, 'candidatePaymentInfo' => $candidatePaymentInfo]);
     }
 }

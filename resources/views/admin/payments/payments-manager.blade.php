@@ -15,9 +15,9 @@
                         <th scope="col">Payment Category</th>
                         <th scope="col">Ref No</th>
                         <th scope="col">Paid Date</th>
-                        <th scope="col">Total Fee (£)</th>
-                        <th scope="col">Paid Amount (£)</th>
-                        <th scope="col">Balance (£)</th>
+                        <th scope="col">Total Fee (€)</th>
+                        <th scope="col">Paid Amount (€)</th>
+                        <th scope="col">Balance (€)</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -133,7 +133,7 @@
              let payment_id = $(this).attr('payment_id');
              let remainingAmount = $(this).attr('remainingAmount');
              let fullAmount = $(this).attr('fullAmount');
-            
+
              $('.payment_Id').val(payment_id);
              $('.remainingAmount').val(remainingAmount);
              $('.fullAmount').val(fullAmount);

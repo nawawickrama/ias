@@ -27,9 +27,9 @@
                     <th scope="row">Category</th>
                     <th>Reference Number</th>
                     <th>Deadline</th>
-                    <th>Amount (£)</th>
-                    <th>Paid Amount (£)</th>
-                    <th>Balance (£)</th>
+                    <th>Amount (€)</th>
+                    <th>Paid Amount (€)</th>
+                    <th>Balance (€)</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -60,7 +60,7 @@
                             @endif
                         </td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-icon-text btn-sm"><i
+                            <button type="button" class="btn btn-warning btn-icon-text btn-sm btn-invoice" candidate_payment_id="{{$list->candidate_payment_id}}"><i
                                     class="btn-icon-prepend" data-feather="download"></i>Invoice
                             </button>
                         </td>
@@ -70,6 +70,10 @@
             </table>
         </div>
     </div>
+    <form action="{{route('invoice')}}" method="POST" id="invoiceForm">
+        @csrf
+        <input type="hidden" value="" name="candidate_payment_id" id="payment_id">
+    </form>
     <div class="card mt-4">
         <div class="card-header bg-primary">
             <div class="row">
@@ -83,7 +87,7 @@
                 <thead>
                 <tr>
                     <th>Category</th>
-                    <th>Paid Amount (£)</th>
+                    <th>Paid Amount (€)</th>
                     <th>Paid Date</th>
                     <th>Status</th>
                     <th>Reason</th>
@@ -96,7 +100,7 @@
                     @endphp
                     <tr>
                         <td>{{$candidatePaymentInfo->payment_category}} Payment</td>
-                        <td style="text-align: right" >{{$payment->paid_amount}}</td>
+                        <td style="text-align: right">{{$payment->paid_amount}}</td>
                         <td>{{date('d F Y', strtotime($payment->paid_date))}}</td>
                         <td>
                             @if($payment->status === 'Pending')<span class="badge badge-warning">Pending for admin approval</span>
@@ -129,7 +133,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="">Paid Date</label>
-                                <input type="date" name="paid_date" id="" class="form-control" value="{{date('Y-m-d')}}" required>
+                                <input type="date" name="paid_date" id="" class="form-control" value="{{date('Y-m-d')}}"
+                                       required>
                             </div>
                         </div>
                         <div class="form-row">
@@ -144,7 +149,8 @@
                                 <select name="payment_category" id="" required>
                                     <option value="" selected disabled>Select Category</option>
                                     @foreach($candidatePayment->where('status', '!=', 'Completed') as $list)
-                                        <option value="{{$list->payment_category}}">{{$list->payment_category}} Payment</option>
+                                        <option value="{{$list->payment_category}}">{{$list->payment_category}}Payment
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -152,7 +158,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="makePaymentFormSubmitButton" class="btn btn-warning" disabled>Save</button>
+                        <button type="submit" id="makePaymentFormSubmitButton" class="btn btn-warning" disabled>Save
+                        </button>
                     </div>
                 </form>
             </div>
@@ -160,12 +167,19 @@
     </div>
 
     <script>
-        $('#paid_amount').keyup(function (){
-            if($(this).val() > 0){
+        $('#paid_amount').keyup(function () {
+            if ($(this).val() > 0) {
                 $('#makePaymentFormSubmitButton').removeAttr('disabled');
-            }else{
+            } else {
                 $('#makePaymentFormSubmitButton').attr('disabled', true);
             }
+        });
+
+        $('.btn-invoice').click(function () {
+            let candidatePaymentId = $(this).attr('candidate_payment_id');
+
+            $('#payment_id').val(candidatePaymentId);
+            $('#invoiceForm').trigger('submit');
         });
     </script>
 @endsection

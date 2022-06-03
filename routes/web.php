@@ -201,4 +201,4 @@ Route::post('/student/download/forms', [DocumentController::class, 'downloadForm
 
 
 //Payment receipt
-Route::view('/fee-receipt', 'admin.payments.receipt')->name('fee-receipt');
+Route::post('/fee-receipt', [PaymentController::class, 'invoice'])->name('invoice');

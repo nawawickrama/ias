@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Learn German Online - Form</title>
+    <title>Invoice</title>
     <link rel="stylesheet" href="{{ url('assets/vendors/core/core.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/demo_1/style.css') }}">
 
 <body>
     <div class="container mt-4">
-        <divv class="card">
+        <div class="card">
             <div class="card-body">
                 <header>
                     <div class="row">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12 text-right">
-                            2 September 2022
+                            {{date('d F Y')}}
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -31,9 +31,8 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <p>IAS College hereby confirms that we received 500€ on 31.08.2021 of Mr. Absel Kunjumon
-                                (born on 28.08.2002) passport number U7380093 for the course GVET Pre Programm
-                                starting in 2022.
+                            <p>IAS College hereby confirms that we received {{$paid_amount}}€ on {{date('d F Y', strtotime($candidatePaymentInfo->updated_at))}} of {{$candidateInfo->first_name.' '.$candidateInfo->sur_name}}
+                                (born on 28.08.2002) passport number {{$candidateInfo->passport_no ?? 'N/A'}} for the course {{$courseInfo->course_code}} - {{$courseInfo->course_name}} Program starting in 2022.
                             </p>
                         </div>
                     </div>
@@ -78,7 +77,7 @@
                     </div>
                 </footer>
             </div>
-        </divv>
+        </div>
     </div>
 </body>
 
