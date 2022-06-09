@@ -145,7 +145,7 @@
                                 </div>
                             </td>
                             <td>
-                            <span data-toggle="tooltip" data-placement="top" title="Send Student Login">
+                            <span data-toggle="tooltip" data-placement="top" title="Re-send Student Login">
                                 <button type="button" class="btn btn-success btn-icon" data-toggle="modal"
                                         data-target="#sendstd">
                                     <i data-feather="send"></i>

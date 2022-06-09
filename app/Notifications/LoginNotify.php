@@ -43,7 +43,7 @@ class LoginNotify extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
+                    ->line('Thank you for applying to IAS College. Please see the attached CPF form with our decision to your application.')
                     ->action('Sign In', url('/login'))
                     ->line('Your Password is: '.$this->pwrd);
     }
