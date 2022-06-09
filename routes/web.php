@@ -199,6 +199,5 @@ Route::get('/admin/payments-manager',[PaymentController::class, 'paymentManager'
 //download forms - student end
 Route::post('/student/download/forms', [DocumentController::class, 'downloadForm'])->name('downloadForm');
 
-
 //Payment receipt
 Route::post('/fee-receipt', [PaymentController::class, 'invoice'])->name('invoice');

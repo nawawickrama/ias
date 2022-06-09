@@ -188,7 +188,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assestment-form.download');
+        $permission = $user->can('assessment-form.download');
 
         $cpfId = $request->cpdId;
 
@@ -213,7 +213,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assestment-form.download');
+        $permission = $user->can('assessment-form.download');
 
         if($permission){
 
@@ -248,7 +248,7 @@ class ApplicationController extends Controller
             if($email_method == 1){
                 Mail::send('admin.assessment.email', $data, function($message)use($pdf, $candidate) {
                     $message->to($candidate->email)
-                            ->subject('Addmission Details')
+                            ->subject('Admission Details')
                             ->attachData($pdf->output(), "admission.pdf");
                 });
             }elseif($email_method == 2){
@@ -256,7 +256,7 @@ class ApplicationController extends Controller
                     $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email) {
                         $message->to($agent_email)
-                                ->subject('Addmission Details')
+                                ->subject('Admission Details')
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
                 }else{
@@ -270,14 +270,14 @@ class ApplicationController extends Controller
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email, $st_mail) {
                         $message->to($agent_email)
                                 ->cc($st_mail)
-                                ->subject('Addmission Details')
+                                ->subject('Admission Details')
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
                 }else{
 
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $candidate) {
                         $message->to($candidate->email)
-                                ->subject('Addmission Details')
+                                ->subject('Admission Details')
                                 ->attachData($pdf->output(), "admission.pdf");
                     });
 
@@ -300,7 +300,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assestment-form.email');
+        $permission = $user->can('assessment-form.email');
 
         if(!$permission){
             Auth::logout();
@@ -348,14 +348,14 @@ class ApplicationController extends Controller
                 Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email, $st_mail, $candidate) {
                     $message->to($agent_email)
                             ->cc($st_mail)
-                            ->subject('Addmission Details')
+                            ->subject('Admission Details')
                             ->attachData($pdf->output(), "$candidate->first_name"."_".$candidate->sur_name."_assesment.pdf");
                 });
             }else{
 
                 Mail::send('admin.assessment.email', $data, function($message)use($pdf, $candidate) {
                     $message->to($candidate->email)
-                            ->subject('Addmission Details')
+                            ->subject('Admission Details')
                             ->attachData($pdf->output(), "$candidate->first_name"."_".$candidate->sur_name."_assesment.pdf");
                 });
 
@@ -404,7 +404,7 @@ class ApplicationController extends Controller
     {
         /** @var App\Models\User $user */
         $user = Auth::user();
-        $permission = $user->can('assestment-form.download');
+        $permission = $user->can('assessment-form.download');
 
         if($permission){
 
@@ -441,7 +441,7 @@ class ApplicationController extends Controller
                 return back()->with(['error' => 'Application Rollback Failed', 'error_type' => 'error']);
             }
 
-            return back()->with(['success' => 'succesful.']);
+            return back()->with(['success' => 'successful.']);
 
         }
 
