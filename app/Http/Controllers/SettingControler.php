@@ -353,7 +353,7 @@ class SettingControler extends Controller
 
         try{
             Document::create([
-                'doc_name' => $documentName
+                'doc_name' => str_replace(' ', '_', $documentName)
             ]);
         }catch (Throwable $e){
             return back()->with(['error' => 'New document submission failed', 'error_type' => 'error']);

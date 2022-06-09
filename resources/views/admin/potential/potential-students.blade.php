@@ -145,12 +145,12 @@
                                 </div>
                             </td>
                             <td>
-                            <span data-toggle="tooltip" data-placement="top" title="Re-send Student Login">
+                            {{--<span data-toggle="tooltip" data-placement="top" title="Re-send Student Login">
                                 <button type="button" class="btn btn-success btn-icon" data-toggle="modal"
                                         data-target="#sendstd">
                                     <i data-feather="send"></i>
                                 </button>
-                            </span>
+                            </span>--}}
                                 <span data-toggle="tooltip" data-placement="top"
                                       title="Send Learn German Online (LGO) Form">
                                 <button type="button" class="btn btn-warning btn-icon btn-form-submit"
