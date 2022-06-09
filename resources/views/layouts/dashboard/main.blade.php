@@ -251,7 +251,7 @@
     </div>
 </div>
 
-<!-- reminder Modal -->
+<!-- reminder modal -->
 <div class="modal fade" id="setReminder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -276,6 +276,55 @@
                     <input type="hidden" value="" name="lead_id" id="lead_id_set_reminder">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Add Reminder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- resent assessment form email modal -->
+<div class="modal fade" id="resendAssessmentFormEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Email Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('email_assessment_form') }}" method="POST">
+                <div class="modal-body">
+                    @csrf
+                    <label>Send this assessment form to :</label>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="email_method" id="" value="1"
+                                   required>
+                            Student
+                        </label>
+                    </div>
+                    <div class="form-check agent-feature d-none">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="email_method" id="" value="2"
+                                   required>
+                            Agent
+                        </label>
+                    </div>
+                    <div class="form-check agent-feature d-none">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="email_method" id="" value="3"
+                                   required>
+                            Both
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" value="" id="appli_id" name="appli_id">
+                    <input type="hidden" value="" id="comments" name="comments">
+                    <input type="hidden" value="" id="addmission" name="addmission">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Send Email</button>
                 </div>
             </form>
         </div>
@@ -343,6 +392,20 @@
                 [0, "desc"]
             ],
 
+        });
+
+        $('.resend-email').click(function () {
+            let cpf_id = $(this).attr('data-id');
+            let agent_id = $(this).attr('agent-id');
+
+            if(agent_id != ''){
+                $('.agent-feature').removeClass('d-none');
+            }else {
+                $('.agent-feature').addClass('d-none');
+            }
+
+            $('#applicant_id').val(cpf_id);
+            $('#resendAssessmentFormEmail').modal('show');
         });
     });
 

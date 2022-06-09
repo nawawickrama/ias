@@ -14,7 +14,7 @@
                         $action_permission = $user->can('cpf.view') || $user->can('cpf.download') || $user->can('pending-request.accept') || $user->can('email-send.create');
                     @endphp
                     <tr>
-                    @if ($action_permission)
+                        @if ($action_permission)
                             <th scope="col">Action</th>
                         @endif
                         <th scope="col">Id</th>
@@ -40,7 +40,7 @@
 
                         @endphp
                         <tr>
-                        @if ($action_permission)
+                            @if ($action_permission)
                                 <td>
                                     <form action="" id="send-form" method="POST">
                                         @csrf
@@ -72,10 +72,9 @@
                                         @can('assessment-form.email')
                                             <button type="button" class="btn btn-success btn-icon resend-email"
                                                     data-toggle="tooltip" data-placement="top"
-                                                    data-id="{{ $cpf->cpf_id }}" title="Re-email Assessment Form">
+                                                    data-id="{{ $cpf->cpf_id }}" agent-id="{{$cpf->agent_id}}" title="Re-email Assessment Form">
                                                 <i data-feather="send"></i>
                                             </button>
-
                                         @endcan
                                         @can('assessment-form.download')
                                             <button type="button" class="btn btn-dark btn-icon btn-down"
@@ -122,52 +121,6 @@
         </div>
     </div>
 
-    <!-- Modal Email -->
-    <div class="modal fade" id="ModalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Email Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('email_assestment_form_by_button') }}" method="POST">
-                        @csrf
-                        <label>Send this assessment form to :</label>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="1"
-                                       required>
-                                Student
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="2"
-                                       required>
-                                Agent
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="3"
-                                       required>
-                                Both
-                            </label>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" value="" id="applicant_id" name="appli_id">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Re-send Email</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <script>
         $('document').ready(function () {
@@ -185,13 +138,6 @@
                 $('#send-form').submit();
             });
 
-            $('.resend-email').click(function () {
-                let cpf_id = $(this).attr('data-id');
-
-                $('#applicant_id').val(cpf_id);
-                $('#ModalEmail').modal('show');
-            });
-
             $('.btn-make-potential').click(function () {
                 let element = $(this);
                 let candidate_id = $(this).attr('candidate-id');
@@ -206,7 +152,7 @@
                         candidateID: candidate_id,
                         cpfID: cpf_id,
                     },
-                    beforeSend:function (){
+                    beforeSend: function () {
                         element.html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
                     },
                     success: function (response) {

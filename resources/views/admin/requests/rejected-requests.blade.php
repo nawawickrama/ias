@@ -85,21 +85,20 @@
                                             </a>
                                         @endcan
 
-                                        @can('assestment-form.download')
+                                        @can('assessment-form.download')
                                             <button type="button" class="btn btn-success btn-icon btn-down"
                                                     data-toggle="tooltip" data-placement="top"
-                                                    title="Download Assesment Form">
+                                                    title="Download Assessment Form">
                                                 <i data-feather="flag"></i>
                                             </button>
                                         @endcan
-                                    <!-- Added New -->
-                                        <a href="#">
-                                            <button type="button" class="btn btn-dark btn-icon" data-toggle="modal"
-                                                    data-target="#ModalEmail1" data-placement="top"
-                                                    title="Re-send Assesment Form">
-                                                <i data-feather="flag"></i>
+                                        @can('assessment-form.email')
+                                            <button type="button" class="btn btn-success btn-icon resend-email"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    data-id="{{ $cpf->cpf_id }}" agent-id="{{$cpf->agent_id}}" title="Re-email Assessment Form">
+                                                <i data-feather="send"></i>
                                             </button>
-                                        </a>
+                                        @endcan
                                         @can('email-send.create')
                                             <button type="button" class="btn btn-danger btn-icon btn-email"
                                                     data-email="{{ $candidate->email }}" data-toggle="tooltip"
@@ -117,54 +116,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal Email -->
-    <div class="modal fade" id="ModalEmail2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Email Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="" method="POST">
-                    <div class="modal-body">
-                        @csrf
-                        <label>Send this assessment form to :</label>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="1"
-                                       required>
-                                Student
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="2"
-                                       required>
-                                Agent
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="3"
-                                       required>
-                                Both
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" value="" id="appli_id" name="appli_id">
-                        <input type="hidden" value="" id="comments" name="comments">
-                        <input type="hidden" value="" id="addmission" name="addmission">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Re-send Email</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
     <script>
         $('document').ready(function () {
             $('.btn-down').click(function () {

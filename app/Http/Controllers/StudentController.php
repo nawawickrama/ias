@@ -299,7 +299,7 @@ class StudentController extends Controller
             abort(403);
         }
 
-        $lgoAccess = $user->candidate->forms->where('form_id', '1')->first();
+        $lgoAccess = $user->candidate->forms->where('form_id', '2')->first();
         if (!isset($lgoAccess)) {
             abort(403);
         }
