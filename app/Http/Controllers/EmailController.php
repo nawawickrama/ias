@@ -17,7 +17,7 @@ class EmailController extends Controller
 
     public function __construct()
     {
-        return $this->middleware(['auth', 'actived', 'agent']);
+        $this->middleware(['auth', 'actived', 'agent']);
     }
 
     //normal email

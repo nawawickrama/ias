@@ -47,7 +47,7 @@
                     <div class="col-md-12">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
+                                <input type="radio" class="form-check-input select-btn" name="addmission" id="addmission_form"
                                        value="1">
                                 Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
                                     ({{ $cpf_details->job_field }}) @endif program.
@@ -59,7 +59,7 @@
                     <div class="col-md-12">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
+                                <input type="radio" class="form-check-input select-btn" name="addmission" id="addmission_form"
                                        value="3">
                                 Selected for the {{ $program->course_code }} @if ($program->course_code == 'Direct job')
                                     ({{ $cpf_details->job_field }}) @endif program with the
@@ -72,7 +72,7 @@
                     <div class="col-md-12">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="addmission" id="addmission_form"
+                                <input type="radio" class="form-check-input select-btn" name="addmission" id="addmission_form"
                                        value="0">
                                 Not selected.
                             </label>
@@ -123,12 +123,12 @@
             <br>
             <div class="row">
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-block btn-success" id="btn-email"
-                            cpf_id="{{ $cpf_details->cpf_id }}">Email Assessment form
+                    <button type="button" class="btn btn-block btn-success btn-send-download" id="btn-email"
+                            cpf_id="{{ $cpf_details->cpf_id }}" disabled>Email Assessment form
                     </button>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-block btn-primary" id="btn-download">Download Assessment
+                    <button type="button" class="btn btn-block btn-primary btn-send-download" id="btn-download" disabled>Download Assessment
                         form
                     </button>
                 </div>
@@ -179,20 +179,22 @@
                                 Student
                             </label>
                         </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="2"
-                                       required>
-                                Agent
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="email_method" id="" value="3"
-                                       required>
-                                Both
-                            </label>
-                        </div>
+                        @if($cpf_details->agent_id != null)
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="email_method" id="" value="2"
+                                           required>
+                                    Agent
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="email_method" id="" value="3"
+                                           required>
+                                    Both
+                                </label>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" value="" id="appli_id" name="appli_id">
@@ -205,4 +207,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('.select-btn').change(function (){
+            $('.btn-send-download').removeAttr('disabled');
+        })
+    </script>
 @endsection
