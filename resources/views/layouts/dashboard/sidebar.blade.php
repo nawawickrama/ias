@@ -135,7 +135,7 @@
             <li class="nav-item">
                 <a href="{{ route('verify-lgo-aaf') }}" class="nav-link">
                     <i class="link-icon text-warning" data-feather="edit-3"></i>
-                    <span class="link-title">Verify LGO & AAF&nbsp;</span>
+                    <span class="link-title">Verify lgo and aaf&nbsp;</span>
                     <div class="text-white invisible pendingForms" role="status">
                         <span
                             class="badge badge-light badge-pill bg-warning text-black text-header-pendingForms"></span>
