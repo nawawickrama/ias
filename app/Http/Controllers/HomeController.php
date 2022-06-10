@@ -36,7 +36,29 @@ class HomeController extends Controller
         //make permission
 
         if($user->hasRole('Student')){
-            return view('student.general.dashboard');
+
+            //Candidate information status
+            $candidateInfo = $user->candidate;
+            $guardianInfo = $candidateInfo->guardian;
+            $isCompleteStudentInfo = ($candidateInfo->isComplete === 'Yes' && $guardianInfo->isComplete === 'Yes') ? 1 : 0;
+
+            //Candidate document status
+            $candidateDocumentStatus = $candidateInfo->documents->whereIn('status', ['Pending', 'Rejected']);
+            $isDocumentsComplete = (count($candidateDocumentStatus) === 0) ? 1 : 0;
+
+            //Candidate form status
+            $candidateAAFStatus = $candidateInfo->forms->where('form_id', 1)->first();
+            $isAAFComplete = (isset($candidateAAFStatus) && $candidateAAFStatus->status === 'Approved') ? 1 : 0;
+
+            $candidateLGOStatus = $candidateInfo->forms->where('form_id', 2)->first();
+            $isLGOComplete = (isset($candidateLGOStatus) && $candidateLGOStatus->status === 'Approved') ? 1 : 0;
+
+            //Candidate payment status
+            $candidatePayment = $candidateInfo->candidatePayments->whereIn('status', ['Not-Paid', 'Partially-Paid', 'Pending', 'Rejected']);
+            $isPaymentComplete = (count($candidatePayment) === 0) ? 1 : 0;
+
+
+            return view('student.general.dashboard')->with(['isCompleteStudentInfo' => $isCompleteStudentInfo, 'isDocumentsComplete' => $isDocumentsComplete, 'isAAFComplete' => $isAAFComplete, 'isLGOComplete' => $isLGOComplete, 'isPaymentComplete' => $isPaymentComplete]);
         }
 
         return view('admin.general.home');
