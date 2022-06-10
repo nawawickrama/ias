@@ -43,6 +43,7 @@ class HomeController extends Controller
             $isCompleteStudentInfo = ($candidateInfo->isComplete === 'Yes' && $guardianInfo->isComplete === 'Yes') ? 1 : 0;
 
             //Candidate document status
+            $documentCourse = $candidateInfo->cpf->course->documents;
             $candidateDocumentStatus = $candidateInfo->documents->whereIn('status', ['Pending', 'Rejected']);
             $isDocumentsComplete = (count($candidateDocumentStatus) === 0) ? 1 : 0;
 
@@ -59,7 +60,7 @@ class HomeController extends Controller
             $isPaymentComplete = (count($candidatePayment) === 0) ? 1 : 0;
 
 
-            return view('student.general.dashboard')->with(['candidateCheckPayment' => $candidateCheckPayment, 'isCompleteStudentInfo' => $isCompleteStudentInfo, 'isDocumentsComplete' => $isDocumentsComplete, 'isAAFComplete' => $isAAFComplete, 'isLGOComplete' => $isLGOComplete, 'isPaymentComplete' => $isPaymentComplete]);
+            return view('student.general.dashboard')->with(['documentCourse' => $documentCourse, 'candidateCheckPayment' => $candidateCheckPayment, 'isCompleteStudentInfo' => $isCompleteStudentInfo, 'isDocumentsComplete' => $isDocumentsComplete, 'isAAFComplete' => $isAAFComplete, 'isLGOComplete' => $isLGOComplete, 'isPaymentComplete' => $isPaymentComplete]);
         }
 
         return view('admin.general.home');
