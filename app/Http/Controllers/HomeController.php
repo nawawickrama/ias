@@ -45,7 +45,7 @@ class HomeController extends Controller
             //Candidate document status
             $documentCourse = $candidateInfo->cpf->course->documents;
             $candidateDocumentStatus = $candidateInfo->documents->whereIn('status', ['Pending', 'Rejected']);
-            $isDocumentsComplete = (count($candidateDocumentStatus) === 0) ? 1 : 0;
+            $isDocumentsComplete = (count($candidateDocumentStatus) === 0 ) ? 1 : 0;
 
             //Candidate form status
             $candidateAAFStatus = $candidateInfo->forms->where('form_id', 1)->first();
