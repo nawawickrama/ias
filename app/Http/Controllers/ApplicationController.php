@@ -253,7 +253,7 @@ class ApplicationController extends Controller
                 });
             }elseif($email_method == 2){
                 if($cpf_details->agent_id != null){
-                    $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
+                    $agent_email = Agent::find($cpf_details->agent_id)->user->email;
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email) {
                         $message->to($agent_email)
                                 ->subject('Admission Details')
@@ -265,7 +265,7 @@ class ApplicationController extends Controller
 
             }elseif($email_method == 3){
                 if($cpf_details->agent_id != null){
-                    $agent_email = Agent::find($cpf_details->agent_id)->agent_email;
+                    $agent_email = Agent::find($cpf_details->agent_id)->user->email;
                     $st_mail = $candidate->email;
                     Mail::send('admin.assessment.email', $data, function($message)use($pdf, $agent_email, $st_mail) {
                         $message->to($agent_email)
