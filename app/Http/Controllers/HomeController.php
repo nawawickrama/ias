@@ -54,11 +54,12 @@ class HomeController extends Controller
             $isLGOComplete = (isset($candidateLGOStatus) && $candidateLGOStatus->status === 'Approved') ? 1 : 0;
 
             //Candidate payment status
+            $candidateCheckPayment = $candidateInfo->candidatePayments;
             $candidatePayment = $candidateInfo->candidatePayments->whereIn('status', ['Not-Paid', 'Partially-Paid', 'Pending', 'Rejected']);
             $isPaymentComplete = (count($candidatePayment) === 0) ? 1 : 0;
 
 
-            return view('student.general.dashboard')->with(['isCompleteStudentInfo' => $isCompleteStudentInfo, 'isDocumentsComplete' => $isDocumentsComplete, 'isAAFComplete' => $isAAFComplete, 'isLGOComplete' => $isLGOComplete, 'isPaymentComplete' => $isPaymentComplete]);
+            return view('student.general.dashboard')->with(['candidateCheckPayment' => $candidateCheckPayment, 'isCompleteStudentInfo' => $isCompleteStudentInfo, 'isDocumentsComplete' => $isDocumentsComplete, 'isAAFComplete' => $isAAFComplete, 'isLGOComplete' => $isLGOComplete, 'isPaymentComplete' => $isPaymentComplete]);
         }
 
         return view('admin.general.home');
