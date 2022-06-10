@@ -22,7 +22,7 @@
                     <tbody>
                     @foreach($potentialDetails as $unit)
                         @php
-                            $candidateDetails = $unit->candidate->first();
+                            $candidateDetails = $unit->candidate;
                             $cpfDetails = $unit->cpf;
                             $agentDetails = $cpfDetails->agent;
                             $countryDetails = $candidateDetails->countryInfo;
