@@ -99,7 +99,7 @@
 </div>
 <div class="row">
     <div class="column1">
-        <img src="public/assets/images/txt.png" alt="image loading.." width="30%" height="30%">
+        <img src="{{ url('assets/images/txt.png') }}" alt="image loading.." width="30%" height="30%">
         <p class="arial"><b>Datum :</b> {{ $status_date }}, Unterschrift/Stempel prufer(n).</p>
     </div>
 </div>
